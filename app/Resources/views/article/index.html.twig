@@ -9,21 +9,7 @@
             <h1>Blog</h1>
                <br>
            {% for article in entities %}
-               <article style="margin-bottom: 50px;border-bottom:1px solid lightgrey">
-                       <p>
-                           <a href="{{ path('article',{'slug':article.slug}) }}">
-                            {{ article.title }}
-                               {% if article.comments is defined %}
-                                   ({{ article.comments|length }})
-                               {% endif %}
-                            </a>
-                       </p>
-                       <p>
-                           {{ article.description }}
-                       </p>
-                       <a class="btn btn-default" href="{{ path('article',{'slug':article.slug}) }}">Read</a>
-
-               </article>
+              {% include ":article:item.html.twig" with {'article' : article } %}
            {% endfor %}
            </div>
 
