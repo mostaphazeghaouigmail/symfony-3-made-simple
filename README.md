@@ -3,7 +3,7 @@ Made Simple Symfony 3 starter kit
 
 ###Documentation under construction###
 
-<p>Hi! i share my symfony 3 starter kit. It's certainly not perfect, feel free to use and improve. It comes with a bunch of nice bundle and a couple of developpement made by me, for image management with&nbsp;&nbsp;drag and drop and multi upload, simple comment system, simple widgets (very simple). It's realy not a cms, you're not supposed to take everything like it is but modify it for your purpose. With this starter, you&nbsp;can manage : Users,&nbsp;Pages, Articles, Imagess, Comments, Settings</p>
+<p>Hi! i share my symfony 3 starter kit. It's certainly not perfect, feel free to use and improve. It comes with a bunch of nice bundle and a couple of developpement made by me, for image management with&nbsp;&nbsp;drag and drop and multi upload, simple comment system, simple widgets (very simple). It's realy not a cms, you're not supposed to take everything like it is but modify it for your purpose. With this starter, you&nbsp;can manage : Users,&nbsp;Pages, Articles, Images, Comments, Settings</p>
 
 <h3>Main Entity Management</h3>
 
