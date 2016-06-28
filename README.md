@@ -136,7 +136,7 @@ class Page
 </ul>
 
 <h3>Installation</h3>
-<p><code>Git clone https://github.com/sohrabg/made-simple.git</code></p>
+<p><code>git clone https://github.com/sohrabg/made-simple.git</code></p>
 <p><code>composer install</code></p>
 <p><code>php bin/console app:init</code></p>
 <p>Answer all question</p>
