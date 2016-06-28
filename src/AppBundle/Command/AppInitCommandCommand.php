@@ -35,16 +35,18 @@ class AppInitCommandCommand extends ContainerAwareCommand
 
         $this->createSchema();
 
+        $output->writeln('Create Admin User');
+
         //LOGIN
         $helper = $this->getHelper('question');
-        $question1 = new Question("Votre Login : ");
+        $question1 = new Question("Login : ");
         $login = $helper->ask($input, $output, $question1);
 
         if(!$login)
             return;
 
         //PASSWORD
-        $question2 = new Question("Votre mot de passe : ");
+        $question2 = new Question("Password : ");
         $question2->setHidden(true);
         $question2->setHiddenFallback(false);
         $pasword = $helper->ask($input, $output, $question2);
@@ -53,19 +55,19 @@ class AppInitCommandCommand extends ContainerAwareCommand
             return;
 
         //EMAIL
-        $question3 = new Question("Votre email : ");
+        $question3 = new Question("Email : ");
         $email = $helper->ask($input, $output, $question3);
 
         if(!$pasword)
             return;
 
-        $output->writeln('Creation de l\'administrateur...');
+        $output->writeln('Admin création...');
         $this->createUser($login, $pasword, $email);
         $output->writeln('Done!');
 
         //DATABASE TYPE
         $question7 = new ChoiceQuestion(
-            'Quel type de BDD utilisez-vous ?',
+            'What database do you use ?',
             array('mysql', 'postgreSql', 'microsoftSql'),
             0
         );
@@ -74,7 +76,7 @@ class AppInitCommandCommand extends ContainerAwareCommand
             return;
 
         $output->writeln('');
-        $output->writeln('Creation de la table des sessions...');
+        $output->writeln('Sessions table creation...');
         $this->createSessionTable($base);
         $output->writeln('Done!');
 
@@ -82,22 +84,22 @@ class AppInitCommandCommand extends ContainerAwareCommand
         //PARAMETERS
 
         //SITE NAME
-        $question4 = new Question("Nom du site : ");
+        $question4 = new Question("Website Name : ");
         $nomSite = $helper->ask($input, $output, $question4);
 
         //SITE DESCRIPTION
-        $question5 = new Question("Description du site par défaut (Meta) : ");
+        $question5 = new Question("Website description (Meta) : ");
         $descriptionSite = $helper->ask($input, $output, $question5);
 
         //EMAIL
-        $question6 = new Question("Email du contact : ");
+        $question6 = new Question("Website contact Email : ");
         $emailContact = $helper->ask($input, $output, $question6);
 
-        $output->writeln('Creation des parametres de bases...');
+        $output->writeln('Settings creation...');
         $this->createParameters($nomSite,$descriptionSite,$emailContact);
         $output->writeln('Done!');
 
-        $output->writeln("C'est Good !!");
+        $output->writeln("it's Good !!");
 
     }
 
