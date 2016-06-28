@@ -5,7 +5,12 @@
 
     {% block body %}
         {{ dump(entity) }}
-        {{ app_twig.getCommentForm(entity)|raw }}
+        <div>
+            {{ app_twig.getCommentForm(entity)|raw }}
+        </div>
+        <div>
+            {{ app_twig.getCommentList(entity)|raw }}
+        </div>
     {% endblock body %}
 
 {% block javascripts %}

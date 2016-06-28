@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+
+{% set page_title = 'Title index blog' %}
+{% set page_description = 'Blog meta description' %}
+
+    {% block body %}
+       <div class="row">
+           <div class="col-md-12">
+            <h1>Blog</h1>
+               <br>
+           {% for article in entities %}
+               <article style="margin-bottom: 50px;border-bottom:1px solid lightgrey">
+                       <p>
+                           <a href="{{ path('article',{'slug':article.slug}) }}">
+                            {{ article.title }}
+                               {% if article.comments is defined %}
+                                   ({{ article.comments|length }})
+                               {% endif %}
+                            </a>
+                       </p>
+                       <p>
+                           {{ article.description }}
+                       </p>
+                       <a class="btn btn-default" href="{{ path('article',{'slug':article.slug}) }}">Read</a>
+
+               </article>
+           {% endfor %}
+           </div>
+
+       </div>
+        <div class="row" style="margin-top:30px">
+            <div class="col-md-12" style="text-align: center">
+                <div class="navigation" style="display:inline-block;margin:0 auto">
+                    {{ knp_pagination_render(entities) }}
+                </div>
+            </div>
+        </div>
+    {% endblock body %}
+
+{% block javascripts %}
+{% endblock javascripts %}

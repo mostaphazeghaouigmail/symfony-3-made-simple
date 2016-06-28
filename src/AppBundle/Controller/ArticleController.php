@@ -12,17 +12,40 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends Controller
 {
+
+    /**
+     * @Route("/blog", name="articles")
+     */
+    public function indexAction(Request $request)
+    {
+        $em     = $this->getDoctrine()->getManager();
+        $dql   = "SELECT a FROM AppBundle:Article a";
+
+        $query = $em->createQuery($dql);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        return $this->render('article/index.html.twig', [
+            'entities' => $pagination
+        ]);
+    }
+
+
     /**
      * @Route("/blog/{slug}", name="article")
      * @ParamConverter("article", class="AppBundle\Entity\Article", options={"slug" = "slug"})
      */
-    public function indexAction(Request $request, Article $article)
+    public function showAction(Request $request, Article $article)
     {
-
         return $this->render('article/'.($article->getTemplate() ? $article->getTemplate()  : 'view').'.html.twig', [
             'entity' => $article
         ]);
     }
+
 
 
 

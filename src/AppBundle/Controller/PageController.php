@@ -12,11 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends Controller
 {
+    
     /**
      * @Route("/{slug}", name="page")
      * @ParamConverter("page", class="AppBundle\Entity\Page", options={"slug" = "slug"})
      */
-    public function indexAction(Request $request, Page $page)
+    public function showAction(Request $request, $slug)
     {
         return $this->render('page/'.($page->getTemplate() ? $page->getTemplate()  : 'view').'.html.twig', [
             'entity' => $page

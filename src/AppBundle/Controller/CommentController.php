@@ -26,10 +26,13 @@ class CommentController extends Controller
             $em->persist($comment);
             $em->flush();
         }
-        if($comment->getValidated())
-            return $this->render("comment/comment.html.twig",['comment'=>$comment]);
 
-        return new JsonResponse(['success'=>true]);
+        if($request->isXmlHttpRequest()){
+            if($comment->getValidated())
+                return $this->render("comment/comment.html.twig",['comment'=>$comment]);
+        }
+        else
+            return $this->redirect($request->headers->get('referer'));
     }
 
 
