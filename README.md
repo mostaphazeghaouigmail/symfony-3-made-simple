@@ -57,7 +57,7 @@ class Page
 </p>
 
 
-<h3><i class="fa fa-map"></i>&nbsp; Map Made Simple</h3>
+<h3>Map</h3>
 <p>
     Just a tiny widget, just do <code>app_twig.getMap(your_lat,your_lng)|raw </code> on your view
 </p>
@@ -65,7 +65,7 @@ class Page
     You can change it easy on <code>app/Resources/views/component/map</code>
 </p>
 
-<h3>omment Made Simple</h3>
+<h3>Comment</h3>
 <p>Juste use Imageable Trait in your entity</p>
 <pre>
 use AppBundle\Traits\Commentable;
@@ -82,7 +82,7 @@ class Page
 <p>You can allow and disallow anonymous comments by changing parameter allow_anonymous_comments to 0 or nop or non or no   </p>
 <p>You can set comments at validated state by default or not by changing parameter validated_comments_by_defaut to 0 or nop or non or no   </p>
 
-<h3><i class="fa fa-area-chart"></i>&nbsp;Tracking Made Simple</h3>
+<h3>Tracking</h3>
 <p>
     Just a tiny widget again, Just do <code>app_twig.getAnalitycsTracking('your tracking code')|raw </code> on your view
 </p>
@@ -108,7 +108,7 @@ class Page
     Feel free to customize it, it's located in <code>views/component/analitycs/</code>
 </p>
 
-<h3><i class="fa fa-file-image-o"></i>&nbsp;Slider Made Simple<br></h3>
+<h3>Slider<br></h3>
 <p>
    Just a tiny widget again ( yeah i know.. ), Just do <code>app_twig.getSlider(entity)|raw </code> on your view
 </p>
@@ -135,7 +135,7 @@ class Page
     <li>	- Website name</li>
 </ul>
 
-<h3>Installation Made Simple</h3>
+<h3>Installation</h3>
 <p><code>Git clone blablabla</code></p>
 <p><code>composer install</code></p>
 <p><code>php bin/console app:init</code></p>
