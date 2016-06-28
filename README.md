@@ -57,9 +57,9 @@ class Page
 </p>
 
 
-<h3><i class="fa fa-map"></i>&nbsp; Map Made Simple<br><small>Just a tiny widget</small></h3>
+<h3><i class="fa fa-map"></i>&nbsp; Map Made Simple</h3>
 <p>
-    Just do <code>app_twig.getMap(your_lat,your_lng)|raw </code> on your view
+    Just a tiny widget, just do <code>app_twig.getMap(your_lat,your_lng)|raw </code> on your view
 </p>
 <p>
     You can change it easy on <code>app/Resources/views/component/map</code>
@@ -82,9 +82,9 @@ class Page
 <p>You can allow and disallow anonymous comments by changing parameter allow_anonymous_comments to 0 or nop or non or no   </p>
 <p>You can set comments at validated state by default or not by changing parameter validated_comments_by_defaut to 0 or nop or non or no   </p>
 
-<h3><i class="fa fa-area-chart"></i>&nbsp;Tracking Made Simple<br><small>Just a tiny widget again</small></h3>
+<h3><i class="fa fa-area-chart"></i>&nbsp;Tracking Made Simple</h3>
 <p>
-    Just do <code>app_twig.getAnalitycsTracking('your tracking code')|raw </code> on your view
+    Just a tiny widget again, Just do <code>app_twig.getAnalitycsTracking('your tracking code')|raw </code> on your view
 </p>
 <p>
     If you create a parameter named tracking_code just do  <code>app_twig.getAnalitycsTracking()|raw </code>
@@ -108,9 +108,9 @@ class Page
     Feel free to customize it, it's located in <code>views/component/analitycs/</code>
 </p>
 
-<h3><i class="fa fa-file-image-o"></i>&nbsp;Slider Made Simple<br><small>Just a tiny widget again ( yeah i know.. )</small></h3>
+<h3><i class="fa fa-file-image-o"></i>&nbsp;Slider Made Simple<br></h3>
 <p>
-    Just do <code>app_twig.getSlider(entity)|raw </code> on your view
+   Just a tiny widget again ( yeah i know.. ), Just do <code>app_twig.getSlider(entity)|raw </code> on your view
 </p>
 <p>
     It's the bootstrap slider, for now, it's made for imgeable entities, feel free to make your own :)
@@ -119,9 +119,10 @@ class Page
    It's located in <code>views/component/slider/</code>
 </p>
 
-<h3>Contact Simple</h3>
-<h3>Settings</h3>
+<h3>Contact Form</h3>
 <p>Just do <code>app_twig.getContactForm()</code><p>
+
+<h3>Settings</h3>
 <p>Some settings are locked, but you can remove them by editing the file <code>AppBundl/Listener/LifeCycleSliner.php</code></p>
 <p>List of default settings : </p>
 <ul style="padding : 0">
@@ -139,6 +140,7 @@ class Page
 <p><code>composer install</code></p>
 <p><code>php bin/console app:init</code></p>
 <p>Answer all question</p>
-<p>Start to work :)</p>
+<p>Start to work</p>
+<p>Demo online comming soon...</p>
 
 
