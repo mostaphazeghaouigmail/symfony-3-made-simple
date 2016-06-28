@@ -1,0 +1,12 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+<div class="col-md-4 col-md-offset-4 panel panel-default" style="margin-top:50px;padding: 50px">
+    <h3 style="margin-top: 0;">Confirmation</h3>
+    <div style="margin-top:20px">
+        {{ 'resetting.check_email'|trans({'%email%': email}) }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,3 @@
+{% for comment in entity.comments %}
+    {% include ":comment:comment.html.twig" with {'comment' : comment} %}
+{% endfor %}

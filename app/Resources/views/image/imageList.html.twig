@@ -1,0 +1,60 @@
+{% extends '::base.html.twig' %}
+{% block style %}
+    <style>
+        .all{display:none}
+    </style>
+{% endblock style %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Media Gallery</h1>
+            <div class="btn-group">
+                <a href="{{ path("images_get") }}" class="btn btn-default {{ not app.request.get('from_entity') ? 'active' : '' }}">All Images</a>
+                <a href="{{ path("images_get",{'from_entity' : 'true'}) }}" class="btn btn-default {{ app.request.get('from_entity')  ? 'active' : '' }}">Uploaded on this entity</a>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:30px">
+        <div class="col-md-12">
+            {% for image in allImages %}
+                <div id="image{{ image.id }}" class="col-md-3" style="box-sizing: border-box;padding:5px;border:1px solid rgba(0,0,0,0.1);">
+                    <img  style="height: auto;width:90%;margin: 5%;display:block" src="{{ asset("uploads/image/"~image.image)|imagine_filter('thumbnail')  }}">
+                    <button class="btn btn-primary" onclick="returnFileUrl('{{  asset("uploads/image/"~image.image) }}')">Select</button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row" style="margin-top:30px">
+        <div class="col-md-12" style="text-align: center">
+            <div class="navigation" style="display:inline-block;margin:0 auto">
+                {{ knp_pagination_render(allImages) }}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock body %}
+{% block javascripts %}
+<script>
+    function getUrlParam( paramName ) {
+        var reParam = new RegExp( '(?:[\?&]|&)' + paramName + '=([^&]+)', 'i' );
+        var match = window.location.search.match( reParam );
+        return ( match && match.length > 1 ) ? match[1] : null;
+    }
+
+    function returnFileUrl(url) {
+
+        var funcNum = getUrlParam( 'CKEditorFuncNum' );
+        var fileUrl = url;
+        window.opener.CKEDITOR.tools.callFunction( funcNum, fileUrl, function() {
+            var dialog = this.getDialog();
+            if ( dialog.getName() == 'image' ) {
+                var element = dialog.getContentElement( 'info', 'txtAlt' );
+                if ( element )
+                    element.setValue( 'alt text' );
+            }
+        } );
+        window.close();
+    }
+</script>
+{% endblock javascripts %}

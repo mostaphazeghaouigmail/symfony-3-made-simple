@@ -1,0 +1,138 @@
+<style>
+    #uploadzone{
+        border: 3px dashed lightgray;
+        width: 100%;
+        height: 100px;
+        line-height: 100px;
+        font-size: 18px;
+        text-align: center;
+        -webkit-transition: .2s all linear;
+        -moz-transition: .2s all linear;
+        -o-transition: .2s all linear;
+        transition: .2s all linear;
+    }
+
+    #uploadzone.dragover{
+        background: rgba(0,0,0,0.2);
+    }
+
+    #filelist{
+        padding:0;
+        margin-left:0;
+    }
+
+    #filelist li{
+        list-style-type: none;
+    }
+</style>
+<script type="text/javascript" src="{{ asset('plupload/js/plupload.full.min.js') }}"></script>
+<div>
+    <div id="uploadzone">
+        <span>Drag & drop images here or <button class="btn btn-primary" style="line-height: 20px" id="browse">Browse...</button></span>
+    </div>
+    <div id="gallery">
+        <ul id="filelist">
+
+        </ul>
+        <div id="container"></div>
+         
+        <br />
+        <div class="row">
+            <div id="image-list" class="col-md-12">
+                {% for image in images %}
+                    {% include ":image:imageItem.html.twig" with {'image' : image} %}
+                {% endfor %}
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<script>
+    var uploaderModule = new plupload.Uploader({
+        // General settings
+        runtimes : 'html5,flash,silverlight,html4',
+        url : Routing.generate('post_upload'),
+        max_file_size : '5mb',
+        filters : [
+            {title : "Image files", extensions : "jpg,gif,png"},
+        ],
+        rename: true,
+        sortable: true,
+        dragdrop: true,
+        browse_button: 'browse',
+        drop_element : 'uploadzone',
+        views: {
+            list: true,
+            thumbs: true, // Show thumbs
+            active: 'thumbs'
+        },
+        flash_swf_url : '/plupload/js/Moxie.swf',
+        silverlight_xap_url : '/plupload/js/Moxie.xap',
+        multipart_params:{
+            parentId : {{ parentId }},
+            parentClass : '{{ parentClass }}'
+        }
+    });
+    uploaderModule.init();
+
+    uploaderModule.bind('FilesAdded', function(up, files) {
+        var html = '';
+        plupload.each(files, function(file) {
+            html += '<li id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ')';
+                html += '<div class="progress">';
+                    html += '<div id="'+ file.id +'bar" class="progress-bar" role="progressbar" style="width:0%">';
+                        html += '0%';
+                    html += '</div>';
+                html += '</div>';
+            html += '</li>';
+        });
+        document.getElementById('filelist').innerHTML += html;
+        uploaderModule.start();
+    });
+
+    uploaderModule.bind('UploadProgress', function(up, file) {
+        $("#"+file.id+"bar").css({width:file.percent+"%"}).html(file.percent + "%");
+    });
+
+    uploaderModule.bind('FileUploaded',function(up,file,info){
+        $("#"+file.id).fadeOut(500,function(){
+            $("#"+file.id).remove();
+        });
+        $("#image-list").append(info.response);
+        $('#image-list').sortable('reload');
+    });
+
+    uploaderModule.bind('Error', function(up, err) {
+        console.log("Error #" + err.code + ": " + err.message);
+    });
+
+    var target = $("#uploadzone");
+
+    target.on("dragover",function(event) {
+        target.addClass("dragover");
+    });
+
+    target.on("dragenter",function(event) {
+        target.addClass("dragover");
+    });
+
+    target.on("dragleave",function(event) {
+        target.removeClass("dragover");
+    });
+
+    target.on("drop",function(event) {
+        target.removeClass("dragover");
+    });
+
+    $(document).ready(function(){
+        $('#image-list').sortable();
+        $('#image-list').on('sortupdate',function(a,b,c){
+            uploader.saveOrder();
+        })
+
+    })
+
+
+</script>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Connexion</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap -->
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+        <link href="{{ asset('css/ripples.min.css') }}" rel="stylesheet" media="screen">
+        <link href="{{ asset('css/bootstrap-material-design.min.css') }}" rel="stylesheet" media="screen">
+        <link href="{{ asset('css/main.css') }}" rel="stylesheet" media="screen">
+        <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
+        <style>
+            input:-webkit-autofill{
+                -webkit-box-shadow : 0 0 0 1000px white inset!important;
+            }
+        </style>
+    </head>
+<body>
+    <div class="hide">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+            <a href="{{ path('fos_user_security_logout') }}">
+                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+            </a>
+        {% else %}
+            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+        {% endif %}
+    </div>
+
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="flash-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+    <div class="row" id="wrapper">
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
+    </div>
+
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/ripples.js') }}"></script>
+    <script src="{{ asset('js/material.min.js') }}"></script>
+    {% block javascripts %}{% endblock javascripts %}
+    <script>
+        $(function () {
+            $.material.init();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+easy_admin:
+    site_name: "BackOffice"
+    design:
+        menu:
+            - { entity: 'User',      label : 'Users',    icon: 'users' }
+            - { entity: 'Image',     label : 'Images',   icon: 'image' }
+            - { entity: 'Page',      label : 'Pages',    icon: 'pencil-square'}
+            - { entity: 'Article',   label : 'Articles', icon: 'newspaper-o'}
+            - { entity: 'Comment',   label : 'Comments', icon: 'comment'}
+            - { entity: 'Parameter', label : 'Settings', icon: 'cogs'}
+    entities:
+        User:
+            class: AppBundle\Entity\User
+            show:
+                fields :
+                    - { property: 'image', type: 'image', base_path: %app.path.user_images% }
+                    - 'username'
+                    - 'email'
+                    - 'enabled'
+                    - 'locked'
+                    - { property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable" }
+            list:
+                fields :
+                    - 'id'
+                    - { property: 'image', type: 'image', base_path: %app.path.user_images% }
+                    - 'username'
+                    - 'email'
+                    - 'enabled'
+                    - 'locked'
+            form:
+                fields:
+                    - 'enabled'
+                    - 'username'
+                    - 'email'
+                    - 'roles'
+                    - 'lastLogin'
+                    - { property: 'imageFile', type: 'vich_image' }
+                    - {property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable"}
+        Image:
+            class: AppBundle\Entity\Image
+            list:
+                fields :
+                    - 'id'
+                    - { property: 'image', type: 'image', base_path: %app.path.image_images% }
+                    - 'parentClass'
+                    - 'parentId'
+                actions :
+                    - 'delete'
+                    - 'edit'
+                    - { name: 'show_parent', type: 'route', label : 'Voir le parent' }
+                    - { name: 'show_front', type: 'route', label : 'Voir', css_class: 'btn btn-primary', icon: 'eye' }
+                    - 'new'
+                    - 'search'
+            form:
+                fields:
+                    - 'name'
+                    - 'title'
+                    - 'text'
+                    - 'alt'
+                    - { property: 'imageFile', type: 'vich_image' }
+
+        Page:
+            class: AppBundle\Entity\Page
+            list:
+                fields :
+                    - 'id'
+                    - { property: 'image', type: 'image', base_path: %app.path.page_images% }
+                    - 'title'
+                    - 'slug'
+                    - 'template'
+                actions :
+                    - 'delete'
+                    - 'edit'
+                    - { name: 'show_front', type: 'route', label : 'Voir' }
+                    - 'new'
+                    - 'search'
+            form:
+                fields:
+                    - 'title'
+                    - { property: 'template', type: 'text' }
+                    - { property: 'imageFile', type: 'vich_image' }
+                    - 'description'
+                    - 'metaDescription'
+                    - {property: 'body', type: 'ckeditor', type_options: { 'config': { filebrowserBrowseRoute: 'images_get'} }}
+                    - {property : 'style', css_class : 'codeable' }
+                    - {property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable"}
+            show:
+                actions :
+                    - 'delete'
+                    - 'edit'
+                    - { name: 'show_front', type: 'route', label : 'Voir', css_class: 'btn btn-primary', icon: 'eye' }
+
+        Article:
+            class: AppBundle\Entity\Article
+            list:
+                fields :
+                    - 'id'
+                    - { property: 'image', type: 'image', base_path: %app.path.article_images% }
+                    - 'title'
+                    - 'slug'
+                    - 'template'
+                actions :
+                    - 'delete'
+                    - 'edit'
+                    - { name: 'show_front', type: 'route', label : 'Voir' }
+                    - 'new'
+                    - 'search'
+            form:
+                fields:
+                    - 'title'
+                    - { property: 'template', type: 'text' }
+                    - { property: 'imageFile', type: 'vich_image' }
+                    - 'description'
+                    - 'metaDescription'
+                    - {property: 'body', type: 'ckeditor', type_options: { 'config': { filebrowserBrowseRoute: 'images_get'} }}
+                    - {property : 'style', css_class : 'codeable' }
+                    - {property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable"}
+            show:
+                actions :
+                    - 'delete'
+                    - 'edit'
+                    - { name: 'show_front', type: 'route', label : 'Voir', css_class: 'btn btn-primary', icon: 'eye' }
+
+        Comment:
+            class: AppBundle\Entity\Comment
+            list:
+                fields :
+                    - 'id'
+                    - 'text'
+                    - 'validated'
+                    - 'createdAt'
+                    - 'parentClass'
+                    - 'parentId'
+                    - 'UserID'
+                actions :
+                    - 'delete'
+                    - 'edit'
+                    - { name: 'show_parent', type: 'route', label : 'Voir le parent' }
+                    - 'new'
+                    - 'search'
+
+        Parameter:
+            class: AppBundle\Entity\Parameter
+            list:
+                title : 'Settings'
+                actions :
+                    - { name : 'new', label : 'Create settings'}
+                    - { name : 'search', label : 'Search' }
+                fiels :
+                    - 'id'
+                    - 'cle'
+                    - 'label'
+                    - 'valeur'

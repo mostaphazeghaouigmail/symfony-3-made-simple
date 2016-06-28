@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+{% set page_title = '' %}
+{% set page_description = '' %}
+{% block style %}
+{% endblock style %}
+{% block body %}
+    {{ dump(entity) }}
+    {{ app_twig.getCommentForm(entity)|raw }}
+{% endblock body %}
+{% block javascripts %}
+{% endblock javascripts %}

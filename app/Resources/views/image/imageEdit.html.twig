@@ -1,0 +1,9 @@
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+<div class="row">
+    <div class="col-md-12" >
+        <img  style="height: auto;width:90%;margin: 5%;display:block" src="{{ asset("uploads/image/"~image.image)|imagine_filter('middle')  }}">
+        <div id="edit-image-form-container">
+            {{ form(form) }}
+        </div>
+    </div>
+</div>

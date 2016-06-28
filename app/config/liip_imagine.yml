@@ -1,0 +1,19 @@
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+
+    filter_sets:
+        cache: ~
+        thumbnail:
+            quality: 75
+            filters:
+                thumbnail: { size: [120, 90], mode: outbound }
+        middle:
+            quality: 75
+            filters:
+                thumbnail: { size: [240, 180], mode: outbound }
+        normal:
+            quality: 75
+            filters:
+                thumbnail: { size: [800, 600], mode: outbound }
