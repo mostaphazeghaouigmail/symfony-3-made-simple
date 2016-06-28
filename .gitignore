@@ -1,4 +1,5 @@
 /app/config/parameters.yml
+/app/Resources/views/page/view.html.twig
 /build/
 /phpunit.xml
 /var/*
@@ -18,3 +19,4 @@
 /web/bundles/
 .idea
 .DS_Store
+
