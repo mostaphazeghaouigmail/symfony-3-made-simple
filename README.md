@@ -136,6 +136,11 @@ class Page
     <li>	Website name</li>
 </ul>
 
+<h3>Route</h3>
+<p>/{slug}          -> page </p>
+<p>/blog            -> articles index</p>
+<p>/blog/{slug}     -> article page</p>
+<p>/image/{slug}    -> image page</p>
 <h3>Installation</h3>
 <p><code>git clone https://github.com/sohrabg/made-simple.git</code></p>
 <p><code>composer install</code></p>
