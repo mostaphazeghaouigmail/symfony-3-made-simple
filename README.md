@@ -79,6 +79,7 @@ class Page
 </pre>
 <p>That's it! After that you can retreive your comment with <code>entity.getComments()</code>  </p>
 <p>To get the form : <code>app_twig.getCommentForm(entity)|raw</code>  </p>
+<p>To get a predefined list, do <code> app_twig.getCommentList(entity)|raw </code>, template are located in <code>app/Resources/views/comment</code>
 <p>You can allow and disallow anonymous comments by changing parameter allow_anonymous_comments to 0 or nop or non or no   </p>
 <p>You can set comments at validated state by default or not by changing parameter validated_comments_by_defaut to 0 or nop or non or no   </p>
 
