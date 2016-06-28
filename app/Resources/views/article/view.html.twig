@@ -4,11 +4,14 @@
 {% set page_description = '' %}
 
     {% block body %}
+        <h1>{{ entity.title }}</h1>
+        <div>{{ entity.body|raw }}</div>
         {{ dump(entity) }}
-        <div>
+        <div class="col-md-4 panel panel-default">
+            <h3>Add Commment</h3>
             {{ app_twig.getCommentForm(entity)|raw }}
         </div>
-        <div>
+        <div class="col-md-8">
             {{ app_twig.getCommentList(entity)|raw }}
         </div>
     {% endblock body %}

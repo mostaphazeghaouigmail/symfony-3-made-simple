@@ -47,8 +47,8 @@ easy_admin:
                 actions :
                     - 'delete'
                     - 'edit'
-                    - { name: 'show_parent', type: 'route', label : 'Voir le parent' }
-                    - { name: 'show_front', type: 'route', label : 'Voir', css_class: 'btn btn-primary', icon: 'eye' }
+                    - { name: 'show_parent', type: 'route', label : 'Show the parent' }
+                    - { name: 'show_front', type: 'route', label : 'Show', css_class: 'btn btn-primary', icon: 'eye' }
                     - 'new'
                     - 'search'
             form:
@@ -71,7 +71,7 @@ easy_admin:
                 actions :
                     - 'delete'
                     - 'edit'
-                    - { name: 'show_front', type: 'route', label : 'Voir' }
+                    - { name: 'show_front', type: 'route', label : 'Show' }
                     - 'new'
                     - 'search'
             form:
@@ -88,7 +88,7 @@ easy_admin:
                 actions :
                     - 'delete'
                     - 'edit'
-                    - { name: 'show_front', type: 'route', label : 'Voir', css_class: 'btn btn-primary', icon: 'eye' }
+                    - { name: 'show_front', type: 'route', label : 'Show', css_class: 'btn btn-primary', icon: 'eye' }
 
         Article:
             class: AppBundle\Entity\Article
@@ -102,7 +102,7 @@ easy_admin:
                 actions :
                     - 'delete'
                     - 'edit'
-                    - { name: 'show_front', type: 'route', label : 'Voir' }
+                    - { name: 'show_front', type: 'route', label : 'Show' }
                     - 'new'
                     - 'search'
             form:
@@ -119,7 +119,7 @@ easy_admin:
                 actions :
                     - 'delete'
                     - 'edit'
-                    - { name: 'show_front', type: 'route', label : 'Voir', css_class: 'btn btn-primary', icon: 'eye' }
+                    - { name: 'show_front', type: 'route', label : 'Show', css_class: 'btn btn-primary', icon: 'eye' }
 
         Comment:
             class: AppBundle\Entity\Comment
@@ -135,7 +135,7 @@ easy_admin:
                 actions :
                     - 'delete'
                     - 'edit'
-                    - { name: 'show_parent', type: 'route', label : 'Voir le parent' }
+                    - { name: 'show_parent', type: 'route', label : 'Show the parent' }
                     - 'new'
                     - 'search'
 
