@@ -126,13 +126,13 @@ class Page
 <p>Some settings are locked, but you can remove them by editing the file <code>AppBundl/Listener/LifeCycleSliner.php</code></p>
 <p>List of default settings : </p>
 <ul style="padding : 0">
-    <li>    - Default Slug route	</li>
-    <li>	- Analitycs tracking  </li>
-    <li>    - By default, comments published without moderation</li>
-    <li>	- Allow anonymous comment</li>
-    <li>	- Contact Email	</li>
-    <li>	- Website description </li>
-    <li>	- Website name</li>
+    <li>    Default Slug route	</li>
+    <li>    Analitycs tracking  </li>
+    <li>    By default, comments published without moderation</li>
+    <li>	Allow anonymous comment</li>
+    <li>	Contact Email	</li>
+    <li>	Website description </li>
+    <li>	Website name</li>
 </ul>
 
 <h3>Installation</h3>
