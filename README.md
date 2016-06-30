@@ -141,6 +141,12 @@ class Page
 <p>/blog            -> articles index</p>
 <p>/blog/{slug}     -> article page</p>
 <p>/image/{slug}    -> image page</p>
+
+<h3>Page and Article<h3>
+<p>- Page and Article are by default commentable</p>
+<p>- The template property create a template file located in app/Resources/views/article or page</p>
+<p>- The property style add the style on the head of the page<p>
+
 <h3>Installation</h3>
 <p><code>git clone https://github.com/sohrabg/made-simple.git</code></p>
 <p><code>composer install</code></p>
