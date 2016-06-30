@@ -147,6 +147,29 @@ class Page
 <p>- The template property create a template file located in app/Resources/views/article or page</p>
 <p>- The property style add the style on the head of the page<p>
 
+<h3>Twig Helper</h3>
+<p>There is a twig helper named app_twig, the class is located at src/AppBundle/Service/AppService.php</p>
+<p>It's also a service, you can use it on every controlleur</p>
+
+<h4>Image</h4>
+<p>Retrieve Image on view for image property (Vich) : app_service.getImage(entity)</p>
+
+<h4>Comment</h4>
+<p>Get the comment Form for commentable entities : app_service.getCommentForm(entity)|raw</p>
+<p>Get the comment List for commentable entities : app_service.getcommentList(entity)|raw</p>
+
+<h4>MAP</h4>
+<p>Get the map widget : app_service.getMap(id_map,lat,lng,content)</p>
+
+<h4>Slider</h4>
+<p>Get e bootstrap slider for imageable entities : app_service.getSlider(entity)|raw</p>
+
+<h4>Analitycs</h4>
+<p>Get analitycs tracking script code : app_service.getAnalitycsTracking(code)|raw</p>
+
+<h4>Setting</h4>
+<p>Retreive a setting's value : app_service.getParameter(key,type = false)<p>
+
 <h3>Installation</h3>
 <p><code>git clone https://github.com/sohrabg/made-simple.git</code></p>
 <p><code>composer install</code></p>
