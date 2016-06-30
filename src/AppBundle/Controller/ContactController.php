@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class contactController extends Controller
+class ContactController extends Controller
 {
     /**
      * @Route("/contact/send", name="contact")
