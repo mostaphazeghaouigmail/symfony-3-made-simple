@@ -152,23 +152,22 @@ class Page
 <p>It's also a service, you can use it on every controlleur</p>
 
 <h4>Image</h4>
-<p>Retrieve Image on view for image property (Vich) : app_service.getImage(entity)</p>
+<p>Retrieve Image on view for image property (Vich) : <code>app_service.getImage(entity)</code></p>
+<p>Get e bootstrap slider for imageable entities : <code>app_service.getSlider(entity)|raw</code></p>
+
 
 <h4>Comment</h4>
-<p>Get the comment Form for commentable entities : app_service.getCommentForm(entity)|raw</p>
-<p>Get the comment List for commentable entities : app_service.getcommentList(entity)|raw</p>
+<p>Get the comment Form for commentable entities : <code>app_service.getCommentForm(entity)|raw</code></p>
+<p>Get the comment List for commentable entities : <code>app_service.getcommentList(entity)|raw</code></p>
 
 <h4>MAP</h4>
-<p>Get the map widget : app_service.getMap(id_map,lat,lng,content)</p>
-
-<h4>Slider</h4>
-<p>Get e bootstrap slider for imageable entities : app_service.getSlider(entity)|raw</p>
+<p>Get the map widget : <code>app_service.getMap(id_map,lat,lng,content)</code></p>
 
 <h4>Analitycs</h4>
-<p>Get analitycs tracking script code : app_service.getAnalitycsTracking(code)|raw</p>
+<p>Get analitycs tracking script code : <code>app_service.getAnalitycsTracking(code)|raw</code></p>
 
 <h4>Setting</h4>
-<p>Retreive a setting's value : app_service.getParameter(key,type = false)<p>
+<p>Retreive a setting's value : <code>app_service.getParameter(key,type = false)</code><p>
 
 <h3>Installation</h3>
 <p><code>git clone https://github.com/sohrabg/made-simple.git</code></p>
