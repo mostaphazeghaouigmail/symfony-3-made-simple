@@ -1,9 +1,9 @@
-Made Simple Symfony 3 starter kit
+Symfony 3 Made Simple starter kit
 =======
 
 ###Documentation under construction###
 
-<p>Hi! i share my symfony 3 starter kit. It's certainly not perfect, feel free to use and improve. It comes with a bunch of nice bundle and a couple of developpement made by me, for image management with&nbsp;&nbsp;drag and drop and multi upload, simple comment system, simple widgets (very simple). It's realy not a cms, you're not supposed to take everything like it is but modify it for your purpose. With this starter, you&nbsp;can manage : Users,&nbsp;Pages, Articles, Images, Comments, Settings</p>
+<p>Hi! This is my Symfony 3 starter kit. It's certainly not perfect, so feel free to use and improve upon it. It comes with a bunch of nice bundles and a couple of basic blocks: image management with drag and drop and multi upload, simple comment management, simple widgets (ahem... very simple, don't get your hopes too high). It's really not a cms, you're not supposed to take it like it is. It has been created to be modified for your unique use-cases. With this starter, you can manage: Users, Pages, Articles, Images, Comments, Settings.</p>
 
 <h3>Main Entity Management</h3>
 
@@ -59,10 +59,10 @@ class Page
 
 <h3>Map</h3>
 <p>
-    Just a tiny widget, just do <code>app_twig.getMap(your_lat,your_lng)|raw </code> on your view
+    Just a tiny widget, type <code>app_twig.getMap(your_lat,your_lng)|raw </code> on your view
 </p>
 <p>
-    You can change it easy on <code>app/Resources/views/component/map</code>
+    You can change it easily on <code>app/Resources/views/component/map</code>
 </p>
 
 <h3>Comment</h3>
@@ -79,19 +79,19 @@ class Page
 </pre>
 <p>That's it! After that you can retreive your comment with <code>entity.getComments()</code>  </p>
 <p>To get the form : <code>app_twig.getCommentForm(entity)|raw</code>  </p>
-<p>To get a predefined list, do <code> app_twig.getCommentList(entity)|raw </code>, template are located in <code>app/Resources/views/comment</code>
-<p>You can allow and disallow anonymous comments by changing parameter allow_anonymous_comments to 0 or nop or non or no   </p>
-<p>You can set comments at validated state by default or not by changing parameter validated_comments_by_defaut to 0 or nop or non or no   </p>
+<p>To get a predefined list, type <code> app_twig.getCommentList(entity)|raw </code>, template are located in <code>app/Resources/views/comment</code>
+<p>You can allow and disallow anonymous comments by changing parameter allow_anonymous_comments to 0 or nop or non or no or x   </p>
+<p>You can set the comments to be published by default or not by changing the following parameter: validated_comments_by_defaut to 0 or nop or non or no or x </p>
 
 <h3>Tracking</h3>
 <p>
-    Just a tiny widget again, Just do <code>app_twig.getAnalitycsTracking('your tracking code')|raw </code> on your view
+    Another tiny widget, type <code>app_twig.getAnalitycsTracking('your tracking code')|raw </code> on your view
 </p>
 <p>
-    If you create a parameter named tracking_code just do  <code>app_twig.getAnalitycsTracking()|raw </code>
+    If you set the parameter named tracking_code just do  <code>app_twig.getAnalitycsTracking()|raw </code>
 </p>
 <p>
-    It will out put the defualt analitycs code tracking
+    It will output the default analitycs code tracking
 </p>
 
 <pre>    var _gaq = _gaq || [];
@@ -111,17 +111,18 @@ class Page
 
 <h3>Slider<br></h3>
 <p>
-   Just a tiny widget again ( yeah i know.. ), Just do <code>app_twig.getSlider(entity)|raw </code> on your view
+   Just a tiny widget again (i know, i know...), Just type <code>app_twig.getSlider(entity)|raw </code> on your view
 </p>
 <p>
-    It's the bootstrap slider, for now, it's made for imgeable entities, feel free to make your own :)
+    It's the bootstrap slider. For now, it's made for imgeable entities, feel free to make your own :)
 </p>
 <p>
    It's located in <code>views/component/slider/</code>
 </p>
 
 <h3>Contact Form</h3>
-<p>Just do <code>app_twig.getContactForm()</code><p>
+<p>Type <code>app_twig.getContactForm()</code>, you can customize fields on <code>src/Type/ContactType.php</code>, the view is located on app/Resources/views/emails/contact<p>
+<p>You may need to set your configuration on parameters.yml</p>
 
 <h3>Settings</h3>
 <p>Some settings are locked, but you can remove them by editing the file <code>AppBundl/Listener/LifeCycleSliner.php</code></p>
