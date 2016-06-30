@@ -66,13 +66,13 @@ class Image
     private $text;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable="true")
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @var string
      */
     private $parentClass;
 
     /**
-     * @ORM\Column(type="integer", nullable="true")
+     * @ORM\Column(type="integer", nullable=true)
      * @var integer
      */
     private $parentId;
