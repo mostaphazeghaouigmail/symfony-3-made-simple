@@ -152,6 +152,7 @@ class Page
 <p><code>composer install</code></p>
 <p>Create an empty database</p>
 <p><code>php bin/console app:init</code></p>
+<p><code>php bin/console assets:install --symlink</code></p>
 <p>Answer all question</p>
 <p>Start to work</p>
 <p>Demo online comming soon...</p>
