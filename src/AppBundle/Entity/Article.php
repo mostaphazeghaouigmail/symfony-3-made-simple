@@ -18,7 +18,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Article extends Editorial
 {
     use Commentable;
-    
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
