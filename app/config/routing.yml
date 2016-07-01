@@ -1,3 +1,7 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
 easy_admin_bundle:
     resource: "@EasyAdminBundle/Controller/"
     type:     annotation
@@ -12,6 +16,3 @@ fos_js_routing:
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
 
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation

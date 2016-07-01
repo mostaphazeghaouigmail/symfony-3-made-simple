@@ -2,6 +2,7 @@
 namespace AppBundle\Controller;
 
 use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
+use JavierEguiluz\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,11 +10,23 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminController extends BaseAdminController
 {
     /**
-     * @Route("/admin")
+     * @Route("/admin/")
      */
     public function indexAction(Request $request)
     {
         return parent::indexAction($request);
+    }
+
+    public function listMenuItemAction(){
+        $this->dispatch(EasyAdminEvents::PRE_LIST);
+        $fields = $this->entity['list']['fields'];
+        $paginator = $this->findAll($this->entity['class'], $this->request->query->get('page', 1), $this->config['list']['max_results'], 'position', 'ASC');
+        $this->dispatch(EasyAdminEvents::POST_LIST, array('paginator' => $paginator));
+        return $this->render($this->entity['templates']['list'], array(
+            'paginator' => $paginator,
+            'fields' => $fields,
+            'delete_form_template' => $this->createDeleteForm($this->entity['name'], '__id__')->createView(),
+        ));
     }
 
     public function createNewUserEntity()
@@ -47,8 +60,8 @@ class AdminController extends BaseAdminController
             'entity' => $entity->getParentClass(),
         ));
     }
+    
 
-    
-    
-    
+
+
 }

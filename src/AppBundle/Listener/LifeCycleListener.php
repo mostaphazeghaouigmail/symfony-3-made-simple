@@ -13,6 +13,7 @@ use AppBundle\Entity\Comment;
 use AppBundle\Entity\Page;
 use AppBundle\Entity\Parameter;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping\PrePersist;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -21,6 +22,7 @@ use Symfony\Component\Filesystem\Filesystem;
 class LifeCycleListener
 {
     private $container;
+    private $itemsMenu = [];
 
     public function __construct($container)
     {
@@ -83,6 +85,9 @@ class LifeCycleListener
 
         if($entity instanceof Page || $entity instanceof Article){
             $this->handleTempateFile($entity);
+            if($args->hasChangedField('title')){
+                $this->chekMenuSlug($args);
+            }
         }
 
     }
@@ -118,6 +123,11 @@ class LifeCycleListener
                 throw new Exception('You can not remove this setting');
             }
         }
+
+        if($entity instanceof Page || $entity instanceof Article){
+            $em = $args->getEntityManager();
+            $em->getConnection()->exec("DELETE FROM MenuItem WHERE route = '".$entity->getSlug()."'");
+        }
     }
 
     private function handleTempateFile($entity){
@@ -128,6 +138,50 @@ class LifeCycleListener
                 $fs = new Filesystem();
                 $fs->copy("../app/Resources/views/default/view_template.html.twig",$file);
             }
+        }
+    }
+
+    private function chekMenuSlug(PreUpdateEventArgs $args){
+
+        $entity = $args->getObject();
+        $em = $args->getEntityManager();
+
+        $oldSlug = $args->getOldValue('slug');
+        $newSlug = $args->getNewValue('slug');
+
+        //Place query here, let's say you want all the users that have blue as their favorite color
+        $query = $em
+            ->createQuery("
+	            SELECT m FROM AppBundle:MenuItem m
+	            WHERE m.route LIKE :key "
+            );
+
+        $query->setParameter('key', '%'.$oldSlug.'%');
+        $itemsMenu =  $query->getResult();
+
+        foreach($itemsMenu as $itemMenu){
+
+            if($entity instanceof Page)
+                $itemMenu->setRoute($this->container->get('router')->generate('page',['slug'=>$newSlug]));
+
+            if($entity instanceof Article)
+                $itemMenu->setRoute($this->container->get('router')->generate('article',['slug'=>$newSlug]));
+
+            $this->itemsMenu[] = $itemMenu;
+        }
+
+
+    }
+
+    public function postFlush(PostFlushEventArgs $args)
+    {
+        if (! empty($this->itemsMenu)) {
+            $em = $args->getEntityManager();
+            foreach ($this->itemsMenu as $menuItem) {
+                $em->persist($menuItem);
+            }
+            $em->flush();
+            $this->itemsMenu = [];
         }
     }
 

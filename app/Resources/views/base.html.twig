@@ -19,7 +19,8 @@
         {{ app_twig.getAnalitycsTracking()|raw }}
     </head>
     <body id="{% block body_id %}{% endblock %}" class="">
-        <div class="wrapper container">
+    {{ app_twig.getMenu()|raw }}
+    <div class="wrapper container">
             {% block body %}{% endblock body %}
         </div>
     </body>

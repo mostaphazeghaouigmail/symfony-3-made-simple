@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3ac8f15d711ec053aa44e6f793117866",
-    "content-hash": "20eca76473e964ebdc4628e50f6f58b0",
+    "hash": "9a85e480cf090425be4214b82c3a8b6f",
+    "content-hash": "9e91b07f819e94d78be98237943ec005",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1138,7 +1138,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/5027eaf99e09e6e8e9cbda14d56f3a21d16dd822",
+                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/0aa1b389ca871445ca3f5b669c3f898ab3740ef4",
                 "reference": "5027eaf99e09e6e8e9cbda14d56f3a21d16dd822",
                 "shasum": ""
             },
@@ -2096,7 +2096,7 @@
         },
         {
             "name": "stof/doctrine-extensions-bundle",
-            "version": "dev-master",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stof/StofDoctrineExtensionsBundle.git",
@@ -3537,8 +3537,7 @@
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
         "timhovius/bootstrap-material-design": 20,
-        "javiereguiluz/easyadmin-bundle": 20,
-        "stof/doctrine-extensions-bundle": 20
+        "javiereguiluz/easyadmin-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

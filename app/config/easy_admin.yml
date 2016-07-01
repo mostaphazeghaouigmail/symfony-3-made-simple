@@ -8,6 +8,7 @@ easy_admin:
             - { entity: 'Article',   label : 'Articles', icon: 'newspaper-o'}
             - { entity: 'Comment',   label : 'Comments', icon: 'comment'}
             - { entity: 'Parameter', label : 'Settings', icon: 'cogs'}
+            - { entity: 'MenuItem', label : 'Menu', icon: 'cogs'}
     entities:
         User:
             class: AppBundle\Entity\User
@@ -151,3 +152,26 @@ easy_admin:
                     - 'cle'
                     - 'label'
                     - 'valeur'
+        MenuItem:
+            class: AppBundle\Entity\MenuItem
+            list:
+                fields:
+                    - { property : 'id', type : 'hidden'}
+                    - { property : 'position', sortable: false }
+                    - { property :'route',sortable: false}
+                    - { property :'label',sortable: false}
+                    - { property :'title',sortable: false}
+            edit:
+                fields:
+                    - 'route'
+                    - 'label'
+                    - 'title'
+                    - { property : 'cssClass', type : 'text'}
+                    - 'attributes'
+            new:
+                fields:
+                    - 'route'
+                    - 'label'
+                    - 'title'
+                    - { property : 'cssClass', type : 'text'}
+                    - 'attributes'

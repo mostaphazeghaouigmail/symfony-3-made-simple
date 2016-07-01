@@ -78,6 +78,14 @@ class AppService
         ]);
     }
 
+    public function getMenu(){
+        $em     = $this->container->get('doctrine.orm.entity_manager');
+        $items  = $em->getRepository("AppBundle:MenuItem")->findBy([],['position'=>"ASC"]);
+        $currentSlug = $this->container->get('request_stack')->getCurrentRequest()->attributes->get('slug');
+        return $this->container->get('twig')
+            ->render("component/menu/menu.html.twig",['items'=>$items,'current'=>$currentSlug]);
+    }
+
     public function getContactForm(){
         $form = $this->container->get('form.factory')
             ->create(ContactType::class);

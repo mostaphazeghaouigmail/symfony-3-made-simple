@@ -148,6 +148,14 @@ class Page
 <p>- The template property create a template file located in app/Resources/views/article or page</p>
 <p>- The property style add the style on the head of the page<p>
 
+
+<h3>Menu</h3>
+<p>Simple Menu Management (one level for now)</p>
+<p>Position are changeable by drag and drop</p>
+<p>if a menu item is related to a page or an article and he's parent title is modifed, the item uri is modified to</p>
+<p><p>To get the main menu on view, type <code>app_twig.getMenu()|raw</code></p>
+
+
 <h3>Twig Helper</h3>
 <p>There is a twig helper named app_twig, the class is located at src/AppBundle/Service/AppService.php</p>
 <p>It's also a service, you can use it on every controlleur</p>
@@ -169,6 +177,9 @@ class Page
 
 <h4>Setting</h4>
 <p>Retreive a setting's value : <code>app_service.getParameter(key,type = false)</code><p>
+
+<h4>Menu</h4>
+<p>Get the main menu on view : <code>app_twig.getMenu()|raw</code><p>
 
 <h3>Installation</h3>
 <p><code>git clone https://github.com/sohrabg/made-simple.git</code></p>

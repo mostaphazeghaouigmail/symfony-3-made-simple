@@ -1,0 +1,30 @@
+<div class="form-group">
+    <input id="routes-input"  type="text" placeholder="Custom url" class="form-control">
+</div>
+<div class="form-group">
+    <select id="routes-select" class="form-control">
+        <option value=""></option>
+        {% for k,v in routes %}
+            <option value="{{ v }}">{{ k }}</option>
+        {% endfor %}
+    </select>
+</div>
+<button class="btn btn-defaut" id="validRoute">Valid</button>
+<script>
+    $("#routes-select").on('change',function(){
+        var val = $("#routes-select option:selected").val();
+        if(val !=''){
+            $("#menuitem_route").val(val);
+            eModal.close();
+        }
+    });
+
+    $('#routes-input').on('change',function(){
+        $("#routes-select").val('');
+    });
+
+    $("#validRoute").click(function(){
+        $("#menuitem_route").val($('#routes-input').val());
+        eModal.close();
+    });
+</script>
