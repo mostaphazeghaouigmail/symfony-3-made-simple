@@ -3,6 +3,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Traits\ApiCapable;
 use AppBundle\Traits\Imageable;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,6 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Editorial
 {
     use Imageable;
+    use ApiCapable;
     
     /**
      * @Vich\UploadableField(mapping="page_images", fileNameProperty="image")

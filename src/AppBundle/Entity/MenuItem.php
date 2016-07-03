@@ -8,6 +8,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Traits\ApiCapable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 /**
@@ -16,7 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class MenuItem
 {
-
+    use ApiCapable;
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
