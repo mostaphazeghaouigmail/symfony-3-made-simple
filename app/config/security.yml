@@ -31,7 +31,10 @@ security:
         - { path: ^/resetting,    role:  IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/,       role:  ROLE_ADMIN }
         - { path: ^/api/user,     roles: ROLE_ADMIN }
+        - { path: ^/api/create,   roles: ROLE_ADMIN }
+        - { path: ^/api/edit,     roles: ROLE_ADMIN }
         - { path: ^/api/page,     roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/image,    roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/article,  roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/commment, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+

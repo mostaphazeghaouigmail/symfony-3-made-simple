@@ -21,7 +21,7 @@ class ApiController extends Controller
 {
 
     /**
-     * @Route("/{model}/create", name="api_create_entity")
+     * @Route("/create/{model}", name="api_create_entity")
      * @Method({"POST"})
      */
     public function createEntityAction(Request $request, $model){
@@ -49,7 +49,7 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/{model}/{id}/edit", name="api_edit_entity")
+     * @Route("/edit/{model}/{id}", name="api_edit_entity")
      * @Method({"PUT"})
      * @Security("has_role('ROLE_ADMIN')")
      */
