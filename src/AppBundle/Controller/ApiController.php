@@ -14,15 +14,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+ * @Route("/api")
+ */
 class ApiController extends Controller
 {
 
-
     /**
-     * @Route("/api/{model}", name="api_get_all")
-     * @Method({"GET"})
+     * @Route("/{model}/create", name="api_create_entity")
+     * @Method({"POST"})
      */
-    public function getEntitesAction($model){
+    public function createEntityAction(Request $request, $model){
 
         if(!$model)
             return $this->handleParamError('model');
@@ -35,15 +37,22 @@ class ApiController extends Controller
         if(!$this->isAuthorized($model))
             return $this->handleAuthorizationError();
 
-       return $this->sendResponse($this->getAll($model));
+        $serializer = $this->container->get('jms_serializer');
+        $entity = $serializer->deserialize($request->getContent(),"AppBundle\\Entity\\".$model,'json');
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($entity);
+        $em->flush();
+
+        return $this->sendResponse($this->serialize($entity));
 
     }
-/*
+
     /**
-     * @Route("/api/{model}/edit/{id}", name="api_edit_entity")
+     * @Route("/{model}/{id}/edit", name="api_edit_entity")
      * @Method({"PUT"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
-    /*
     public function editEntityAction(Request $request, $model,$id){
 
         if(!$model)
@@ -71,15 +80,12 @@ class ApiController extends Controller
         return $this->sendResponse($this->serialize($entity));
 
     }
-*/
 
-    /*
     /**
-     * @Route("/api/{model}/create", name="api_create_entity")
-     * @Method({"POST"})
+     * @Route("/{model}", name="api_get_all")
+     * @Method({"GET"})
      */
-    /*
-    public function editEntityAction(Request $request, $model){
+    public function getEntitesAction($model){
 
         if(!$model)
             return $this->handleParamError('model');
@@ -92,20 +98,12 @@ class ApiController extends Controller
         if(!$this->isAuthorized($model))
             return $this->handleAuthorizationError();
 
-        $serializer = $this->container->get('jms_serializer');
-        $entity = $serializer->deserialize($request->getContent(),"AppBundle\\Entity\\".$model,'json');
-
-        $em = $this->getDoctrine()->getEntityManager();
-        $em->presist($entity);
-        $em->flush();
-
-        return $this->sendResponse($this->serialize($entity));
+       return $this->sendResponse($this->getAll($model));
 
     }
-*/
 
     /**
-     * @Route("/api/{model}/{id}", name="api_get")
+     * @Route("/{model}/{id}", name="api_get")
      * @Method({"GET"})
      */
     public function getEntityAction($model = false,$id = false){
@@ -127,6 +125,9 @@ class ApiController extends Controller
         return $this->sendResponse($this->getById($model,$id));
 
     }
+
+
+
 
     private function isAuthorized($model){
         return property_exists("AppBundle\\Entity\\".$model,'isApiCapable');

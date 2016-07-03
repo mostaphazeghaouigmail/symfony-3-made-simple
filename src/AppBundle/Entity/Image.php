@@ -39,9 +39,16 @@ class Image
 
     /**
      * @ORM\Column(type="datetime")
-     * @var string
+     * @Gedmo\Timestampable(on="update")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $createdAt;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

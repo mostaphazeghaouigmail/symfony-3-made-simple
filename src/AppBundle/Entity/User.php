@@ -3,6 +3,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Traits\ApiCapable;
 use AppBundle\Traits\Imageable;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,6 +18,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class User extends BaseUser
 {
     use Imageable;
+    use ApiCapable;
+    
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

@@ -25,8 +25,13 @@ security:
             anonymous:    true
 
     access_control:
-        - { path: ^/$,         role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login$,    role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register,  role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/,    role: ROLE_ADMIN }
+        - { path: ^/$,            role:  IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$,       role:  IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register,     role:  IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting,    role:  IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/,       role:  ROLE_ADMIN }
+        - { path: ^/api/user,     roles: ROLE_ADMIN }
+        - { path: ^/api/page,     roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/image,    roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/article,  roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/commment, roles: IS_AUTHENTICATED_ANONYMOUSLY }

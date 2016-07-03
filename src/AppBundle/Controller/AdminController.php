@@ -60,6 +60,55 @@ class AdminController extends BaseAdminController
             'entity' => $entity->getParentClass(),
         ));
     }
+
+    /**
+     * Override EasyAdminBundle because of a form error on delete
+     * @return RedirectResponse
+     */
+    protected function deleteAction()
+    {
+        $this->dispatch(EasyAdminEvents::PRE_DELETE);
+
+        if ('DELETE' !== $this->request->getMethod()) {
+            return $this->redirect($this->generateUrl('easyadmin', array('action' => 'list', 'entity' => $this->entity['name'])));
+        }
+
+        $id = $this->request->query->get('id');
+        $form = $this->createDeleteForm($this->entity['name'], $id);
+        $form->handleRequest($this->request);
+
+        $easyadmin = $this->request->attributes->get('easyadmin');
+        $entity = $easyadmin['item'];
+
+        $this->dispatch(EasyAdminEvents::PRE_REMOVE, array('entity' => $entity));
+        $this->executeDynamicMethod('preRemove<EntityName>Entity', array($entity));
+
+        $this->em->remove($entity);
+        $this->em->flush();
+
+        $this->dispatch(EasyAdminEvents::POST_REMOVE, array('entity' => $entity));
+        $refererUrl = $this->request->query->get('referer', '');
+
+        $this->dispatch(EasyAdminEvents::POST_DELETE);
+
+        return !empty($refererUrl)
+            ? $this->redirect(urldecode($refererUrl))
+            : $this->redirect($this->generateUrl('easyadmin', array('action' => 'list', 'entity' => $this->entity['name'])));
+    }
+
+    /**
+     * Override EasyAdminBundle because of a form error on delete
+     */
+    private function executeDynamicMethod($methodNamePattern, array $arguments = array())
+    {
+        $methodName = str_replace('<EntityName>', $this->entity['name'], $methodNamePattern);
+
+        if (!is_callable(array($this, $methodName))) {
+            $methodName = str_replace('<EntityName>', '', $methodNamePattern);
+        }
+
+        return call_user_func_array(array($this, $methodName), $arguments);
+    }
     
 
 

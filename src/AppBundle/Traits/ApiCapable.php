@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 trait ApiCapable
 {
     public $isApiCapable = true;
-    protected $key = "ofSWeZ3223yOuI8D0MDVwktks8sIDfortHQVNRf1viSpumQKeC";
+    protected $key = "";
 
     public function getKey(){
         return $this->key;

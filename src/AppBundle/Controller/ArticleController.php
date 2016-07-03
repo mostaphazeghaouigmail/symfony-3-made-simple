@@ -9,12 +9,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-
+/**
+ * @Route("/blog")
+ */
 class ArticleController extends Controller
 {
 
     /**
-     * @Route("/blog", name="articles")
+     * @Route("/", name="articles")
      */
     public function indexAction(Request $request)
     {
@@ -36,7 +38,7 @@ class ArticleController extends Controller
 
 
     /**
-     * @Route("/blog/{slug}", name="article")
+     * @Route("/{slug}", name="article")
      * @ParamConverter("article", class="AppBundle\Entity\Article", options={"slug" = "slug"})
      */
     public function showAction(Request $request, Article $article)

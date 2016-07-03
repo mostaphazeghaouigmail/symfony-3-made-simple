@@ -82,4 +82,3 @@ services:
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
 
-
