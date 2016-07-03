@@ -5,6 +5,7 @@ use AppBundle\Entity\Comment;
 use AppBundle\Type\CommentType;
 use AppBundle\Type\ContactType;
 use Doctrine\DBAL\Types\BooleanType;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -19,7 +20,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerI
  */
 class AppService
 {
-    private $container;
 
     public function __construct($container)
     {
@@ -89,7 +89,7 @@ class AppService
     public function getContactForm(){
         $form = $this->container->get('form.factory')
             ->create(ContactType::class);
-        
+
         return $this->container
             ->get('twig')
             ->render("component/contact/form.html.twig",

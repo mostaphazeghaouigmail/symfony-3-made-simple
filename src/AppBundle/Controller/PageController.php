@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends Controller
 {
-    
+
     /**
      * @Route("/{slug}", name="page")
      * @ParamConverter("page", class="AppBundle\Entity\Page", options={"slug" = "slug"})

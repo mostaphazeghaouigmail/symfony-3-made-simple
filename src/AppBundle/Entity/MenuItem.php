@@ -44,21 +44,21 @@ class MenuItem
 
     /**
      * @ORM\Column(type="integer")
-     * @var integer
+     * @var string
      */
     protected $position = 0;
 
     /**
-     * @ORM\Column(type="simple_array",nullable=true)
+     * @ORM\Column(type="array",nullable=true)
      * @var array
      */
     protected $attributes;
 
     /**
-     * @ORM\Column(type="string",nullable=true)
-     * @var string
+     * @ORM\Column(name="css_class",type="string",nullable=true)
+     * @var array
      */
-    protected $css_class;
+    protected $cssClass;
 
     /**
      * @return mixed
@@ -170,20 +170,20 @@ class MenuItem
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getCssClass()
     {
-        return $this->css_class;
+        return $this->cssClass;
     }
 
     /**
-     * @param string $css_class
+     * @param array $cssClass
      * @return MenuItem
      */
-    public function setCssClass($css_class)
+    public function setCssClass($cssClass)
     {
-        $this->css_class = $css_class;
+        $this->cssClass = $cssClass;
         return $this;
     }
 
