@@ -39,10 +39,10 @@ class ArticleController extends Controller
 
     /**
      * @Route("/{slug}", name="article")
-     * @ParamConverter("article", class="AppBundle\Entity\Article", options={"slug" = "slug"})
      */
-    public function showAction(Request $request, Article $article)
+    public function showAction(Request $request, $slug)
     {
+        die($slug);
         return $this->render('article/templates/'.($article->getTemplate() ? $article->getTemplate()  : 'view').'.html.twig', [
             'entity' => $article
         ]);

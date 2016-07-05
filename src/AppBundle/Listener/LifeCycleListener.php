@@ -126,7 +126,16 @@ class LifeCycleListener
 
         if($entity instanceof Page || $entity instanceof Article){
             $em = $args->getEntityManager();
-            $em->getConnection()->exec("DELETE FROM MenuItem WHERE route = '".$entity->getSlug()."'");
+            $query = $em
+                ->createQuery("
+	            SELECT m FROM AppBundle:MenuItem m
+	            WHERE m.route LIKE :key "
+                );
+
+            $query->setParameter('key', '%'.$entity->getSlug().'%');
+            $itemsMenu =  $query->getResult();
+            foreach ($itemsMenu as $item)
+                $em->getConnection()->exec("DELETE FROM MenuItem WHERE id = '".$item->getId()."'");
         }
     }
 
@@ -149,7 +158,6 @@ class LifeCycleListener
         $oldSlug = $args->getOldValue('slug');
         $newSlug = $args->getNewValue('slug');
 
-        //Place query here, let's say you want all the users that have blue as their favorite color
         $query = $em
             ->createQuery("
 	            SELECT m FROM AppBundle:MenuItem m

@@ -205,3 +205,7 @@ class Page
 <p>Demo online comming soon...</p>
 
 
+<h3>INFORMATIONS</h3>
+<p>I a m working on this currently, so you may have to make <code>php bin/console doctrine:schema:update --force</code> if you pull the project</p>
+
+

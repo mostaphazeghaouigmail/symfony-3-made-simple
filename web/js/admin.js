@@ -15,7 +15,6 @@ function init() {
         });
     }
 
-
     //MENU ITEM
     $('#menuitem_route').on('focus',function(){
         eModal.ajax({

@@ -2,7 +2,7 @@
     <input id="templates-input"  type="text" placeholder="Create template" class="form-control">
 </div>
 <div class="form-group">
-    <select id="template-select" class="form-control">
+    <select id="templates-select" class="form-control">
         <option value=""></option>
         {% for template in templates %}
             <option value="{{ template }}">{{ template }}</option>
@@ -11,20 +11,44 @@
 </div>
 <button class="btn btn-defaut" id="validRoute">Valid</button>
 <script>
-    $("#templates-select").on('change',function(){
-        var val = $("#templates-select option:selected").val();
-        if(val !=''){
-            $("#{{ model }}_template").val(val);
-            eModal.close();
+    $(document).ready(function(){
+
+        if($("#{{ model }}_template").val() != ""){
+            var currentValue = $("#{{ model }}_template").val();
+            var exist = false;
+            $.each( $("#templates-select option"),function(){
+                if(!exist && $(this).val() == currentValue){
+                    exist = true;
+                    $(this).attr('selected','selected');
+                }
+            });
+
+            if(!exist){
+                $('#templates-input').val(currentValue);
+            }
         }
-    });
 
-    $('#templates-input').on('change',function(){
-        $("#templates-select").val('');
-    });
+        $("#templates-select").on('change',function(){
+            var val = $("#templates-select option:selected").val();
+            if(val !=''){
+                $("#{{ model }}_template").val(val);
+                eModal.close();
+            }
+        });
 
-    $("#validRoute").click(function(){
-        $("#{{ model }}_template").val($('#templates-input').val());
-        eModal.close();
+        $('#templates-input').on('keydown',function(){
+            $("#templates-select").find("option:selected").removeAttr("selected");
+        });
+
+        $("#validRoute").click(function(){
+            if($('#templates-input').val() != "")
+                $("#{{ model }}_template").val($('#templates-input').val());
+            else{
+                var val = $("#templates-select option:selected").val();
+                if(val !='')
+                    $("#{{ model }}_template").val(val);
+            }
+            eModal.close();
+        });
     });
 </script>

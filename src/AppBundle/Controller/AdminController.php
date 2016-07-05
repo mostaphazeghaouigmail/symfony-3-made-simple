@@ -120,7 +120,9 @@ class AdminController extends BaseAdminController
         $finder->in($this->get('kernel')->getRootDir()."/Resources/views/".$model.'/templates/')->files();
         $templates = [];
         foreach ($finder as $file) {
-            $templates[] = $file->getFileName();
+            $fileName = $file->getFileName();
+            $fileName = str_replace(".html.twig","",$fileName);
+            $templates[] = $fileName;
         }
         return $this->render('admin/templates.html.twig',['model'=>$model,'templates'=>$templates]);
     }
