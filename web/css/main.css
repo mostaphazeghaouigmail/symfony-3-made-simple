@@ -1,4 +1,4 @@
-#wrapper {
+.wrapper {
   padding-top: 50px; }
 
 .panel {
@@ -12,5 +12,8 @@ h1 {
 
 .dropdown:hover > .dropdown-menu {
   display: block; }
+
+img {
+  max-width: 100%; }
 
 /*# sourceMappingURL=main.css.map */

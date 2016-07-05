@@ -9,7 +9,10 @@
 
     {% block body %}
         <h1>{{ entity.title }}</h1>
-        <div>{{ entity.body|raw }}</div>
+
+        <img src="{{ app_twig.getImage(entity)|imagine_filter('cover')  }}">
+
+        <p>{{ entity.body|raw }}</p>
 
         {% if attribute(entity, 'getCommentable') is defined  %}
             <h2>Comments</h2>
