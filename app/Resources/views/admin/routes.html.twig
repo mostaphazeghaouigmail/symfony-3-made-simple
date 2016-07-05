@@ -11,20 +11,48 @@
 </div>
 <button class="btn btn-defaut" id="validRoute">Valid</button>
 <script>
-    $("#routes-select").on('change',function(){
-        var val = $("#routes-select option:selected").val();
-        if(val !=''){
-            $("#menuitem_route").val(val);
-            eModal.close();
+    $(document).ready(function(){
+        if($("#menuitem_route").val() != ""){
+            var currentValue = $("#menuitem_route").val();
+            var exist = false;
+            $.each( $("#routes-select option"),function(){
+                if(!exist && $(this).val() == currentValue){
+                    exist = true;
+                    $(this).attr('selected','selected');
+                }
+            });
+
+            if(!exist){
+                $('#routes-input').val(currentValue);
+            }
         }
+
+        $("#routes-select").on('change',function(){
+            var val = $("#routes-select option:selected").val();
+            if(val !=''){
+                $("#menuitem_route").val(val);
+                eModal.close();
+            }
+        });
+
+        $('#routes-input').on('keydown',function(){
+            $("#routes-select").val('');
+        });
+
+        $("#validRoute").click(function(){
+            if($('#templates-input').val() != "")
+                $("#menuitem_route").val($('#routes-input').val());
+            else{
+                var val = $("#routes-select option:selected").val();
+                if(val !='')
+                    $("#menuitem_route").val(val);
+            }
+
+            $("#menuitem_route").val($('#routes-input').val());
+            eModal.close();
+        });
     });
 
-    $('#routes-input').on('change',function(){
-        $("#routes-select").val('');
-    });
 
-    $("#validRoute").click(function(){
-        $("#menuitem_route").val($('#routes-input').val());
-        eModal.close();
-    });
+
 </script>

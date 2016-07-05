@@ -9,7 +9,7 @@
         {% endfor %}
     </select>
 </div>
-<button class="btn btn-defaut" id="validRoute">Valid</button>
+<button class="btn btn-defaut" id="validTemplate">Valid</button>
 <script>
     $(document).ready(function(){
 
@@ -37,10 +37,10 @@
         });
 
         $('#templates-input').on('keydown',function(){
-            $("#templates-select").find("option:selected").removeAttr("selected");
+            $("#templates-select").val('');
         });
 
-        $("#validRoute").click(function(){
+        $("#validTemplate").click(function(){
             if($('#templates-input').val() != "")
                 $("#{{ model }}_template").val($('#templates-input').val());
             else{
