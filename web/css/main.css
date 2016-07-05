@@ -10,7 +10,7 @@ input:-webkit-autofill {
 h1 {
   font-size: 30px; }
 
-.wrapper{
-  padding-top:60px;
-}
+.dropdown:hover > .dropdown-menu {
+  display: block; }
+
 /*# sourceMappingURL=main.css.map */

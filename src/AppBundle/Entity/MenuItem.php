@@ -9,6 +9,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Traits\ApiCapable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 /**
@@ -44,6 +45,16 @@ class MenuItem
     protected $title;
 
     /**
+     * @ORM\ManyToOne(targetEntity="MenuItem")
+     */
+    protected $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="MenuItem", mappedBy="parent")
+     */
+    protected $childrens;
+
+    /**
      * @ORM\Column(type="integer")
      * @var string
      */
@@ -60,6 +71,12 @@ class MenuItem
      * @var array
      */
     protected $cssClass;
+
+
+    public function __construct()
+    {
+        $this->childrens = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -135,6 +152,24 @@ class MenuItem
     }
 
     /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param mixed $parent
+     * @return MenuItem
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getPosition()
@@ -187,6 +222,35 @@ class MenuItem
         $this->cssClass = $cssClass;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getChildrens()
+    {
+        return $this->childrens;
+    }
+
+    /**
+     * @param mixed $children
+     * @return MenuItem
+     */
+    public function setChildrens($childrens)
+    {
+        $this->childrens = $childrens;
+        return $this;
+    }
+
+    /**
+     * @param mixed $children
+     * @return MenuItem
+     */
+    public function addChildrens($children)
+    {
+        $this->childrens[] = $children;
+        return $this;
+    }
+
 
 
 

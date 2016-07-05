@@ -13,10 +13,20 @@
         <div class="collapse navbar-collapse" id="admin-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 {% for item in items %}
-                    <li class="{{ "/"~current == item.route ? 'active' : '' }}">
-
-                        <a href="{{ item.route }}" title="{{ item.title }}" {{ item.attributes|join(' ') }} class="{{ item.cssClass }}">{{ item.label }}</a>
-                    </li>
+                    {% if item.parent == null %}
+                            <li class="{{ "/"~current == item.route ? 'active' : '' }} {{  item.childrens|length > 0 ? 'dropdown' : '' }}">
+                                <a href="{{ item.route }}" title="{{ item.title }}" {{ item.attributes|join(' ') }} class="{{ item.cssClass }}">{{ item.label }}</a>
+                                {% if item.childrens|length > 0 %}
+                                    <ul class="dropdown-menu">
+                                    {% for _item in item.childrens %}
+                                        <li class="{{ "/"~current == _item.route ? 'active' : '' }}">
+                                            <a href="{{ _item.route }}" title="{{ _item.title }}" {{ _item.attributes|join(' ') }} class="{{ _item.cssClass }}">{{ _item.label }}</a>
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>

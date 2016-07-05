@@ -17,20 +17,6 @@ function init() {
 
 
     //MENU ITEM
-
-    if($("body").is('#easyadmin-list-MenuItem')){
-        $('.table tbody').sortable();
-        $('.table tbody').on('sortupdate',function(a,b,c){
-            var items = $('.table tbody').children();
-            var sort = [];
-
-            $.each(items,function (index) {
-                sort.push($(this).attr('data-id'));
-                $(this).find('td[data-label="Position"]').html(index);
-            });
-            $.post(Routing.generate('save_menu_position'),{'position':sort});
-        })
-    }
     $('#menuitem_route').on('focus',function(){
         eModal.ajax({
             title   : "Menu Url",
@@ -47,7 +33,7 @@ function init() {
             buttons : []
         });
     });
-    
+
     $('#article_template').on('focus',function(){
         eModal.ajax({
             title   : "Article Template Selection",
@@ -56,5 +42,11 @@ function init() {
         });
     });
 
-}
+    //sortable menu
+    if($("body").is("#easyadmin-list-MenuItem")){
+        $.getScript("/js/menuItemAdmin.js",function(){
+            replaceMenuItemTable();
+        });
+    }
 
+}

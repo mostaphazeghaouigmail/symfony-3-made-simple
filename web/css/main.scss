@@ -13,3 +13,7 @@ input:-webkit-autofill{
 h1{
   font-size : 30px;
 }
+
+.dropdown:hover > .dropdown-menu{
+  display: block;
+}

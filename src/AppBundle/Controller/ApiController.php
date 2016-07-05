@@ -83,7 +83,7 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/{model}", name="api_get_all")
+     * @Route("/{model}", name="api_get_all", options={"expose"=true })
      * @Method({"GET"})
      */
     public function getEntitesAction(Request $request,$model){
@@ -205,6 +205,9 @@ class ApiController extends Controller
             
         $key = $this->container->getParameter('api_key');
         $headerKey = $request->query->get('api_key');
+
+        if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+            return true;
 
         if(is_null($headerKey) || !$headerKey)
             return false;

@@ -19,8 +19,19 @@ class MenuController extends Controller
         $position = $request->request->get("position");
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository("AppBundle:MenuItem");
-        for($i = 0; $i < count($position); $i++)
-            $repository->find($position[$i])->setPosition($i);
+        for($i = 0; $i < count($position); $i++){
+            if(is_array($position[$i])){
+                $parent = $repository->find($position[$i-1]);
+                for($j = 0; $j < count($position[$i]); $j++){
+                    $item = $repository->find($position[$i][$j]);
+                    $item->setPosition($j)
+                        ->setParent($parent);
+                    $parent->addChildrens($item);
+                }
+            } else {
+                $repository->find($position[$i])->setPosition($i)->setParent(null);
+            }
+        }
         $em->flush();
         exit;
     }
@@ -31,7 +42,6 @@ class MenuController extends Controller
     public function getRouteAction(Request $request){
 
         $em = $this->getDoctrine()->getManager();
-
 
         $result = $em->createQuery("SELECT a.slug,a.title FROM AppBundle:Article a")->getScalarResult();
         foreach ($result as $r){

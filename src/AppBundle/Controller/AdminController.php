@@ -124,6 +124,15 @@ class AdminController extends BaseAdminController
         }
         return $this->render('admin/templates.html.twig',['model'=>$model,'templates'=>$templates]);
     }
+
+    /**
+     * @Route(path = "/admin/get_menu_orderable", name="get_menu_orderable", options={"expose"=true})
+     */
+    public function getMenuItemOrderableViewAtion(){
+        $em     = $this->getDoctrine()->getManager();
+        $menu   = $em->getRepository("AppBundle:MenuItem")->findBy([],['position'=>'ASC']);
+        return $this->render('admin/menu.html.twig',['menu'=>$menu]);
+    }
     
 
 
