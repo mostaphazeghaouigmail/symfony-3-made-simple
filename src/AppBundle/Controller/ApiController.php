@@ -22,7 +22,6 @@ class ApiController extends Controller
 
     /**
      * @Route("/create/{model}", name="api_create_entity")
-     * @Method({"POST"})
      */
     public function createEntityAction(Request $request, $model){
 
@@ -49,17 +48,13 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/edit/{model}/{id}", name="api_edit_entity")
+     * @Route("/edit/{model}", name="api_edit_entity")
      * @Method({"PUT"})
-     * @Security("has_role('ROLE_ADMIN')")
      */
-    public function editEntityAction(Request $request, $model,$id){
+    public function editEntityAction(Request $request, $model){
 
         if(!$model)
             return $this->handleParamError('model');
-
-        if(!$id)
-            return $this->handleParamError('id');
 
         $model  = ucfirst($model);
 

@@ -133,7 +133,7 @@ class LifeCycleListener
     private function handleTempateFile($entity){
         if($entity->getTemplate()){
             $type = $entity instanceof Page ? 'page' : 'article';
-            $file = "../app/Resources/views/".$type."/".$entity->getTemplate().'.html.twig';
+            $file = "../app/Resources/views/".$type."/templates/".$entity->getTemplate().'.html.twig';
             if(!is_file($file)){
                 $fs = new Filesystem();
                 $fs->copy("../app/Resources/views/default/view_template.html.twig",$file);

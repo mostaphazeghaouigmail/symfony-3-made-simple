@@ -43,7 +43,7 @@ class ArticleController extends Controller
      */
     public function showAction(Request $request, Article $article)
     {
-        return $this->render('article/'.($article->getTemplate() ? $article->getTemplate()  : 'view').'.html.twig', [
+        return $this->render('article/templates/'.($article->getTemplate() ? $article->getTemplate()  : 'view').'.html.twig', [
             'entity' => $article
         ]);
     }

@@ -1,0 +1,30 @@
+<div class="form-group">
+    <input id="templates-input"  type="text" placeholder="Create template" class="form-control">
+</div>
+<div class="form-group">
+    <select id="template-select" class="form-control">
+        <option value=""></option>
+        {% for template in templates %}
+            <option value="{{ template }}">{{ template }}</option>
+        {% endfor %}
+    </select>
+</div>
+<button class="btn btn-defaut" id="validRoute">Valid</button>
+<script>
+    $("#templates-select").on('change',function(){
+        var val = $("#templates-select option:selected").val();
+        if(val !=''){
+            $("#{{ model }}_template").val(val);
+            eModal.close();
+        }
+    });
+
+    $('#templates-input').on('change',function(){
+        $("#templates-select").val('');
+    });
+
+    $("#validRoute").click(function(){
+        $("#{{ model }}_template").val($('#templates-input').val());
+        eModal.close();
+    });
+</script>

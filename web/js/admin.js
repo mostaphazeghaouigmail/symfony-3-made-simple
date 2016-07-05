@@ -39,5 +39,22 @@ function init() {
         });
     });
 
+    //Template selection
+    $('#page_template').on('focus',function(){
+        eModal.ajax({
+            title   : "Page Template Selection",
+            url     : Routing.generate('get_templates',{'model':'page'}),
+            buttons : []
+        });
+    });
+    
+    $('#article_template').on('focus',function(){
+        eModal.ajax({
+            title   : "Article Template Selection",
+            url     : Routing.generate('get_templates',{'model':'article'}),
+            buttons : []
+        });
+    });
+
 }
 

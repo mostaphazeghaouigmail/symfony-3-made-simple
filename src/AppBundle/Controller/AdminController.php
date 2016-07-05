@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
 use JavierEguiluz\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -108,6 +109,20 @@ class AdminController extends BaseAdminController
         }
 
         return call_user_func_array(array($this, $methodName), $arguments);
+    }
+
+    /**
+     * @Route(path = "/admin/get_templates/{model}", name="get_templates", options={"expose"=true})
+     */
+    public function getTemplatesAction(Request $request,$model){
+
+        $finder = new Finder();
+        $finder->in($this->get('kernel')->getRootDir()."/Resources/views/".$model.'/templates/')->files();
+        $templates = [];
+        foreach ($finder as $file) {
+            $templates[] = $file->getFileName();
+        }
+        return $this->render('admin/templates.html.twig',['model'=>$model,'templates'=>$templates]);
     }
     
 

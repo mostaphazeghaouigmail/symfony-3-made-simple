@@ -19,7 +19,7 @@ class PageController extends Controller
      */
     public function showAction(Request $request, Page $page)
     {
-        return $this->render('page/'.($page->getTemplate() ? $page->getTemplate()  : 'view').'.html.twig', [
+        return $this->render('page/templates/'.($page->getTemplate() ? $page->getTemplate()  : 'view').'.html.twig', [
             'entity' => $page
         ]);
     }
