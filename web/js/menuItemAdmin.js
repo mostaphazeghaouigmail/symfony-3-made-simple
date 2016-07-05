@@ -7,6 +7,9 @@ function setSortableMenuItem(){
     $('#nestable').on('change',function(a,b,c){
         saveMenuOrder();
     });
+
+    removeLoader();
+
 }
 
 function saveMenuOrder(){
@@ -45,3 +48,4 @@ function triggerEditMenuClick(id){
 function triggerDeleteMenuClick(id){
     $('tr[data-id="'+id+'"').find('td a.action-delete')[0].click();
 }
+

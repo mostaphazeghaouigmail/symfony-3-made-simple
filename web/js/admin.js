@@ -43,9 +43,19 @@ function init() {
 
     //sortable menu
     if($("body").is("#easyadmin-list-MenuItem")){
+        createLoader();
         $.getScript("/js/menuItemAdmin.js",function(){
             replaceMenuItemTable();
         });
     }
 
+}
+
+function createLoader(){
+    if($('.loading').length == 0)
+        $("body").append('<div class="loading"></div>');
+}
+
+function removeLoader(){
+    $('.loading').remove();
 }

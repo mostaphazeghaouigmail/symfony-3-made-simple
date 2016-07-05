@@ -24,6 +24,59 @@
   float: right; }
 
 /**
+* Loader
+*/
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+@keyframes pulse {
+  50% {
+    background: white; } }
+.loading {
+  border-radius: 50%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: 13px;
+  margin-top: -50px;
+  width: 100px;
+  height: 100px;
+  border: 0.25rem solid rgba(0, 0, 0, 0.2);
+  border-top-color: black;
+  animation: spin 500ms infinite linear; }
+  .loading--double {
+    border-style: double;
+    border-width: .5rem; }
+
+@media (max-width: 767px) {
+  .loading {
+    margin-left: -50px; } }
+.loading-pulse {
+  position: relative;
+  width: 25px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.2);
+  animation: pulse 500ms infinite;
+  animation-delay: 166.66667ms; }
+  .loading-pulse:before, .loading-pulse:after {
+    content: '';
+    position: absolute;
+    display: block;
+    height: 66.66667px;
+    width: 25px;
+    background: rgba(255, 255, 255, 0.2);
+    top: 50%;
+    transform: translateY(-50%);
+    animation: pulse 500ms infinite; }
+  .loading-pulse:before {
+    left: -50px; }
+  .loading-pulse:after {
+    left: 50px;
+    animation-delay: 333.33333ms; }
+
+/**
  * Nestable
  */
 .dd {
