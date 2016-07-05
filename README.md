@@ -187,6 +187,7 @@ class Page
 <p>If you want your entity api capable, just use ApiCapable trait in it </p>
 <p>You can customize the public / private on security.yml for method, by default, PUT and POST method require an admin role</p>
 <p>It's just made for building for exemple a front with angular or somthing like that, you can set the api_key in parameters.yml</p>
+<p>You need to add api_key in get parameter</p>
 <h4>Method and route</h4>
 <p>GET /api/{model}         -> Retreive all entity of a model</p>
 <p>GET /api/{model}/{id}    -> Retreive entity of a model with id</p>
