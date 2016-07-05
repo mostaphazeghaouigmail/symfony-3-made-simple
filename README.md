@@ -181,6 +181,18 @@ class Page
 <h4>Menu</h4>
 <p>Get the main menu on view : <code>app_twig.getMenu()|raw</code><p>
 
+
+<h3>API</h3>
+<p>There is a tiny little API</p>
+<p>If you want your entity api capable, just use ApiCapable trait in it </p>
+<p>You can customize the public / private on security.yml for method, by default, PUT and POST method require an admin role</p>
+<p>It's just made for building for exemple a front with angular or somthing like that, you can set the api_key in parameters.yml</p>
+<h4>Method and route</h4>
+<p>GET /api/{model}         -> Retreive all entity of a model</p>
+<p>GET /api/{model}/{id}    -> Retreive entity of a model with id</p>
+<p>PUT /api/{model}         -> update entity of a model</p>
+<p>POST /api/{model}        -> create entity of a model</p>
+
 <h3>Installation</h3>
 <p><code>git clone https://github.com/sohrabg/made-simple.git</code></p>
 <p><code>composer install</code></p>

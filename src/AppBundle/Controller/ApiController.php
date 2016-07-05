@@ -25,6 +25,9 @@ class ApiController extends Controller
      */
     public function createEntityAction(Request $request, $model){
 
+        if(!$this->checkApiKey($request))
+            return $this->handleApiKEyError();
+
         if(!$model)
             return $this->handleParamError('model');
 
@@ -53,6 +56,9 @@ class ApiController extends Controller
      */
     public function editEntityAction(Request $request, $model){
 
+        if(!$this->checkApiKey($request))
+            return $this->handleApiKEyError();
+
         if(!$model)
             return $this->handleParamError('model');
 
@@ -80,7 +86,10 @@ class ApiController extends Controller
      * @Route("/{model}", name="api_get_all")
      * @Method({"GET"})
      */
-    public function getEntitesAction($model){
+    public function getEntitesAction(Request $request,$model){
+
+        if(!$this->checkApiKey($request))
+            return $this->handleApiKEyError();
 
         if(!$model)
             return $this->handleParamError('model');
@@ -101,7 +110,10 @@ class ApiController extends Controller
      * @Route("/{model}/{id}", name="api_get")
      * @Method({"GET"})
      */
-    public function getEntityAction($model = false,$id = false){
+    public function getEntityAction(Request $request, $model = false,$id = false){
+
+        if(!$this->checkApiKey($request))
+            return $this->handleApiKEyError();
 
         if(!$model)
             return  $this->handleParamError('model');
@@ -120,9 +132,6 @@ class ApiController extends Controller
         return $this->sendResponse($this->getById($model,$id));
 
     }
-
-
-
 
     private function isAuthorized($model){
         return property_exists("AppBundle\\Entity\\".$model,'isApiCapable');
@@ -143,6 +152,12 @@ class ApiController extends Controller
     private function handleParamError($param){
         $response  = new JsonResponse(['success'=>false,'data'=> $param.' is required']);
         $response->setStatusCode(400);
+        return $response;
+    }
+
+    private function handleApiKEyError(){
+        $response  = new JsonResponse(['success'=>false,'data'=>'The Api Key is missing or wrong']);
+        $response->setStatusCode(403);
         return $response;
     }
 
@@ -184,6 +199,20 @@ class ApiController extends Controller
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+    }
+
+    private function checkApiKey(Request $request){
+            
+        $key = $this->container->getParameter('api_key');
+        $headerKey = $request->query->get('api_key');
+
+        if(is_null($headerKey) || !$headerKey)
+            return false;
+
+        if($headerKey != $key)
+            return false;
+
+        return true;
     }
 
 
