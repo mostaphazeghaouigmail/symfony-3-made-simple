@@ -1,9 +1,12 @@
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 <div class="row">
-    <div class="col-md-12" >
-        <img  style="height: auto;width:90%;margin: 5%;display:block" src="{{ asset("uploads/image/"~image.image)|imagine_filter('middle')  }}">
-        <div id="edit-image-form-container">
-            {{ form(form) }}
+    <div class="col-md-12" style="padding-top:50px">
+        <img  id="image" style="height: auto;width:90%;margin: 5%;display:block" src="{{ app_twig.getImage(image)  }}">
+        <div id="edit-image-form-container"  style="margin-top:20px">
+            {{ form(form,{'attr':{'data-entity-id' : image.id, 'data-entity' : 'Image'}}) }}
         </div>
     </div>
 </div>
+<script>
+    initDarkroom();
+</script>

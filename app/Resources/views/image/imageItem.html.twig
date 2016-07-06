@@ -1,23 +1,25 @@
 
-<div class="col-md-4" style="box-sizing: border-box;padding:5px;border:1px solid rgba(0,0,0,0.1)" id="image{{ image.id }}" data-id="{{ image.id }}">
-
-<a
-   href="#"
-   class="easyadmin-thumbnail"
-   data-featherlight="#easyadmin-lightbox-{{ image.id }}"
-   data-featherlight-close-on-click="anywhere"
->
-    <img  style="height: auto;width:90%;margin: 5%;display:block;max-height:inherit;" src="{{ asset("uploads/image/"~image.image)|imagine_filter('thumbnail')  }}">
-    <a href="#" class="edit-image" onclick="uploader.editImage({{ image.id }})">
-        <i class="fa fa-pencil"></i>
+<div class="col-md-4 image-uploader-item"  id="image{{ image.id }}" data-id="{{ image.id }}">
+    <a
+       href="#"
+       class="easyadmin-thumbnail"
+       data-featherlight="#easyadmin-lightbox-{{ image.id }}"
+       data-featherlight-close-on-click="anywhere"
+    >
+        <div class="image-uploader-item-image">
+            <img  src="{{ asset("uploads/image/"~image.image)|imagine_filter('thumbnail')  }}?v={{ random() }}">
+        </div>
     </a>
-    <a href="#" class="delete-image"  onclick="uploader.deleteImage({{ image.id }})">
-        <i class="fa fa-trash"></i>
-    </a>
-</a>
-
-<div id="easyadmin-lightbox-{{ image.id  }}" class="easyadmin-lightbox">
-    <img src="{{ asset("uploads/image/"~image.image) }}">
-</div>
+    <div class="uploader-image-actions">
+        <a href="#" class="edit-image" onclick="uploader.editImage({{ image.id }})">
+            <i class="fa fa-pencil"></i> Edit
+        </a>
+        <a href="#" class="delete-image"  onclick="uploader.deleteImage({{ image.id }})">
+            <i class="fa fa-trash"></i> Delete
+        </a>
+    </div>
+    <div id="easyadmin-lightbox-{{ image.id  }}" class="easyadmin-lightbox">
+        <img src="{{ asset("uploads/image/"~image.image) }}">
+    </div>
 
 </div>

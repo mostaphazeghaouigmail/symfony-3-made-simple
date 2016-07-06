@@ -23,8 +23,8 @@
         {% for css_asset in easyadmin_config('design.assets.css') %}
             <link rel="stylesheet" href="{{ asset(css_asset) }}">
         {% endfor %}
-        <link rel="stylesheet" href="{{ asset("css/codemirror.css") }}">
-        <link rel="stylesheet" href="{{ asset("css/admin.css") }}">
+        <link rel="stylesheet" href="{{ asset("css/admin/codemirror.css") }}">
+        <link rel="stylesheet" href="{{ asset("css/admin/admin.css") }}">
 
         {% block head_favicon %}
             {% set favicon = easyadmin_config('design.assets.favicon') %}
@@ -140,11 +140,12 @@
         {% endfor %}
     </body>
     {% endblock body %}
-    <script src="{{ asset('js/codemirror.js') }}"></script>
-    <script src="{{ asset('js/emodal.js') }}"></script>
+    <script src="{{ asset('js/admin/codemirror.js') }}"></script>
+    <script src="{{ asset('js/admin/emodal.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-    <script src="{{ asset('/js/jquery.mjs.nestedSortable.js') }}"></script>
-    <script src="{{ asset('js/uploader.js') }}"></script>
-    <script src="{{ asset('js/admin.js') }}"></script>
+    <script src="{{ asset('/js/admin/jquery.mjs.nestedSortable.js') }}"></script>
+    <script src="{{ asset('/js/admin/sortable.min.js') }}"></script>
+    <script src="{{ asset('js/admin/uploader.js') }}"></script>
+    <script src="{{ asset('js/admin/admin.js') }}"></script>
 </html>

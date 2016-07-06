@@ -76,9 +76,11 @@ class ImageController extends Controller
         $appService = $this->get("app.application.service");
         $path = $appService->getImage($image);
 
+        $name =
         // write the file to the upload directory
         $success = file_put_contents($this->get('kernel')->getRootDir() . '/../web'.$path, $data);
 
+        $this->get('liip_imagine.cache.manager')->remove($path);
         return new JsonResponse(['success'=>$success]);
     }
 
@@ -89,6 +91,8 @@ class ImageController extends Controller
      */
     public function deleteAction(Request $request,Image $image)
     {
+        $path = $this->get('app.application.service')->getImage($image);
+        $this->get('liip_imagine.cache.manager')->remove($path);
         $em = $this->getDoctrine()->getManager();
         $em->remove($image);
         $em->flush();
@@ -107,7 +111,6 @@ class ImageController extends Controller
 
         if($request->query->get('from_entity')){
             $dql   = "SELECT i FROM AppBundle:Image i WHERE i.parentId = ".$session->get('parentId')." AND i.parentClass = '".$session->get('parentClass')."'";
-
         } else {
             $dql   = "SELECT i FROM AppBundle:Image i";
         }
@@ -138,6 +141,17 @@ class ImageController extends Controller
             $repository->find($position[$i])->setPlace($i);
         $em->flush();
         exit;
+    }
+
+    private function getRandomName(){
+        $key = '';
+        $keys = array_merge(range(0, 9), range('a', 'z'));
+
+        for ($i = 0; $i < 20; $i++) {
+            $key .= $keys[array_rand($keys)];
+        }
+
+        return $key;
     }
 
 }

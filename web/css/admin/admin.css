@@ -1,106 +1,23 @@
 /**
- * hide this field, unecessary for user but necessary for uploader
+ * Uploader
  */
-.imageable {
-  display: none; }
-
-/**
- * page and article style edit textaera
- */
-.CodeMirror {
-  max-width: 98%;
-  z-index: 0; }
-
-/**
- * logout link
- */
-.nav > li > a.logout-link {
-  color: white;
-  display: inline-block; }
-  .nav > li > a.logout-link:hover {
-    background: inherit;
-    color: inherit; }
-
-/**
- * Menu item l
- */
-#easyadmin-list-MenuItem {
-  /**
-  * hide because no need
-  */
-  /**
-   * moove but not hide because we need to trigger click on edit action click on sortable menu list
-   */
-  /**
-  * actions on menu item sortable list
-  */ }
-  #easyadmin-list-MenuItem .action-search {
-    display: none; }
-  #easyadmin-list-MenuItem table {
-    position: absolute;
-    opacity: 0;
-    left: -1000000000%; }
-  #easyadmin-list-MenuItem .menuItemList li .action {
-    float: right; }
-
-/**
-* handle margin for darkroom toolbar
-*/
-.easyadmin.edit-image #image_alt {
-  margin-bottom: 50px; }
-
-/**
-* Loader
-*/
-@keyframes spin {
-  0% {
-    transform: rotate(0deg); }
-  100% {
-    transform: rotate(360deg); } }
-@keyframes pulse {
-  50% {
-    background: white; } }
-.loading {
-  border-radius: 50%;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-left: 130px;
-  margin-top: -50px;
-  width: 100px;
-  height: 100px;
-  border: 0.25rem solid rgba(0, 0, 0, 0.2);
-  border-top-color: black;
-  animation: spin 500ms infinite linear; }
-  .loading--double {
-    border-style: double;
-    border-width: .5rem; }
-
-@media (max-width: 767px) {
-  .loading {
-    margin-left: -50px; } }
-.loading-pulse {
-  position: relative;
-  width: 25px;
-  height: 100px;
-  background: rgba(255, 255, 255, 0.2);
-  animation: pulse 500ms infinite;
-  animation-delay: 166.66667ms; }
-  .loading-pulse:before, .loading-pulse:after {
-    content: '';
-    position: absolute;
-    display: block;
-    height: 66.66667px;
-    width: 25px;
-    background: rgba(255, 255, 255, 0.2);
-    top: 50%;
-    transform: translateY(-50%);
-    animation: pulse 500ms infinite; }
-  .loading-pulse:before {
-    left: -50px; }
-  .loading-pulse:after {
-    left: 50px;
-    animation-delay: 333.33333ms; }
+.image-uploader-item {
+  box-sizing: border-box;
+  padding: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1); }
+  .image-uploader-item .image-uploader-item-image {
+    width: 144px;
+    height: 105px;
+    overflow: hidden;
+    margin: 0 auto; }
+    .image-uploader-item .image-uploader-item-image img {
+      height: auto;
+      width: 100%;
+      display: block;
+      max-height: inherit; }
+  .image-uploader-item .uploader-image-actions {
+    text-align: center;
+    margin-top: 10px; }
 
 /**
  * Nestable
@@ -331,7 +248,107 @@
   margin-right: 10px; }
 
 /**
- * Socialite
+* Loader
+*/
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+@keyframes pulse {
+  50% {
+    background: white; } }
+.loading {
+  border-radius: 50%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: 130px;
+  margin-top: -50px;
+  width: 100px;
+  height: 100px;
+  border: 0.25rem solid rgba(0, 0, 0, 0.2);
+  border-top-color: black;
+  animation: spin 500ms infinite linear; }
+  .loading--double {
+    border-style: double;
+    border-width: .5rem; }
+
+@media (max-width: 767px) {
+  .loading {
+    margin-left: -50px; } }
+.loading-pulse {
+  position: relative;
+  width: 25px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.2);
+  animation: pulse 500ms infinite;
+  animation-delay: 166.66667ms; }
+  .loading-pulse:before, .loading-pulse:after {
+    content: '';
+    position: absolute;
+    display: block;
+    height: 66.66667px;
+    width: 25px;
+    background: rgba(255, 255, 255, 0.2);
+    top: 50%;
+    transform: translateY(-50%);
+    animation: pulse 500ms infinite; }
+  .loading-pulse:before {
+    left: -50px; }
+  .loading-pulse:after {
+    left: 50px;
+    animation-delay: 333.33333ms; }
+
+/**
+ * hide this field, unecessary for user but necessary for uploader
  */
+.imageable {
+  display: none; }
+
+/**
+ * page and article style edit textaera
+ */
+.CodeMirror {
+  max-width: 98%;
+  z-index: 0; }
+
+/**
+ * logout link
+ */
+.nav > li > a.logout-link {
+  color: white;
+  display: inline-block; }
+  .nav > li > a.logout-link:hover {
+    background: inherit;
+    color: inherit; }
+
+/**
+ * Menu item list
+ */
+#easyadmin-list-MenuItem {
+  /**
+  * hide because no need
+  */
+  /**
+   * moove but not hide because we need to trigger click on edit action click on sortable menu list
+   */
+  /**
+  * actions on menu item sortable list
+  */ }
+  #easyadmin-list-MenuItem .action-search {
+    display: none; }
+  #easyadmin-list-MenuItem table {
+    position: absolute;
+    opacity: 0;
+    left: -1000000000%; }
+  #easyadmin-list-MenuItem .menuItemList li .action {
+    float: right; }
+
+/**
+* handle margin for darkroom toolbar
+*/
+.easyadmin.edit-image #image_alt {
+  margin-bottom: 50px; }
 
 /*# sourceMappingURL=admin.css.map */

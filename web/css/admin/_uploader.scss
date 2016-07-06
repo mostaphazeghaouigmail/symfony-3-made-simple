@@ -1,0 +1,29 @@
+/**
+ * Uploader
+ */
+
+.image-uploader-item{
+  box-sizing: border-box;
+  padding:5px;
+  border:1px solid rgba(0,0,0,0.1);
+
+  .image-uploader-item-image{
+    width:144px;
+    height:105px;
+    overflow: hidden;
+    margin:0 auto;
+
+    img{
+      height: auto;
+      width:100%;
+      display:block;
+      max-height:inherit;
+    }
+  }
+
+  .uploader-image-actions{
+    text-align: center;
+    margin-top: 10px;
+  }
+}
+

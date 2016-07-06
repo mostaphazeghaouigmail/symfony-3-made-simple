@@ -45,20 +45,21 @@ function init() {
     //sortable menu
     if($("body").is("#easyadmin-list-MenuItem")){
         createLoader();
-        $.getScript("/js/menuItemAdmin.js",function(){
+        $.getScript("/js/admin/menuItemAdmin.js",function(){
             replaceMenuItemTable();
         });
     }
 
     //image editing
-    if($("body").is('.edit-image')){
+    if($(".easyadmin-vich-image") || isImageable){
+        if(typeof(Darkroom) == "undefined")
         initEditImage();
     }
 
 }
 
 function initEditImage(){
-    $.getScript("/js/editImageScript.js");
+    $.getScript("/js/admin/editImageScript.js");
 }
 
 function createLoader(){
