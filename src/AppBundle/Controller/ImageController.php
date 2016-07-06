@@ -49,6 +49,7 @@ class ImageController extends Controller
      */
     public function postEditAction(Request $request,Image $image)
     {
+
         $form = $this->createForm(ImageTypeLight::class,$image,[
             'action' => $this->generateUrl('image_post_edit',['id'=>$image->getId()])
         ]);
@@ -59,6 +60,28 @@ class ImageController extends Controller
 
         return new JsonResponse(['success'=>true]);
     }
+
+    /**
+     * @Route("/admin/image/edit/post/file/{id}", name="image_post_edit", options={"expose"=true })
+     * @Method({"POST"})
+     */
+    public function postEditFileAction(Request $request,Image $image)
+    {
+        // get the dataURL
+        $dataURL = json_decode($request->getContent());
+        $parts = explode(',', $dataURL->imageFile);
+        $data = $parts[1];
+        $data = base64_decode($data);
+
+        $appService = $this->get("app.application.service");
+        $path = $appService->getImage($image);
+
+        // write the file to the upload directory
+        $success = file_put_contents($this->get('kernel')->getRootDir() . '/../web'.$path, $data);
+
+        return new JsonResponse(['success'=>$success]);
+    }
+
 
     /**
      * @Route("/admin/image/delete/{id}", name="image_delete", options={"expose"=true })

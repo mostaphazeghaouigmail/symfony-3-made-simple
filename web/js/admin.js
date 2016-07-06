@@ -24,7 +24,7 @@ function init() {
         });
     });
 
-    //Template selection
+    //Template article selection
     $('#page_template').on('focus',function(){
         eModal.ajax({
             title   : "Page Template Selection",
@@ -33,6 +33,7 @@ function init() {
         });
     });
 
+    //Template page selection
     $('#article_template').on('focus',function(){
         eModal.ajax({
             title   : "Article Template Selection",
@@ -49,6 +50,15 @@ function init() {
         });
     }
 
+    //image editing
+    if($("body").is('.edit-image')){
+        initEditImage();
+    }
+
+}
+
+function initEditImage(){
+    $.getScript("/js/editImageScript.js");
 }
 
 function createLoader(){

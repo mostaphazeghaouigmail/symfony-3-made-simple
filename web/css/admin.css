@@ -1,27 +1,53 @@
+/**
+ * hide this field, unecessary for user but necessary for uploader
+ */
 .imageable {
   display: none; }
 
+/**
+ * page and article style edit textaera
+ */
 .CodeMirror {
   max-width: 98%;
   z-index: 0; }
 
+/**
+ * logout link
+ */
 .nav > li > a.logout-link {
   color: white;
   display: inline-block; }
+  .nav > li > a.logout-link:hover {
+    background: inherit;
+    color: inherit; }
 
-.nav > li > a.logout-link:hover {
-  background: inherit;
-  color: inherit; }
+/**
+ * Menu item l
+ */
+#easyadmin-list-MenuItem {
+  /**
+  * hide because no need
+  */
+  /**
+   * moove but not hide because we need to trigger click on edit action click on sortable menu list
+   */
+  /**
+  * actions on menu item sortable list
+  */ }
+  #easyadmin-list-MenuItem .action-search {
+    display: none; }
+  #easyadmin-list-MenuItem table {
+    position: absolute;
+    opacity: 0;
+    left: -1000000000%; }
+  #easyadmin-list-MenuItem .menuItemList li .action {
+    float: right; }
 
-#easyadmin-list-MenuItem .action-search {
-  display: none; }
-#easyadmin-list-MenuItem table {
-  position: absolute;
-  opacity: 0;
-  left: -1000000000%; }
-
-.menuItemList li .action {
-  float: right; }
+/**
+* handle margin for darkroom toolbar
+*/
+.easyadmin.edit-image #image_alt {
+  margin-bottom: 50px; }
 
 /**
 * Loader
@@ -39,7 +65,7 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  margin-left: 13px;
+  margin-left: 130px;
   margin-top: -50px;
   width: 100px;
   height: 100px;
