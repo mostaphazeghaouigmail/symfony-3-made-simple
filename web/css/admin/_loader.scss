@@ -23,18 +23,28 @@ $pulse-duration: 500ms;
   }
 }
 
+.loading-background{
+  background: rgba(255,255,255,0.3);
+  position: fixed;
+  top:0;
+  left:0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999999999;
+}
 .loading {
   border-radius: 50%;
   position: fixed;
   top:50%;
   left:50%;
-  margin-left: 130px;
+  margin-left: -50px;
   margin-top:-50px;
   width: $base-line-height;
   height: $base-line-height;
   border: .25rem solid rgba(0,0,0,0.2);
   border-top-color: black;
   animation: spin $spin-duration infinite linear;
+  z-index: 9999999999;
   &--double {
     border-style: double;
     border-width: .5rem;

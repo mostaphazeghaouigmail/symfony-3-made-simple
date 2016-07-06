@@ -26,7 +26,7 @@ services:
 
     app.image.service:
         class: AppBundle\Service\ImageService
-        arguments : ["@doctrine.orm.entity_manager"]
+        arguments : ["@doctrine.orm.entity_manager","@kernel"]
 
     app.theme.service:
         class: AppBundle\Service\ThemeService

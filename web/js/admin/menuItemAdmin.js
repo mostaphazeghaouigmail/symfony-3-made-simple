@@ -8,8 +8,6 @@ function setSortableMenuItem(){
         saveMenuOrder();
     });
 
-    removeLoader();
-
 }
 
 function saveMenuOrder(){

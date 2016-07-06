@@ -16,4 +16,7 @@ h1 {
 img {
   max-width: 100%; }
 
+.navbar.navbar-default.navbar-fixed-top {
+  background: black; }
+
 /*# sourceMappingURL=main.css.map */

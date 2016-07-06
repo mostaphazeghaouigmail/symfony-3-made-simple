@@ -3,6 +3,7 @@ namespace AppBundle\Service;
 
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpKernel\Kernel;
 
 
 /**
@@ -14,10 +15,12 @@ use Doctrine\ORM\EntityManager;
 class ImageService
 {
     private $em;
+    private $rootDir;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em,Kernel $kernel)
     {
-        $this->em = $em;
+        $this->em       = $em;
+        $this->rootDir  = $kernel->getRootDir();
     }
 
     public function cleanImages($entity){
@@ -35,7 +38,7 @@ class ImageService
         $parts = explode(',', $dataURL->imageFile);
         $data = $parts[1];
         $data = base64_decode($data);
-        $success = file_put_contents($this->get('kernel')->getRootDir() . '/../web'.$path, $data);
+        $success = file_put_contents($this->rootDir . '/../web'.$path, $data);
 
         return boolval($success);
     }

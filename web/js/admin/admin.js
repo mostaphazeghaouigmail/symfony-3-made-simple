@@ -44,14 +44,13 @@ function init() {
 
     //sortable menu
     if($("body").is("#easyadmin-list-MenuItem")){
-        createLoader();
         $.getScript("/js/admin/menuItemAdmin.js",function(){
             replaceMenuItemTable();
         });
     }
 
     //image editing
-    if($(".body").is('edit-image') || isImageable){
+    if($("body").is('.edit-image') || isImageable){
         if(typeof(Darkroom) == "undefined")
         initEditImage();
     }
@@ -67,6 +66,10 @@ function init() {
         $('.disabled').trigger('blur');
         return false;
     });
+
+    $( document ).ajaxSend(createLoader);
+    $( document ).ajaxStop(removeLoader);
+
 }
 
 function initEditImage(){
@@ -75,11 +78,11 @@ function initEditImage(){
 
 function createLoader(){
     if($('.loading').length == 0)
-        $("body").append('<div class="loading"></div>');
+        $("body").append('<div class="loading-background"></div><div class="loading"></div>');
 }
 
 function removeLoader(){
-    $('.loading').remove();
+    $('.loading,.loading-background').remove();
 }
 
 function handleCreateThemeStructure(){

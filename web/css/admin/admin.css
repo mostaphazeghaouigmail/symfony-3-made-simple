@@ -258,18 +258,28 @@
 @keyframes pulse {
   50% {
     background: white; } }
+.loading-background {
+  background: rgba(255, 255, 255, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999999999; }
+
 .loading {
   border-radius: 50%;
   position: fixed;
   top: 50%;
   left: 50%;
-  margin-left: 130px;
+  margin-left: -50px;
   margin-top: -50px;
   width: 100px;
   height: 100px;
   border: 0.25rem solid rgba(0, 0, 0, 0.2);
   border-top-color: black;
-  animation: spin 500ms infinite linear; }
+  animation: spin 500ms infinite linear;
+  z-index: 9999999999; }
   .loading--double {
     border-style: double;
     border-width: .5rem; }
