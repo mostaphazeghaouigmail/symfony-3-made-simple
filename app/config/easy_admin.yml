@@ -8,7 +8,8 @@ easy_admin:
             - { entity: 'Article',   label : 'Articles', icon: 'newspaper-o'}
             - { entity: 'Comment',   label : 'Comments', icon: 'comment'}
             - { entity: 'Parameter', label : 'Settings', icon: 'cogs'}
-            - { entity: 'MenuItem', label : 'Menu', icon: 'cogs'}
+            - { entity: 'MenuItem',  label : 'Menu',     icon: 'cogs'}
+            - { entity: 'Theme',     label : 'Themes',   icon: 'th'}
     entities:
         User:
             class: AppBundle\Entity\User
@@ -175,3 +176,29 @@ easy_admin:
                     - 'title'
                     - { property : 'cssClass', type : 'text'}
                     - 'attributes'
+        Theme:
+            class: AppBundle\Entity\Theme
+            list:
+                fields:
+                    - 'id'
+                    - { property: 'image', type: 'image', base_path: %app.path.theme_images% }
+                    - 'name'
+                    - 'author'
+                    - 'active'
+                    - 'folderCreated'
+            edit:
+                fields:
+                    - 'name'
+                    - 'author'
+                    - 'description'
+                    - { property: 'imageFile', type: 'vich_image' }
+                    - 'folder'
+                    - 'active'
+            new:
+                fields:
+                    - 'name'
+                    - 'author'
+                    - 'description'
+                    - { property: 'imageFile', type: 'vich_image' }
+                    - 'folder'
+

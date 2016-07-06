@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends app_twig.getThemeBase() %}
 
 {% set page_title = 'Title index blog' %}
 {% set page_description = 'Blog meta description' %}
@@ -9,7 +9,7 @@
             <h1>Blog</h1>
                <br>
            {% for article in entities %}
-              {% include ":article:item.html.twig" with {'article' : article } %}
+              {% include app_twig.getTheme()~"/article/item.html.twig" with {'article' : article } %}
            {% endfor %}
            </div>
 

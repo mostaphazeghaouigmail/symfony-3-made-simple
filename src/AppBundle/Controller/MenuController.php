@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
-class MenuController extends Controller
+class MenuController extends SuperController
 {
 
     /**

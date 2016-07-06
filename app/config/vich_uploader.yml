@@ -20,3 +20,8 @@ vich_uploader:
             uri_prefix:         %app.path.article_images%
             upload_destination: %kernel.root_dir%/../web/uploads/article
             namer:              vich_uploader.namer_uniqid
+
+        theme_images:
+            uri_prefix:         %app.path.theme_images%
+            upload_destination: %kernel.root_dir%/../web/uploads/theme
+            namer:              vich_uploader.namer_uniqid

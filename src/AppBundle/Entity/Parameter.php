@@ -14,6 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity
  * @ORM\Table(name="Parameter")
  * @Vich\Uploadable
+ * @ORM\HasLifecycleCallbacks()
  */
 class Parameter
 {
@@ -42,6 +43,16 @@ class Parameter
      * @var string
      */
     protected $valeur;
+
+    private $mandatory = [
+        'index_page',
+        'tracking_code',
+        'validated_comments_by_defaut',
+        'allow_anonymous_comments',
+        'site_email',
+        'site_description',
+        'site_nom'
+    ];
 
     /**
      * @return mixed
@@ -113,6 +124,15 @@ class Parameter
     {
         $this->label = $label;
         return $this;
+    }
+
+    /**
+     * @ORM\PreRemove
+     */
+    public function beforeRemove(){
+        if(in_array($this->getCle(),$this->mandatory)){
+            throw new Exception('You can not remove this setting');
+        }
     }
 
     

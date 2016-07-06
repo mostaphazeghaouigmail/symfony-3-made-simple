@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class DefaultController extends SuperController
 {
     /**
      * @Route("/", name="home")
@@ -20,8 +20,9 @@ class DefaultController extends Controller
         if($indexPage && !empty($indexPage)){
             return $this->forward('AppBundle:Page:index',['slug'=>$indexPage]);
         }
+
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
+        return $this->render($this->templating('index.html.twig'), [
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
         ]);
     }

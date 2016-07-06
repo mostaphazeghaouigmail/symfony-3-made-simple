@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @Route("/blog")
  */
-class ArticleController extends Controller
+class ArticleController extends SuperController
 {
 
     /**
@@ -31,7 +31,7 @@ class ArticleController extends Controller
             10
         );
 
-        return $this->render('article/index.html.twig', [
+        return $this->render($this->templating('article/index.html.twig'), [
             'entities' => $pagination
         ]);
     }
@@ -43,7 +43,7 @@ class ArticleController extends Controller
      */
     public function showAction(Request $request, Article $article)
     {
-        return $this->render('article/templates/'.($article->getTemplate() ? $article->getTemplate()  : 'view').'.html.twig', [
+        return $this->render($this->templating('article/templates/'.($article->getTemplate() ? $article->getTemplate()  : 'view').'.html.twig'), [
             'entity' => $article
         ]);
     }

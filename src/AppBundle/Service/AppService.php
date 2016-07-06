@@ -50,20 +50,20 @@ class AppService
 
             //return  view form if needed
             return $form ? $this->container->get('twig')
-                ->render("comment/form.html.twig",['form'=>$form->createView()]) : '';
+                ->render($this->templating("comment/form.html.twig"),['form'=>$form->createView()]) : '';
         }
     }
 
     public function getCommentList($entity){
         if(method_exists($entity,"getCommentable")){
             return $this->container->get('twig')
-                ->render("comment/list.html.twig",['entity'=>$entity]);
+                ->render($this->templating("comment/list.html.twig"),['entity'=>$entity]);
         }
     }
 
     public function getMap($id = 'map', $lat = 45.7573657, $lng = 4.8406775, $content="I'm Here"){
         return $this->container->get('twig')
-            ->render("component/map/map.html.twig",[
+            ->render($this->templating("component/map/map.html.twig"),[
             'id'        => $id,
             'lat'       => $lat,
             'lng'       => $lng,
@@ -73,7 +73,7 @@ class AppService
 
     public function getSlider($entity){
         return $this->container->get('twig')
-            ->render("component/slider/slider.html.twig",[
+            ->render($this->templating("component/slider/slider.html.twig"),[
             'entity'       => $entity
         ]);
     }
@@ -83,7 +83,7 @@ class AppService
         $items  = $em->getRepository("AppBundle:MenuItem")->findBy([],['position'=>"ASC"]);
         $currentSlug = $this->container->get('request_stack')->getCurrentRequest()->attributes->get('slug');
         return $this->container->get('twig')
-            ->render("component/menu/menu.html.twig",['items'=>$items,'current'=>$currentSlug]);
+            ->render($this->templating("component/menu/menu.html.twig"),['items'=>$items,'current'=>$currentSlug]);
     }
 
     public function getContactForm(){
@@ -92,7 +92,7 @@ class AppService
 
         return $this->container
             ->get('twig')
-            ->render("component/contact/form.html.twig",
+            ->render($this->templating("component/contact/form.html.twig"),
                 ['contact_form'=> $form->createView()]
             );
     }
@@ -105,7 +105,7 @@ class AppService
         if($code){
             return $this->container
                          ->get('twig')
-                         ->render("component/analitycs/tracking.html.twig",
+                         ->render($this->templating("component/analitycs/tracking.html.twig"),
                              ['code'=> $code]
                          );
         }
@@ -139,6 +139,24 @@ class AppService
         }
 
         return $param;
+    }
+
+    public function templating($view){
+        return $this->getTheme().'/'.$view;
+    }
+
+    public function getTheme(){
+        $session = $this->container->get('session');
+        if(!$session->has('theme')){
+            $em     = $this->container->get('doctrine.orm.entity_manager');
+            $theme  = $em->getRepository('AppBundle:Theme')->findOneBy(['active'=>true]);
+            $session->set('theme',$theme && $theme->getFolderCreated() == "Yes" ? $theme->getFolder() : 'default');
+        }
+        return 'themes/'.$session->get('theme').'/';
+    }
+
+    public function getThemeBase(){
+        return $this->getTheme().'base.html.twig';
     }
 
 

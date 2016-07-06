@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends app_twig.getThemeBase() %}
 
 {% set page_title = '' %}
 {% set page_description = '' %}
@@ -6,13 +6,9 @@
 {% block style %}
 {% endblock style %}
 
-
     {% block body %}
         <h1>{{ entity.title }}</h1>
-
-        <img src="{{ app_twig.getImage(entity)|imagine_filter('cover')  }}">
-
-        <p>{{ entity.body|raw }}</p>
+        <div>{{ entity.body|raw }}</div>
 
         {% if attribute(entity, 'getCommentable') is defined  %}
             <h2>Comments</h2>
@@ -25,6 +21,9 @@
                 {{ app_twig.getCommentList(entity)|raw }}
             </div>
         {% endif %}
+
+
+
     {% endblock body %}
 
 {% block javascripts %}

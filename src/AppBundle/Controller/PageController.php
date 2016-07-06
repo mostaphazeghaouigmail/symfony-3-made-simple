@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 
-class PageController extends Controller
+class PageController extends SuperController
 {
 
     /**
@@ -19,7 +19,7 @@ class PageController extends Controller
      */
     public function showAction(Request $request, Page $page)
     {
-        return $this->render('page/templates/'.($page->getTemplate() ? $page->getTemplate()  : 'view').'.html.twig', [
+        return $this->render($this->templating('page/templates/'.($page->getTemplate() ? $page->getTemplate()  : 'view').'.html.twig'), [
             'entity' => $page
         ]);
     }

@@ -13,7 +13,7 @@ use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class ImageController extends Controller
+class ImageController extends SuperController
 {
 
     /**
@@ -22,7 +22,7 @@ class ImageController extends Controller
      */
     public function showAction(Request $request, Image $image)
     {
-        return $this->render('image/view.html.twig', [
+        return $this->render($this->templating('image/templates/view.html.twig'), [
             'entity' => $image
         ]);
     }

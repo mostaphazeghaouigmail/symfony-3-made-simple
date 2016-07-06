@@ -117,7 +117,7 @@ class AdminController extends BaseAdminController
     public function getTemplatesAction(Request $request,$model){
 
         $finder = new Finder();
-        $finder->in($this->get('kernel')->getRootDir()."/Resources/views/".$model.'/templates/')->files();
+        $finder->in($this->get('kernel')->getRootDir()."/Resources/views/".$this->get('app.application.service')->getTheme().$model.'/templates/')->files();
         $templates = [];
         foreach ($finder as $file) {
             $fileName = $file->getFileName();

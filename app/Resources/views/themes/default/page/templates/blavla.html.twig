@@ -1,15 +1,15 @@
-{% extends '::base.html.twig' %}
-
-{% set page_title = '' %}
-{% set page_description = '' %}
+{% extends app_twig.getThemeBase() %}
 
 {% block style %}
 {% endblock style %}
 
+{% set page_title = '' %}
+{% set page_description = '' %}
+
     {% block body %}
         <h1>{{ entity.title }}</h1>
         <div>{{ entity.body|raw }}</div>
-
+bop;
         {% if attribute(entity, 'getCommentable') is defined  %}
             <h2>Comments</h2>
             <hr>
@@ -21,8 +21,6 @@
                 {{ app_twig.getCommentList(entity)|raw }}
             </div>
         {% endif %}
-
-
 
     {% endblock body %}
 

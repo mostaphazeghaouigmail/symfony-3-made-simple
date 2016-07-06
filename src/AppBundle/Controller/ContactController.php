@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class ContactController extends Controller
+class ContactController extends SuperController
 {
     /**
      * @Route("/contact/send", name="contact")
@@ -31,7 +31,7 @@ class ContactController extends Controller
             ->setTo($from)
             ->setBody(
                 $this->renderView(
-                    'emails/contact.html.twig',
+                    $this->templating('emails/contact.html.twig'),
                     array('contact' => $contact)
                 ),
                 'text/html'

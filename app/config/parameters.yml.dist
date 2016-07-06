@@ -21,6 +21,6 @@ parameters:
     app.path.image_images : /uploads/image
     app.path.page_images :  /uploads/page
     app.path.article_images :  /uploads/article
-
+    app.path.theme_images: /uploads/theme
 
     api_key: yourapikey

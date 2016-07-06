@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class CommentController extends Controller
+class CommentController extends SuperController
 {
     /**
      * @Route("/comment/post", name="post_comment")
@@ -29,7 +29,7 @@ class CommentController extends Controller
 
         if($request->isXmlHttpRequest()){
             if($comment->getValidated())
-                return $this->render("comment/comment.html.twig",['comment'=>$comment]);
+                return $this->render($this->templating("comment/comment.html.twig"),['comment'=>$comment]);
         }
         else
             return $this->redirect($request->headers->get('referer'));

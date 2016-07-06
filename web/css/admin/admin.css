@@ -351,4 +351,8 @@
 .easyadmin.edit-image #image_alt {
   margin-bottom: 50px; }
 
+.disabled {
+  cursor: default;
+  opacity: 0.3; }
+
 /*# sourceMappingURL=admin.css.map */

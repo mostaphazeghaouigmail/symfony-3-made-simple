@@ -51,11 +51,22 @@ function init() {
     }
 
     //image editing
-    if($(".easyadmin-vich-image") || isImageable){
+    if($(".body").is('edit-image') || isImageable){
         if(typeof(Darkroom) == "undefined")
         initEditImage();
     }
 
+    //prevent to edit template folder
+    if($("body").is('.edit-theme')){
+        $('#theme_folder').addClass('disabled');
+        handleCreateThemeStructure();
+    }
+
+    //disable an input
+    $('.disabled').on('keydown focus keypress',function(){
+        $('.disabled').trigger('blur');
+        return false;
+    });
 }
 
 function initEditImage(){
@@ -69,4 +80,28 @@ function createLoader(){
 
 function removeLoader(){
     $('.loading').remove();
+}
+
+function handleCreateThemeStructure(){
+    var id = $("form").attr('data-entity-id');
+    $.get(Routing.generate('check_theme_strucutre',{'id':id}),function(data){
+       if(data.success === false){
+           eModal
+               .confirm({
+                   'title'   : "The theme file strutcture doesn't exist",
+                   'message' : "Do you want to create it ?"
+               }).then(
+               createThemeStructure,
+               function(){eModal.close();}
+           )
+       }
+    });
+
+}
+
+function createThemeStructure(){
+    var id = $("form").attr('data-entity-id');
+    $.get(Routing.generate("create_theme_structure",{'id':id}),function(){
+        eModal.alert("Done !");
+    });
 }
