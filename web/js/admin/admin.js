@@ -77,7 +77,7 @@ function initEditImage(){
 }
 
 function createLoader(){
-    if($('.loading').length == 0)
+    if($('.loading').length == 0 && !$('.modal').is(':visible'))
         $("body").append('<div class="loading-background"></div><div class="loading"></div>');
 }
 
