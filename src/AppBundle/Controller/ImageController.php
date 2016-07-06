@@ -67,20 +67,12 @@ class ImageController extends SuperController
      */
     public function postEditFileAction(Request $request,Image $image)
     {
-        // get the dataURL
-        $dataURL = json_decode($request->getContent());
-        $parts = explode(',', $dataURL->imageFile);
-        $data = $parts[1];
-        $data = base64_decode($data);
-
         $appService = $this->get("app.application.service");
-        $path = $appService->getImage($image);
-
-        $name =
-        // write the file to the upload directory
-        $success = file_put_contents($this->get('kernel')->getRootDir() . '/../web'.$path, $data);
+        $path       = $appService->getImage($image);
+        $success    = $this->get('app.image.service')->changeFile($request,$path);
 
         $this->get('liip_imagine.cache.manager')->remove($path);
+
         return new JsonResponse(['success'=>$success]);
     }
 
@@ -134,24 +126,9 @@ class ImageController extends SuperController
      * @Method({"POST"})
      */
     public function saveOrderAction(Request $request){
-        $position = $request->request->get("position");
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository("AppBundle:Image");
-        for($i = 0; $i < count($position); $i++)
-            $repository->find($position[$i])->setPlace($i);
-        $em->flush();
+        $this->get('app.image.service')->saveOrder($request);
         exit;
     }
 
-    private function getRandomName(){
-        $key = '';
-        $keys = array_merge(range(0, 9), range('a', 'z'));
-
-        for ($i = 0; $i < 20; $i++) {
-            $key .= $keys[array_rand($keys)];
-        }
-
-        return $key;
-    }
 
 }

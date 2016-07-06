@@ -4,11 +4,8 @@ namespace AppBundle\Service;
 use AppBundle\Entity\Comment;
 use AppBundle\Type\CommentType;
 use Doctrine\DBAL\Types\BooleanType;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 
 /**
  * Created by PhpStorm.
@@ -20,9 +17,15 @@ class CommentService
 {
     private $container;
 
-    public function __construct($container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+    }
+
+    public function cleanComment($entity){
+        $sql = "Update Image SET parent_class = NULL, parent_id = NULL WHERE parent_class = '".$entity->getModel()."' AND parent_id = ".$entity->getId();
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $em->getConnection()->exec($sql);
     }
 
 
@@ -59,5 +62,24 @@ class CommentService
 
     }
 
+
+    public function loadComments($model,$id){
+        return $this->container->get('doctrine.orm.entity_manager')
+            ->getRepository("AppBundle:Comment")
+            ->findBy(["parentClass"=> $model, "parentId"=> $id,'validated' => true], ['validated'=>"ASC"]);
+    }
+
+    public function canModify($entity){
+        $token           = $this->container->get('security.token_storage')->getToken();
+        $securityChecker = $this->container->get('security.authorization_checker');
+        if($token && $securityChecker->isGranted('ROLE_USER')) {
+            $user = $this->container->get('security.token_storage')->getToken()->getUser();
+            if($user && $entity->getUserId() == $user->getId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 }

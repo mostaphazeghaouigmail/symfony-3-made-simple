@@ -1,0 +1,19 @@
+.wrapper {
+  padding-top: 70px; }
+
+.panel {
+  padding: 20px; }
+
+input:-webkit-autofill {
+  background: none !important; }
+
+h1 {
+  font-size: 30px; }
+
+.dropdown:hover > .dropdown-menu {
+  display: block; }
+
+img {
+  max-width: 100%; }
+
+/*# sourceMappingURL=main.css.map */

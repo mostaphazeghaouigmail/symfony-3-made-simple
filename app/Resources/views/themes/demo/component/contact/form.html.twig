@@ -1,0 +1,37 @@
+{% form_theme contact_form 'bootstrap_3_layout.html.twig' %}
+<div class="panel panel-default">
+    <h3>Contact me</h3>
+    <div class="alert hide" id="contact-return">
+
+    </div>
+    {{ form(contact_form,{'action':path('contact'),'id':'contact-form'}) }}
+</div>
+<script>
+    if(typeof($) == "undefined"){
+        var contactInterval = setInterval(function(){
+            if(typeof($) != "undefined"){
+                initContactListener();
+                contactInterval = clearInterval(contactInterval);
+            }
+        },100);
+    }
+        else {
+        initContactListener();
+    }
+
+    function initContactListener(){
+        $(document).ready(function(){
+            $('form[name="contact"]').on('submit',function(){
+                var form = $(this);
+                $.post(form.attr('action'),form.serialize(),function(data){
+                    $("#contact-return").replaceWith("<div class='alert alert-"+(data.success ? 'success' : 'danger')+"'>"+data.message+"</div>");
+                    if(data.success){
+                        form.find('input[type=text],input[type=email],textarea').val('');
+                    }
+                });
+                return false;
+            })
+        })
+    }
+
+</script>

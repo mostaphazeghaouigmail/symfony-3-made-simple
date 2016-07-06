@@ -31,18 +31,7 @@ class ThemeController extends SuperController
      */
     public function createThemeStructureAction(Request $request,Theme $theme)
     {
-        $defaultTheme = $this->get('kernel')->getRootDir()."/Resources/views/themes/default";
-        $targetTheme  = $this->get('kernel')->getRootDir()."/Resources/views/themes/".$theme->getFolder();
-
-        $fs = new Filesystem();
-        if(!$fs->exists($targetTheme)){
-            $fs->mirror($defaultTheme,$targetTheme);
-            $fs->mirror($this->get('kernel')->getRootDir().'/../web/themes/default/assets',$targetTheme.'/assets');
-            $fs->mkdir($this->get('kernel')->getRootDir().'/../web/themes/'.$theme->getFolder());
-            $fs->symlink($targetTheme.'/assets/',$this->get('kernel')->getRootDir().'/../web/themes/'.$theme->getFolder().'/assets');
-        }
-
-        return new JsonResponse(['success'=>true]);
+        return $this->get('app.theme.service')->createThemeStructureAction($theme);
     }
 
 }

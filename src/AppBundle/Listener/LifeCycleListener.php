@@ -18,6 +18,7 @@ use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping\PrePersist;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 class LifeCycleListener
@@ -25,7 +26,7 @@ class LifeCycleListener
     private $container;
     private $itemsMenu = [];
 
-    public function __construct($container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
@@ -35,36 +36,17 @@ class LifeCycleListener
        $entity = $args->getEntity();
 
        if(method_exists($entity,'getImageable')){
-           $em = $args->getEntityManager();
-           $images = $em->getRepository("AppBundle:Image")->findBy(
-               [
-               "parentClass"     => $entity->getModel(),
-               "parentId"        => $entity->getId()
-                ],
-               [
-                   'place'=>"ASC"
-               ]);
+           $images = $this->container->get("app.image.service")->loadImage($entity->getModel(),$entity->getId());
            $entity->setImages($images);
        }
 
         if(method_exists($entity,'getCommentable')){
-            $em = $args->getEntityManager();
-            $images = $em->getRepository("AppBundle:Comment")->findBy([
-                "parentClass"     => $entity->getModel(),
-                "parentId"        => $entity->getId(),
-                "validated"        => true
-            ]);
-            $entity->setComments($images);
+            $comments = $this->container->get("app.comment.service")->loadComments($entity->getModel(),$entity->getId());
+            $entity->setComments($comments);
         }
 
-        if($entity instanceof Comment){
-            if($this->container->get('security.token_storage')->getToken() && $this->container->get('security.authorization_checker')->isGranted('ROLE_USER')) {
-                $user = $this->container->get('security.token_storage')->getToken()->getUser();
-                if($user && $entity->getUserId() == $user->getId()) {
-                    $entity->setEditable(true);
-                }
-            }
-        }
+        if($entity instanceof Comment)
+            $entity->setEditable($this->container->get("app.comment.service")->canModify($entity));
 
     }
 
@@ -72,11 +54,12 @@ class LifeCycleListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof Page || $entity instanceof Article){
-            if($entity->getTemplate()){
-                $this->handleTemplateFile($entity);
-            }
-        }
+        if($entity instanceof Page || $entity instanceof Article)
+            $this->container->get('app.theme.service')->handleTemplateFile($entity);
+
+
+        if($entity instanceof Theme)
+            $this->container->get('app.theme.service')->createThemeStructure($entity->getFolder());
 
     }
 
@@ -85,9 +68,9 @@ class LifeCycleListener
         $entity = $args->getEntity();
 
         if($entity instanceof Page || $entity instanceof Article){
-            $this->handleTemplateFile($entity);
+            $this->container->get('app.theme.service')->handleTemplateFile($entity);
             if($args->hasChangedField('title')){
-                $this->chekMenuSlug($args);
+                $this->itemsMenu = $this->container->get("app.menu.service")->beforeUpdate($args);
             }
         }
 
@@ -96,9 +79,7 @@ class LifeCycleListener
                 if($entity->getActive() && $entity->getFolderCreated() == "No"){
                     $entity->setActive(false);
                 } else {
-                    $em = $args->getEntityManager();
-                    $em->getConnection()->exec("Update Theme SET active = false");
-                    $this->container->get('session')->remove('theme');
+                    $this->container->get('app.theme.service')->deactivateAllTheme();
                 }
             }
         }
@@ -110,83 +91,24 @@ class LifeCycleListener
         $entity = $args->getEntity();
 
         //set image as orphan
-        if(method_exists($entity,'getImageable')){
-            $em = $args->getEntityManager();
-            $em->getConnection()->exec("Update Image SET parent_class = NULL, parent_id = NULL WHERE parent_class = '".$entity->getModel()."' AND parent_id = ".$entity->getId());
-        }
+        if(method_exists($entity,'getImageable'))
+            $this->container->get('app.image.service')->cleanImages($entity);
 
         //remove attached comment
-        if(method_exists($entity,'getCommentable')){
-            $em = $args->getEntityManager();
-            $em->getConnection()->exec("DELETE FROM Comment WHERE parent_class = '".$entity->getModel()."' AND parent_id = ".$entity->getId());
-        }
+        if(method_exists($entity,'getCommentable'))
+            $this->container->get('app.comment.service')->cleanComment($entity);
 
         //handle menu change if need it
-        if($entity instanceof Page || $entity instanceof Article){
-            $em = $args->getEntityManager();
-            $query = $em
-                ->createQuery("
-	            SELECT m FROM AppBundle:MenuItem m
-	            WHERE m.route LIKE :key "
-                );
-
-            $query->setParameter('key', '%'.$entity->getSlug().'%');
-            $itemsMenu =  $query->getResult();
-            foreach ($itemsMenu as $item)
-                $em->getConnection()->exec("DELETE FROM MenuItem WHERE id = '".$item->getId()."'");
-        }
+        if($entity instanceof Page || $entity instanceof Article)
+            $this->container->get('app.menu.service')->cleaMenu($entity);
     }
 
-    private function handleTemplateFile($entity){
-        if($entity->getTemplate()){@
-            $type = $entity instanceof Page ? 'page' : 'article';
-            $file = "../app/Resources/views/".$this->container->get('app.application.service')->getTheme().$type."/templates/".$entity->getTemplate().'.html.twig';
-            if(!is_file($file)){
-                $fs = new Filesystem();
-                $fs->copy("../app/Resources/views/default/view_template.html.twig",$file);
-            }
-        }
-    }
 
-    private function chekMenuSlug(PreUpdateEventArgs $args){
-
-        $entity = $args->getObject();
-        $em = $args->getEntityManager();
-
-        $oldSlug = $args->getOldValue('slug');
-        $newSlug = $args->getNewValue('slug');
-
-        $query = $em
-            ->createQuery("
-	            SELECT m FROM AppBundle:MenuItem m
-	            WHERE m.route LIKE :key "
-            );
-
-        $query->setParameter('key', '%'.$oldSlug.'%');
-        $itemsMenu =  $query->getResult();
-
-        foreach($itemsMenu as $itemMenu){
-
-            if($entity instanceof Page)
-                $itemMenu->setRoute($this->container->get('router')->generate('page',['slug'=>$newSlug]));
-
-            if($entity instanceof Article)
-                $itemMenu->setRoute($this->container->get('router')->generate('article',['slug'=>$newSlug]));
-
-            $this->itemsMenu[] = $itemMenu;
-        }
-
-
-    }
 
     public function postFlush(PostFlushEventArgs $args)
     {
         if (! empty($this->itemsMenu)) {
-            $em = $args->getEntityManager();
-            foreach ($this->itemsMenu as $menuItem) {
-                $em->persist($menuItem);
-            }
-            $em->flush();
+            $this->container->get('app.menu.service')->afterFlush($this->itemsMenu);
             $this->itemsMenu = [];
         }
     }

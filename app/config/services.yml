@@ -12,6 +12,26 @@ services:
         class: AppBundle\Service\LoginFailureHandler
         arguments : ["@router"]
 
+    app.comment.service:
+        class: AppBundle\Service\CommentService
+        arguments : ["@service_container"]
+
+    app.menu.service:
+        class: AppBundle\Service\MenuService
+        arguments : ["@doctrine.orm.entity_manager","@router"]
+
+    app.application.service:
+        class: AppBundle\Service\AppService
+        arguments : ["@service_container"]
+
+    app.image.service:
+        class: AppBundle\Service\ImageService
+        arguments : ["@doctrine.orm.entity_manager"]
+
+    app.theme.service:
+        class: AppBundle\Service\ThemeService
+        arguments : ["@kernel","@app.application.service","@doctrine.orm.entity_manager","@session"]
+
     session.handler.pdo:
         class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
         public:    false
@@ -28,14 +48,6 @@ services:
             - { name: doctrine.event_listener, event: 'preUpdate' }
             - { name: doctrine.event_listener, event: 'preRemove' }
             - { name: doctrine.event_listener, event: 'postFlush' }
-
-    app.comment.service:
-        class: AppBundle\Service\CommentService
-        arguments : ["@service_container"]
-
-    app.application.service:
-        class: AppBundle\Service\AppService
-        arguments : ["@service_container"]
 
     # Doctrine Extension listeners to handle behaviors
     gedmo.listener.tree:
