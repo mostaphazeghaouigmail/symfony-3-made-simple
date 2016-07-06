@@ -56,6 +56,8 @@ class Page
     Filters are defined in <code>app/config/liip_imagine.yml</code>
 </p>
 
+<p>All image are online editable editable with the famous <a hre="http://mattketmo.github.io/darkroomjs/">DarkroomJs</a> </p>
+
 
 <h3>Map</h3>
 <p>
