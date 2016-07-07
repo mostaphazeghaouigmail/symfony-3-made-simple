@@ -365,4 +365,25 @@
   cursor: default;
   opacity: 0.3; }
 
+.theme-item {
+  padding: 10px; }
+  .theme-item .theme-item-inner {
+    box-sizing: border-box; }
+    .theme-item .theme-item-inner h3 {
+      margin-top: 5px; }
+    .theme-item .theme-item-inner div:not(.toggle-group) {
+      margin: 5px; }
+    .theme-item .theme-item-inner b {
+      display: inline-block;
+      width: 100px; }
+    .theme-item .theme-item-inner .actions {
+      margin-top: 15px !important; }
+      .theme-item .theme-item-inner .actions a {
+        margin-right: 5px; }
+    .theme-item .theme-item-inner .easyadmin-thumbnail img {
+      max-height: inherit; }
+    .theme-item .theme-item-inner small {
+      font-style: italic;
+      margin-left: 5px; }
+
 /*# sourceMappingURL=admin.css.map */

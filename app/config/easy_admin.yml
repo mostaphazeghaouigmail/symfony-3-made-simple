@@ -180,16 +180,16 @@ easy_admin:
             class: AppBundle\Entity\Theme
             list:
                 fields:
-                    - 'id'
-                    - { property: 'image', type: 'image', base_path: %app.path.theme_images% }
                     - 'name'
+                    - { property: 'image', type: 'image', base_path: %app.path.theme_images% }
                     - 'author'
+                    - 'description'
                     - 'active'
                     - 'folderCreated'
                 actions:
-                    - 'delete'
-                    - 'edit'
-                    - { name: 'link_assets', type: 'route', label : 'Link assets' }
+                    - { name: 'edit', css_class : 'btn btn-primary btn-xs', icon: 'pencil', label: '' }
+                    - { name: 'link_assets', type: 'route', label : '', css_class : 'btn btn-primary btn-xs', icon : 'link'}
+                    - { name: 'delete', css_class : 'btn btn-danger btn-xs', icon : 'trash', label : '' }
                     - 'new'
                     - 'search'
             edit:

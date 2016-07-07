@@ -61,6 +61,9 @@ function init() {
         handleCreateThemeStructure();
     }
 
+    if($('body').is('#easyadmin-list-Theme'))
+        initMasonrytheme();
+
     //disable an input
     $('.disabled').on('keydown focus keypress',function(){
         $('.disabled').trigger('blur');
@@ -128,4 +131,13 @@ function linkAssets(){
     );
 
     return false;
+}
+
+function initMasonrytheme(){
+    $(".themes-wrapper").imagesLoaded(function(){
+        $('.themes-inner').masonry({
+            itemSelector: '.theme-item', // use a separate class for itemSelector, other than .col-
+            percentPosition: true
+        });
+    })
 }

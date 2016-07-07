@@ -79,3 +79,41 @@
   cursor:default;
   opacity: 0.3;
 }
+
+
+.theme-item{
+  padding:10px;
+  .theme-item-inner{
+
+    box-sizing: border-box;
+
+    h3{
+      margin-top:5px;
+    }
+
+    div:not(.toggle-group){
+      margin: 5px;
+    }
+
+    b{
+      display: inline-block;
+      width: 100px;
+    }
+
+    .actions{
+      margin-top:15px!important;
+      a{
+        margin-right: 5px;
+      }
+    }
+
+    .easyadmin-thumbnail img{
+      max-height: inherit;
+    }
+
+    small{
+      font-style: italic;
+      margin-left:5px;
+    }
+  }
+}
