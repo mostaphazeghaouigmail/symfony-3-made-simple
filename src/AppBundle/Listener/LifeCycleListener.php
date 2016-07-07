@@ -101,6 +101,11 @@ class LifeCycleListener
         //handle menu change if need it
         if($entity instanceof Page || $entity instanceof Article)
             $this->container->get('app.menu.service')->cleaMenu($entity);
+
+        //deactivate theme
+        if($entity instanceof Theme && $entity->isActive()){
+            $this->container->get('app.theme.service')->deactivateAllTheme();
+        }
     }
 
 
