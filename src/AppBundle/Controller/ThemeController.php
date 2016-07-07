@@ -31,7 +31,16 @@ class ThemeController extends SuperController
      */
     public function createThemeStructureAction(Request $request,Theme $theme)
     {
-        return $this->get('app.theme.service')->createThemeStructureAction($theme);
+        return $this->get('app.theme.service')->createThemeStructure($theme->getFolder());
     }
+
+    /**
+     * @Route("/admin/theme/link_assets/{id}", name="link_assets", options={"expose"=true })
+     */
+    public function linkAssetsAction(Request $request,Theme $theme)
+    {
+        return $this->get('app.theme.service')->linkAssets($theme->getFolder());
+    }
+
 
 }

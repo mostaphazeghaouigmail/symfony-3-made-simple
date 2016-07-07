@@ -67,6 +67,8 @@ function init() {
         return false;
     });
 
+    $(".action-link_assets").click(linkAssets);
+
     $( document ).ajaxSend(createLoader);
     $( document ).ajaxStop(removeLoader);
 
@@ -107,4 +109,23 @@ function createThemeStructure(){
     $.get(Routing.generate("create_theme_structure",{'id':id}),function(){
         eModal.alert("Done !");
     });
+}
+
+function linkAssets(){
+    var href = $(this).attr("href");
+    eModal.confirm({
+        title   :"Assets Link",
+        message :"Your are about to create assets symlink in web/themes folder, it is without danger..."
+    }).then(
+        function(){
+            $.get(href,function(){
+             eModal.alert('done !');
+            });
+        },
+        function(){
+            eModal.close;
+        }
+    );
+
+    return false;
 }

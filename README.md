@@ -200,8 +200,8 @@ class Page
 <p>It comes to my attention that it would be preferable to make a theme management, so i dit it</p>
 <p>All theme need to be place in app/Ressources/views/themes</p>
 <p>You can create theme from the back-office, if you don't put the directory corresponding to the folder name you gave, the system will propose you to create the whole theme structure</p>
-<p>If you create the theme structure by the backoffice, no need to di anything, but if not, you need to creete a symlink to web path like the defaut theme</p>
-<p>I will create a action to link it by the back office</p>
+<p>If you create the theme structure by the backoffice, no need to di anything, but if not, you need to create a symlink to web path like the defaut theme</p>
+<p>You can do that by clicking on the link assets button on themes list</p>
 
 <h3>Installation</h3>
 <p><code>git clone https://github.com/sohrabg/made-simple.git</code></p>

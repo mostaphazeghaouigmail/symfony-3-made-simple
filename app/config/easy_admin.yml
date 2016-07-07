@@ -186,6 +186,12 @@ easy_admin:
                     - 'author'
                     - 'active'
                     - 'folderCreated'
+                actions:
+                    - 'delete'
+                    - 'edit'
+                    - { name: 'link_assets', type: 'route', label : 'Link assets' }
+                    - 'new'
+                    - 'search'
             edit:
                 fields:
                     - 'name'
