@@ -1,0 +1,10 @@
+<div>
+    <h3>
+        {{ comment.author }}
+        <br>
+        <small style="font-size:12px;margin-top:-1px;display: block" >wrote on {{ comment.createdAt|date('Y-m-d h:m') }} : </small>
+    </h3>
+    <p>
+        {{ comment.text }}
+    </p>
+</div>
