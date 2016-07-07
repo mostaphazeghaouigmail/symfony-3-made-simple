@@ -31,19 +31,3 @@ function saveMenuOrder(){
 
     $.post(Routing.generate('save_menu_position'),{'position':sort});
 }
-
-function replaceMenuItemTable(){
-    $.get('get_menu_orderable',function(data){
-        $('#main').append(data);
-        setSortableMenuItem();
-    });
-}
-
-function triggerEditMenuClick(id){
-   document.location.href =  $('tr[data-id="'+id+'"').find('td a.action-edit').attr('href');
-}
-
-function triggerDeleteMenuClick(id){
-    $('tr[data-id="'+id+'"').find('td a.action-delete')[0].click();
-}
-

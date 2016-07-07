@@ -44,9 +44,7 @@ function init() {
 
     //sortable menu
     if($("body").is("#easyadmin-list-MenuItem")){
-        $.getScript("/js/admin/menuItemAdmin.js",function(){
-            replaceMenuItemTable();
-        });
+        setSortableMenuItem();
     }
 
     //image editing
