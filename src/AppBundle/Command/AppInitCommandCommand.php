@@ -99,7 +99,12 @@ class AppInitCommandCommand extends ContainerAwareCommand
 
         $fs = new Filesystem();
 
-        $defaultTheme = $this->getContainer()->get('kernel')->getRootDir()."/Resources/views/themes/default";
+        $themeFolder = $this->getContainer()->get('kernel')->getRootDir()."/Resources/views/themes";
+        $defaultTheme = $themeFolder."/default";
+
+        $fs->mkdir($themeFolder);
+        $fs->mkdir($defaultTheme);
+        
         $fs->symlink($defaultTheme.'/assets/',$this->getContainer()->get('kernel')->getRootDir().'/../web/themes/default/assets');
 
         $output->writeln("it's Good !!");
