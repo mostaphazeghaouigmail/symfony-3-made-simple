@@ -19,8 +19,8 @@
 /vendor/
 /web/bundles/
 /web/themes/*
-!/web/themes/default
-/web/thems/default/*
+!/web/themes/default/
+/web/themes/default/assets
 .idea
 .DS_Store
 
