@@ -25,6 +25,9 @@
                 var form = $(this);
                 $.post(form.attr('action'),form.serialize(),function(data){
                     $("#contact-return").replaceWith("<div class='alert alert-"+(data.success ? 'success' : 'danger')+"'>"+data.message+"</div>");
+                    setTimeout(function(){
+                        $("#contact-return").fadeOut(500);
+                    },2000);
                     if(data.success){
                         form.find('input[type=text],input[type=email],textarea').val('');
                     }
