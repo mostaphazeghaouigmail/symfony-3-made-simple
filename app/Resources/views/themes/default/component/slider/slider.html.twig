@@ -2,7 +2,7 @@
     <!-- Indicators -->
     <ol class="carousel-indicators">
         {% for image in entity.images %}
-        <li data-target="#slider" data-slide-to="{{ loop.index }}" class="{{ loop.first ? 'active' : '' }}"></li>
+        <li data-target="#slider" data-slide-to="{{ loop.index -1 }}" class="{{ loop.first ? 'active' : '' }}"></li>
         {% endfor %}
     </ol>
 
