@@ -43,7 +43,14 @@ class ArticleController extends SuperController
      */
     public function showAction(Request $request, Article $article)
     {
-        return $this->render($this->templating('article/templates/'.($article->getTemplate() ? $article->getTemplate()  : 'view').'.html.twig'), [
+
+        $template = $article->getTemplate() ? $article->getTemplate() : "view";
+
+        $view = $this->templating('article/templates/'.($article->getTemplate() ? $article->getTemplate()  : 'view').'.html.twig');
+        if(!file_exists($this->get('kernel')->getRootDir().'/Resources/views/'.$view) && $template !="view" ){
+            $template = "view";
+        }
+        return $this->render($this->templating('article/templates/'.$template.'.html.twig'), [
             'entity' => $article
         ]);
     }

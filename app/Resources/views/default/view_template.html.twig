@@ -1,10 +1,10 @@
-{% extends '::base.html.twig' %}
-
-{% block style %}
-{% endblock style %}
+{% extends app_twig.getThemeBase() %}
 
 {% set page_title = '' %}
 {% set page_description = '' %}
+
+{% block style %}
+{% endblock style %}
 
     {% block body %}
         <h1>{{ entity.title }}</h1>
@@ -21,6 +21,8 @@
                 {{ app_twig.getCommentList(entity)|raw }}
             </div>
         {% endif %}
+
+
 
     {% endblock body %}
 
