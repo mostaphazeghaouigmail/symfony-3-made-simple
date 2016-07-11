@@ -19,7 +19,13 @@ class PageController extends SuperController
      */
     public function showAction(Request $request, Page $page)
     {
-        return $this->render($this->templating('page/templates/'.($page->getTemplate() ? $page->getTemplate()  : 'view').'.html.twig'), [
+        $template = $page->getTemplate() ? $page->getTemplate() : "view";
+
+        $view = $this->templating('page/templates/'.($page->getTemplate() ? $page->getTemplate()  : 'view').'.html.twig');
+        if(!file_exists($this->get('kernel')->getRootDir().'/app/Resources/views'.$view) && $template !="view" ){
+            $template = "view";
+        }
+        return $this->render($this->templating('page/templates/'.$template.'.html.twig'), [
             'entity' => $page
         ]);
     }

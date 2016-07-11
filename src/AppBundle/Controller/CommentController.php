@@ -35,5 +35,23 @@ class CommentController extends SuperController
             return $this->redirect($request->headers->get('referer'));
     }
 
+    /**
+     * @Route("/comment/update/{id}", name="update_comment", options={"expose":true})
+     * @Method({"POST"})
+     */
+    public function updateCommentAction(Request $request, Comment $comment)
+    {
+        $em     = $this->getDoctrine()->getManager();
+        $user   = $this->getUser();
+
+        if(empty($request->request->get('text')) || $user->getId() != $comment->getParentId())
+            exit;
+
+        $comment->setText($request->request->get('text'));
+        $em->flush();
+
+        exit;
+
+    }
 
 }

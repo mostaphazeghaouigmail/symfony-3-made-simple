@@ -73,8 +73,9 @@ class CommentService
         $token           = $this->container->get('security.token_storage')->getToken();
         $securityChecker = $this->container->get('security.authorization_checker');
         if($token && $securityChecker->isGranted('ROLE_USER')) {
-            $user = $this->container->get('security.token_storage')->getToken()->getUser();
-            if($user && $entity->getUserId() == $user->getId()) {
+            $user    = $this->container->get('security.token_storage')->getToken()->getUser();
+            $isAdmin = $securityChecker->isGranted('ROLE_ADMIN');
+            if($entity->getUserId() == $user->getId() || $isAdmin ){
                 return true;
             }
         }

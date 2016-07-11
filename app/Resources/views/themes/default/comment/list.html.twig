@@ -1,3 +1,14 @@
 {% for comment in entity.comments if comment.validated  %}
         {% include app_twig.getTheme()~"/comment/comment.html.twig" with {'comment' : comment} %}
 {% endfor %}
+<script>
+        function saveComment(id){
+                $.post(Routing.generate("update_comment",{'id':id}),{'text':$('#text'+id).html()},function(){
+                        $("#text"+id).next("p").find('button').addClass('hide');
+                });
+        }
+        function showButton(id){
+                $("#text"+id).next("p").find('button').removeClass('hide');
+
+        }
+</script>
