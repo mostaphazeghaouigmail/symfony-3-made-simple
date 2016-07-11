@@ -42,8 +42,9 @@ class MenuController extends SuperController
     public function getRouteAction(Request $request){
 
         $em = $this->getDoctrine()->getManager();
-
+        $routes = [];
         $result = $em->createQuery("SELECT a.slug,a.title FROM AppBundle:Article a")->getScalarResult();
+        
         foreach ($result as $r){
             $route = $this->generateUrl("article",['slug'=>$r['slug']]);
             $route = str_replace("/app_dev.php","",$route);
