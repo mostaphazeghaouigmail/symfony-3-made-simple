@@ -21,9 +21,12 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerI
 class AppService
 {
 
+    private $env;
+
     public function __construct($container)
     {
         $this->container = $container;
+        $this->env       = $this->container->get( 'kernel' )->getEnvironment();
     }
 
     public function getImage($entity){
@@ -159,6 +162,16 @@ class AppService
         return $this->getTheme().'base.html.twig';
     }
 
+    public function getMenuUrl($url){
+        if($this->env == "dev"){
+            $exploded = explode("/",$url);
+            if(count($exploded) > 1 ){
+                $exploded[0] = "/app_dev.php";
+                $url = implode("/",$exploded);
+            }
+        }
+        return $url;
+    }
 
 
 }
