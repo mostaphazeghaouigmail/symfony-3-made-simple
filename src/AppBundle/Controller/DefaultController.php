@@ -17,8 +17,9 @@ class DefaultController extends SuperController
     {
         $service = $this->get('app.application.service');
         $indexPage = $service->getParameter('index_page');
+
         if($indexPage && !empty($indexPage)){
-            return $this->forward('AppBundle:Page:index',['slug'=>$indexPage]);
+            return $this->forward('AppBundle:Page:show',['slug'=>$indexPage]);
         }
 
         // replace this example code with whatever you need
