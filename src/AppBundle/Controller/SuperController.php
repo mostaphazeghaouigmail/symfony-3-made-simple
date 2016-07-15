@@ -17,4 +17,8 @@ class SuperController extends Controller
     public function templating($view){
         return $this->get('app.application.service')->templating($view);
     }
+
+    public function template($view,$data){
+        return $this->render($this->templating($view), $data);
+    }
 }

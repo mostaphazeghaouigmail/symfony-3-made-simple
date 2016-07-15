@@ -8,7 +8,7 @@ easy_admin:
             - { entity: 'Article',   label : 'Articles', icon: 'newspaper-o'}
             - { entity: 'Comment',   label : 'Comments', icon: 'comment'}
             - { entity: 'Parameter', label : 'Settings', icon: 'cogs'}
-            - { entity: 'MenuItem',  label : 'Menu',     icon: 'cogs'}
+            - { entity: 'MenuItem',  label : 'Menu',     icon: 'bars'}
             - { entity: 'Theme',     label : 'Themes',   icon: 'th'}
     entities:
         User:

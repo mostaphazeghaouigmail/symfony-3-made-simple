@@ -11,7 +11,9 @@ function init() {
     if(isCodable){
         var container = document.getElementsByClassName("codeable")[0];
         var editor = CodeMirror.fromTextArea(container.getElementsByTagName('textarea')[0], {
-            lineNumbers: true
+            lineNumbers: true,
+            mode: "css",
+            theme:"monokai"
         });
     }
 

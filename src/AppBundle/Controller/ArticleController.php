@@ -20,20 +20,36 @@ class ArticleController extends SuperController
      */
     public function indexAction(Request $request)
     {
-        $em     = $this->getDoctrine()->getManager();
         $dql   = "SELECT a FROM AppBundle:Article a";
+        $pagination = $this->getArticles($request,$dql);
 
-        $query = $em->createQuery($dql);
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            10
-        );
-
-        return $this->render($this->templating('article/index.html.twig'), [
+        return $this->template('article/index.html.twig', [
             'entities' => $pagination
         ]);
+    }
+
+
+    /**
+     * @Route("/search", name="quick_search", options={"expose"=true})
+     */
+    public function quickSearchAction(Request $request ){
+
+        $term       = $request->request->get('term');
+        $properties = get_class_vars("AppBundle\\Entity\\Article");
+
+        $conditions = [];
+
+        foreach ($properties["searchable"] as $f)
+            $conditions[] = "a.".$f." LIKE '%".$term."%'";
+
+        $conditions = implode(" OR ",$conditions);
+        $pagination = $this->getArticles($request,'SELECT a from AppBundle:Article a WHERE '.$conditions);
+
+        return $this->template('article/index.html.twig', [
+            'entities' => $pagination,
+            'term'     => $term
+        ]);
+
     }
 
 
@@ -50,12 +66,23 @@ class ArticleController extends SuperController
         if(!file_exists($this->get('kernel')->getRootDir().'/Resources/views/'.$view) && $template !="view" ){
             $template = "view";
         }
-        return $this->render($this->templating('article/templates/'.$template.'.html.twig'), [
+        return $this->template('article/templates/'.$template.'.html.twig', [
             'entity' => $article
         ]);
     }
 
+    private function getArticles(Request $request,$dql){
 
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery($dql);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            20
+        );
 
+        return $pagination;
+    }
 
 }

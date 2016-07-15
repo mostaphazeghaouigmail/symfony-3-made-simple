@@ -24,3 +24,4 @@ parameters:
     app.path.theme_images: /uploads/theme
 
     api_key: yourapikey
+    cache_driver:

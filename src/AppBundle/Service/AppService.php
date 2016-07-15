@@ -117,6 +117,7 @@ class AppService
     }
 
     public function getParameter($cle,$type = false){
+        
         $em     = $this->container->get('doctrine.orm.entity_manager');
         $param  = $em->getRepository('AppBundle:Parameter')->findOneByCle($cle);
         $param  = $param ? $param->getValeur() : '';
@@ -162,7 +163,10 @@ class AppService
         return $this->getTheme().'base.html.twig';
     }
 
-    public function getMenuUrl($url){
+    public function getMenuUrl(Request $request,$url){
+        if(strpos($url,"#") !== false && $request->getPathInfo() != "/"){
+            $url = "/".$url;
+        }
         if($this->env == "dev"){
             $exploded = explode("/",$url);
             if(count($exploded) > 1 ){
@@ -173,5 +177,12 @@ class AppService
         return $url;
     }
 
+    public function getSearch($model){
+        return $this->container
+            ->get('twig')
+            ->render($this->templating("component/search/search.html.twig"),
+                ['model'=> $model]
+            );
+    }
 
 }

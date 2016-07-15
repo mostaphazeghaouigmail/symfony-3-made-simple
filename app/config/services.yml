@@ -28,6 +28,10 @@ services:
         class: AppBundle\Service\ImageService
         arguments : ["@doctrine.orm.entity_manager","@kernel"]
 
+    app.cache.service:
+        class: AppBundle\Service\CacheService
+        arguments : ["@service_container"]
+
     app.theme.service:
         class: AppBundle\Service\ThemeService
         arguments : ["@kernel","@app.application.service","@doctrine.orm.entity_manager","@session"]

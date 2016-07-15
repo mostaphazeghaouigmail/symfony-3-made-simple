@@ -8,6 +8,19 @@
            <div class="col-md-12">
             <h1>Blog</h1>
                <br>
+           <div>
+               {% if term is defined %}
+                   <h3>{{ entities.getTotalItemCount }} result{{ entities.getTotalItemCount > 1 ? 's' : '' }}  for '{{ term }}'</h3>
+               {% endif %}
+               <form action="{{ path('quick_search') }}" method="POST">
+                   <div class="col-md-3 form-group">
+                       <input id="quicksearch" name="term" class="form-control" type="text" placeholder="Quick Search" >
+                   </div>
+                   <div class="col-md-1 form-group">
+                       <input type="submit" value="search" class="btn-default btn btn-primary">
+                   </div>
+               </form>
+           </div>
            {% for article in entities %}
               {% include app_twig.getTheme()~"/article/item.html.twig" with {'article' : article } %}
            {% endfor %}

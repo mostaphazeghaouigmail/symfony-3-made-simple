@@ -25,7 +25,7 @@ class PageController extends SuperController
         if(!file_exists($this->get('kernel')->getRootDir().'/Resources/views/'.$view) && $template !="view" ){
             $template = "view";
         }
-        return $this->render($this->templating('page/templates/'.$template.'.html.twig'), [
+        return $this->template('page/templates/'.$template.'.html.twig', [
             'entity' => $page
         ]);
     }

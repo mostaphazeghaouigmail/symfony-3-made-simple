@@ -17,8 +17,9 @@ use Symfony\Component\Debug\Debug;
 $loader = require __DIR__.'/../app/autoload.php';
 Debug::enable();
 
-$apcEnable = extension_loaded('apc') && ini_get('apc.enabled');
-if($apcEnable){
+define("APC_ENABLE",extension_loaded('apc') && ini_get('apc.enabled'));
+
+if(APC_ENABLE){
     $apcLoader = new Symfony\Component\ClassLoader\ApcClassLoader(sha1(__FILE__), $loader);
     $loader->unregister();
     $apcLoader->register(true);

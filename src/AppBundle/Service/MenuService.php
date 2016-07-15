@@ -26,7 +26,8 @@ class MenuService
         foreach ($itemsMenu as $item)
             $ids[] = $item->getId();
 
-        $this->em->getConnection()->exec("DELETE FROM MenuItem WHERE id IN (".implode(',',$ids).") ");
+        if( count($ids) > 0 )
+            $this->em->getConnection()->exec("DELETE FROM MenuItem WHERE id IN (".implode(',',$ids).") ");
     }
 
     public function beforeUpdate($args){

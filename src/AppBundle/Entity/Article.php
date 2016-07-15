@@ -92,5 +92,7 @@ class Article extends Editorial
      */
     protected $style;
 
+    public $searchable = ['title'];
+
 
 }
