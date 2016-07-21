@@ -122,7 +122,7 @@ class LifeCycleListener
             $this->itemsMenu = [];
         }
 
-        if(APC_ENABLE)
+        if(defined("APC_ENABLE") && APC_ENABLE)
             apc_clear_cache();
     }
 
