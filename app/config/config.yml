@@ -63,6 +63,8 @@ doctrine:
         #remove those line if you do not have apc
         metadata_cache_driver: "%cache_driver%"
         query_cache_driver: "%cache_driver%"
+        result_cache_driver: "%cache_driver%"
+
 
 
 # Swiftmailer Configuration

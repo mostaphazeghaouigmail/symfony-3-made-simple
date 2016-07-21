@@ -13,13 +13,16 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 trait Imageable
 {
 
-    private $images;
+    protected $images;
 
     /**
      * @return Json
      */
     public function getImageable(){
-        return json_encode(['name'=>$this->getModel(),'id'=>$this->id]);
+        $model = get_class($this);
+        $model = explode('\\', $model);
+        $model = array_pop($model);
+        return json_encode(['name'=>$model,'id'=>$this->id]);
     }
 
     /**
@@ -38,17 +41,6 @@ trait Imageable
     {
         $this->images = $images;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getModel()
-    {
-        $model = get_class($this);
-        $model = explode('\\', $model);
-        $model = array_pop($model);
-        return $model;
     }
 
 }

@@ -29,7 +29,14 @@ class ImageService
     }
 
     public function loadImage($model,$id){
-        return $this->em->getRepository("AppBundle:Image")->findBy(["parentClass"=> $model, "parentId"=> $id], ['place'=>"ASC"]);
+
+        $dql = "SELECT i FROM AppBundle:Image i WHERE i.parentClass ='".$model."' AND i.parentId=".$id." ORDER BY i.place ASC";
+        $query = $this->em->createQuery($dql);
+
+        if(APC_ENABLE)
+            $query->useResultCache(true,3600);
+
+        return $query->getResult();
     }
     
     public function changeFile($request,$path){

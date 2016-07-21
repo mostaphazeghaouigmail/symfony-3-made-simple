@@ -1,15 +1,17 @@
-<div>
-    <h3>
-        {{ comment.author }}
-        <br>
-        <small style="font-size:12px;margin-top:-1px;display: block" >wrote on {{ comment.createdAt|date('Y-m-d h:m') }} : </small>
-    </h3>
-    <p {{ comment.isEditable ? 'contenteditable' : '' }} class="comment-text" id="text{{ comment.id }}" onkeydown="showButton({{ comment.id }})">
-        {{ comment.text }}
-    </p>
-    <p>
-        {% if comment.isEditable %}
-            <button class="btn btn-primary hide" onclick="saveComment({{ comment.id }})">Save</button>
-        {% endif %}
-    </p>
+<div class="comment-item col-md-3">
+    <div class="comment-inner">
+        <h3>
+            {{ comment.author }}
+            <br>
+            <small style="font-size:12px;margin-top:-1px;display: block" >on {{ comment.createdAt|date('Y-m-d h:m') }} : </small>
+        </h3>
+        <p {{ comment.isEditable ? 'contenteditable' : '' }} class="comment-text" id="text{{ comment.id }}" onkeydown="showButton({{ comment.id }})">
+            {{ comment.text }}
+        </p>
+        <p>
+            {% if comment.isEditable %}
+                <button class="btn btn-primary hide" onclick="saveComment({{ comment.id }})">Save</button>
+            {% endif %}
+        </p>
+    </div>
 </div>

@@ -3,8 +3,10 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Traits\ApiCapable;
 use AppBundle\Traits\Commentable;
 use AppBundle\Traits\Imageable;
+use AppBundle\Traits\Taggable;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -18,6 +20,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Page extends Editorial
 {
     use Commentable;
+    use Taggable;
+    use Imageable;
+    use ApiCapable;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -90,6 +96,7 @@ class Page extends Editorial
      * @var string
      */
     protected $style;
+
 
 
 

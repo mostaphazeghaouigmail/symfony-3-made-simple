@@ -46,12 +46,12 @@ class MenuItem
     protected $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MenuItem", inversedBy="childrens")
+     * @ORM\ManyToOne(targetEntity="MenuItem", inversedBy="childrens", fetch="EAGER")
      */
     protected $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="MenuItem", mappedBy="parent", )
+     * @ORM\OneToMany(targetEntity="MenuItem", mappedBy="parent", fetch="EAGER" )
      */
     protected $childrens;
 

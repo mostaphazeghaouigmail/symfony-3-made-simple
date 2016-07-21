@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Traits\ApiCapable;
 use AppBundle\Traits\Imageable;
+use AppBundle\Traits\Taggable;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -13,14 +14,20 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 class Editorial
 {
-    use Imageable;
-    use ApiCapable;
-    
+
     /**
      * @Vich\UploadableField(mapping="page_images", fileNameProperty="image")
      * @var File
      */
     private $imageFile;
+
+    public function __toString()
+    {
+        $model = get_class($this);
+        $model = explode('\\', $model);
+        $model = array_pop($model);
+        return $model;
+    }
 
     public function __construct()
     {

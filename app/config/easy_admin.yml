@@ -37,7 +37,7 @@ easy_admin:
                     - 'roles'
                     - 'lastLogin'
                     - { property: 'imageFile', type: 'vich_image' }
-                    - {property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable"}
+                    - { property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable"}
         Image:
             class: AppBundle\Entity\Image
             list:
@@ -60,6 +60,8 @@ easy_admin:
                     - 'text'
                     - 'alt'
                     - { property: 'imageFile', type: 'vich_image' }
+                    - {property: 'tags', type: 'text'}
+
 
         Page:
             class: AppBundle\Entity\Page
@@ -83,6 +85,7 @@ easy_admin:
                     - { property: 'imageFile', type: 'vich_image' }
                     - 'description'
                     - 'metaDescription'
+                    - {property: 'tags', type: 'text'}
                     - {property: 'body', type: 'ckeditor', type_options: { 'config': { filebrowserBrowseRoute: 'images_get'} }}
                     - {property : 'style', css_class : 'codeable' }
                     - {property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable"}
@@ -114,6 +117,7 @@ easy_admin:
                     - { property: 'imageFile', type: 'vich_image' }
                     - 'description'
                     - 'metaDescription'
+                    - {property: 'tags', type: 'text'}
                     - {property: 'body', type: 'ckeditor', type_options: { 'config': { filebrowserBrowseRoute: 'images_get'} }}
                     - {property : 'style', css_class : 'codeable' }
                     - {property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable"}

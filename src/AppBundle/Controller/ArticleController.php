@@ -3,9 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Article;
+use AppBundle\Interfaces\Taggable;
+use Doctrine\Common\Cache\ApcCache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,6 +21,8 @@ class ArticleController extends SuperController
      */
     public function indexAction(Request $request)
     {
+
+
         $dql   = "SELECT a FROM AppBundle:Article a";
         $pagination = $this->getArticles($request,$dql);
 
@@ -59,7 +62,6 @@ class ArticleController extends SuperController
      */
     public function showAction(Request $request, Article $article)
     {
-
         $template = $article->getTemplate() ? $article->getTemplate() : "view";
 
         $view = $this->templating('article/templates/'.($article->getTemplate() ? $article->getTemplate()  : 'view').'.html.twig');
@@ -75,6 +77,10 @@ class ArticleController extends SuperController
 
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
+
+        if(APC_ENABLE)
+            $query->useResultCache(true,3600,'_articles');
+
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,

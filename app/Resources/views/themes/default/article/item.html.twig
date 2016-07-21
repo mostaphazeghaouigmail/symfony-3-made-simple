@@ -1,26 +1,31 @@
-<article style="margin-bottom: 50px;border-bottom:1px dashed lightgrey">
-    {% if article.image %}
-        <img style="float: left;margin-right: 10px;" src="{{ app_twig.getImage(article)|imagine_filter('thumbnail')  }}">
-    {% endif %}
-    <p>
-        <a href="{{ path('article',{'slug':article.slug}) }}">
-            <h4>
+<div class="col-md-3 article">
+    <article>
+            <div class="image-wrapper">
+                {% if article.image %}
+                    <img style="" src="{{ app_twig.getImage(article)|imagine_filter('middle', {"thumbnail": {"size": [400, 150] }} )  }}">
+                {% endif %}
+            </div>
+        <h4>
+            <a href="{{ path('article',{'slug':article.slug}) }}">
                 {{ article.title }}
                 {% if article.comments is defined %}
-                    ({{ article.comments|length }})
+                    <span class="pull-right" style="font-size:12px">
+                        <i class="fa fa-comment"></i>&nbsp;{{ article.comments|length }}
+                    </span>
                 {% endif %}
-            </h4>
-        </a>
-    </p>
-    <p>
-        {{ article.description }}
-    </p>
-    <div style="clear:both"></div>
-    <p>
+            </a>
+        </h4>
+        <p>
+            {{ article.description }}
+        </p>
+        <div style="clear:both"></div>
+        <p>
         <span class="pull-left" style="margin-top:20px;font-style: italic">
             Published on {{ article.createdAt|date('Y/m/d h:m') }}
         </span>
-        <a class="btn btn-default pull-right" href="{{ path('article',{'slug':article.slug}) }}" style="fl">Read</a>
-    </p>
-    <div style="clear:both"></div>
-</article>
+            <a class="btn btn-default pull-right" href="{{ path('article',{'slug':article.slug}) }}" style="fl">Read</a>
+        </p>
+        <div style="clear:both"></div>
+    </article>
+</div>
+

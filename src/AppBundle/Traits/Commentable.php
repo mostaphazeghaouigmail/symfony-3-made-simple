@@ -3,7 +3,6 @@ namespace AppBundle\Traits;
 
 use Symfony\Component\Config\Definition\Exception\Exception;
 
-//Todo Rendre le load lazy ?
 /**
  * Created by PhpStorm.
  * User: sohrab
@@ -19,7 +18,10 @@ trait Commentable
      * @return Json
      */
     public function getCommentable(){
-        return json_encode(['name'=>$this->getModel(),'id'=>$this->id]);
+        $model = get_class($this);
+        $model = explode('\\', $model);
+        $model = array_pop($model);
+        return json_encode(['name'=>$model,'id'=>$this->id]);
     }
 
     /**
@@ -40,15 +42,5 @@ trait Commentable
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getModel()
-    {
-        $model = get_class($this);
-        $model = explode('\\', $model);
-        $model = array_pop($model);
-        return $model;
-    }
 
 }

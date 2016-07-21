@@ -4,7 +4,9 @@ namespace AppBundle\Service;
 use AppBundle\Entity\Comment;
 use AppBundle\Type\CommentType;
 use AppBundle\Type\ContactType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\BooleanType;
+use Doctrine\ORM\Mapping\Cache;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -82,9 +84,10 @@ class AppService
     }
 
     public function getMenu(){
-        $em     = $this->container->get('doctrine.orm.entity_manager');
-        $items  = $em->getRepository("AppBundle:MenuItem")->findBy([],['position'=>"ASC"]);
+
+        $items       = $this->container->get('app.menu.service')->getMenuItems();
         $currentSlug = $this->container->get('request_stack')->getCurrentRequest()->attributes->get('slug');
+
         return $this->container->get('twig')
             ->render($this->templating("component/menu/menu.html.twig"),['items'=>$items,'current'=>$currentSlug]);
     }
@@ -119,8 +122,17 @@ class AppService
     public function getParameter($cle,$type = false){
         
         $em     = $this->container->get('doctrine.orm.entity_manager');
-        $param  = $em->getRepository('AppBundle:Parameter')->findOneByCle($cle);
-        $param  = $param ? $param->getValeur() : '';
+
+        $dql    = "SELECT p FROM AppBundle:Parameter p WHERE p.cle=:cle";
+        $query  = $em->createQuery($dql);
+        $query->setParameter('cle',$cle);
+
+        if(APC_ENABLE)
+            $query->useResultCache(true,3600,'_parameter_'.$cle);
+
+        $param  = $query->getResult();
+        $param  = isset($param[0]) ? $param[0]->getValeur() : '';
+
 
         if($type){
             switch ($type){
@@ -164,17 +176,9 @@ class AppService
     }
 
     public function getMenuUrl(Request $request,$url){
-        if(strpos($url,"#") !== false && $request->getPathInfo() != "/"){
-            $url = "/".$url;
-        }
-        if($this->env == "dev"){
-            $exploded = explode("/",$url);
-            if(count($exploded) > 1 ){
-                $exploded[0] = "/app_dev.php";
-                $url = implode("/",$exploded);
-            }
-        }
-        return $url;
+
+        return $this->container->get('app.menu.service')->getMenuUrl($request,$url,$this->container->get('kernel')->getEnvironment());
+
     }
 
     public function getSearch($model){
@@ -183,6 +187,49 @@ class AppService
             ->render($this->templating("component/search/search.html.twig"),
                 ['model'=> $model]
             );
+    }
+
+    public function getTagsLink($entity){
+        $tagService = $this->container->get('app.tag.service');
+        return $tagService->getTagsLink($entity->getTags());
+    }
+
+
+    public function listEntities(){
+
+        $em = $this->container->get("doctrine.orm.entity_manager");
+        $meta = $em->getMetadataFactory()->getAllMetadata();
+
+        foreach ($meta as $m) {
+            $entities[] = $m->getName();
+        }
+
+        return $entities;
+
+    }
+
+    private function listBehaviored($prop){
+        $class = [];
+        $entites  = $this->listEntities();
+
+        foreach ($entites as $entity){
+            if(property_exists($entity,$prop))
+                $class[] = $entity;
+        }
+
+        return $class;
+    }
+
+    public function listTaggable(){
+        return $this->listBehaviored("tags");
+    }
+
+    public function listImageable(){
+        return $this->listBehaviored("images");
+    }
+
+    public function listCommentable(){
+        return $this->listBehaviored("comments");
     }
 
 }

@@ -1,29 +1,47 @@
 {% extends app_twig.getThemeBase() %}
 
-{% set page_title = '' %}
-{% set page_description = '' %}
+{% set page_title = "Symfony 3 starter kit"~entity.title %}
+{% set page_description = entity.metaDescription %}
+
+{% block body_class %}article{% endblock %}
 
 {% block style %}
 {% endblock style %}
     {% block body %}
-        <h1>{{ entity.title }}</h1>
+        <section>
+                <div class="col-md-12">
+                    <div class="row article-title">
+                        <h1>
+                            {{ entity.title }}
+                        </h1>
+                        {% if entity.image %}
+                            <img src="{{ app_twig.getImage(entity)|imagine_filter('cover')  }}">
+                        {% else %}
+                            <div style="height: 100px"></div>
+                        {% endif %}
+                    </div>
 
-        <img src="{{ app_twig.getImage(entity)|imagine_filter('cover')  }}">
+                    <div class="article-body">{{ entity.body|raw }}</div>
 
-        <p>{{ entity.body|raw }}</p>
-
-        {% if attribute(entity, 'getCommentable') is defined  %}
-            <h2>Comments</h2>
-            <hr>
-            <div class="col-md-4 panel panel-default">
-                <h3>Add Commment</h3>
-                {{ app_twig.getCommentForm(entity)|raw }}
-            </div>
-            <div class="col-md-8">
-                {{ app_twig.getCommentList(entity)|raw }}
-            </div>
-        {% endif %}
+                    {% if entity.tags is defined and entity.tags %}
+                        <div class="tags">
+                            <h4>Tags</h4>
+                            {{ app_twig.getTagsLink(entity)|raw }}
+                        </div>
+                    {% endif %}
+                    {% if attribute(entity, 'getCommentable') is defined  %}
+                        <h3>Comments</h3>
+                        <hr>
+                        <div class="col-md-4 panel panel-default">
+                            <h3>Add Commment</h3>
+                            {{ app_twig.getCommentForm(entity)|raw }}
+                        </div>
+                        <div class="col-md-8">
+                            {{ app_twig.getCommentList(entity)|raw }}
+                        </div>
+                    {% endif %}
+                </div>
+        </section>
     {% endblock body %}
-
 {% block javascripts %}
 {% endblock javascripts %}

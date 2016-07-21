@@ -20,6 +20,7 @@ Debug::enable();
 define("APC_ENABLE",extension_loaded('apc') && ini_get('apc.enabled'));
 
 if(APC_ENABLE){
+
     $apcLoader = new Symfony\Component\ClassLoader\ApcClassLoader(sha1(__FILE__), $loader);
     $loader->unregister();
     $apcLoader->register(true);

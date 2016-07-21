@@ -3,8 +3,10 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Traits\ApiCapable;
 use AppBundle\Traits\Commentable;
 use AppBundle\Traits\Imageable;
+use AppBundle\Traits\Taggable;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -15,9 +17,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="Article")
  * @Vich\Uploadable
  */
-class Article extends Editorial
+class Article extends Editorial implements \AppBundle\Interfaces\Taggable
 {
     use Commentable;
+    use Taggable;
+    use Imageable;
+    use ApiCapable;
 
     /**
      * @ORM\Id
@@ -91,6 +96,7 @@ class Article extends Editorial
      * @var string
      */
     protected $style;
+
 
     public $searchable = ['title'];
 

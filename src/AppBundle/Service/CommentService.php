@@ -39,7 +39,7 @@ class CommentService
 
         if($allowAnonymous || $connected){
             $comment = new Comment();
-            $comment->setParentClass($entity->getModel())
+            $comment->setParentClass($entity)
                     ->setParentId($entity->getId())
                     ->setValidated($allowAnonymous);
 
@@ -64,9 +64,15 @@ class CommentService
 
 
     public function loadComments($model,$id){
-        return $this->container->get('doctrine.orm.entity_manager')
-            ->getRepository("AppBundle:Comment")
-            ->findBy(["parentClass"=> $model, "parentId"=> $id,'validated' => true], ['validated'=>"ASC"]);
+
+        $dql = "SELECT c FROM AppBundle:Comment c WHERE c.parentClass ='".$model."' AND c.parentId=".$id." AND c.validated=true ORDER BY c.createdAt DESC";
+        $query = $this->container->get("doctrine.orm.entity_manager")->createQuery($dql);
+
+        if(APC_ENABLE)
+            $query->useResultCache(true,3600);
+
+        return $query->getResult();
+
     }
 
     public function canModify($entity){

@@ -10,7 +10,7 @@
     <div class="carousel-inner" role="listbox">
         {% for image in entity.images %}
             <div class="item {{ loop.first ? 'active' : '' }}">
-                <img src="{{ asset("uploads/image/"~image.image)|imagine_filter('normal')  }}" alt="{{ image.alt }}" title="{{ image.title }}">
+                <div class="bg-slider" style="background-image : url({{ asset("uploads/image/"~image.image)|imagine_filter('middle', {"thumbnail": {"size": [2000, 1333] }} )  }})"  title="{{ image.title }}"></div>
                 {% if image.name or image.text %}
                 <div class="carousel-caption">
                     {% if image.name %}

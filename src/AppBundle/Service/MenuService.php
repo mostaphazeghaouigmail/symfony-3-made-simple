@@ -2,6 +2,7 @@
 namespace AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
 
 
@@ -59,6 +60,32 @@ class MenuService
         $this->em->flush();
     }
 
+    public function getMenuItems(){
+
+        $dql    = "SELECT m FROM AppBundle:MenuItem m WHERE m.parent IS NULL ORDER BY m.position ASC";
+        $query  = $this->em->createQuery($dql);
+
+        if(APC_ENABLE)
+            $query->useResultCache(true,3600);
+
+        return $query->getResult();
+    }
+
+    public function getMenuUrl(Request $request,$url,$env){
+
+        if(strpos($url,"#") !== false && $request->getPathInfo() != "/"){
+            $url = "/".$url;
+        }
+        if($env == "dev"){
+            $exploded = explode("/",$url);
+            if(count($exploded) > 1 ){
+                $exploded[0] = "/app_dev.php";
+                $url = implode("/",$exploded);
+            }
+        }
+
+        return $url;
+    }
 
 
 }

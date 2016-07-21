@@ -28,6 +28,10 @@ services:
         class: AppBundle\Service\ImageService
         arguments : ["@doctrine.orm.entity_manager","@kernel"]
 
+    app.tag.service:
+        class: AppBundle\Service\TagService
+        arguments : ["@kernel","@router"]
+
     app.theme.service:
         class: AppBundle\Service\ThemeService
         arguments : ["@kernel","@app.application.service","@doctrine.orm.entity_manager","@session"]
