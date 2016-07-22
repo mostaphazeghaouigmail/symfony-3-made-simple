@@ -5,18 +5,7 @@ Symfony 3 Made Simple starter kit
 
 <p>Hi! This is my Symfony 3 starter kit. It's certainly not perfect, so feel free to use and improve upon it. It comes with a bunch of nice bundles and a couple of basic blocks: image management with drag and drop and multi upload, simple comment management, simple widgets (ahem... very simple, don't get your hopes too high). It's really not a cms, you're not supposed to take it like it is. It has been created to be modified for your unique use-cases. With this starter, you can manage: Users, Pages, Articles, Images, Comments, Settings.</p>
 
-<h3>Main Entity Management</h3>
-
-<p>Easy User management with  <a href="http://symfony.com/doc/current/bundles/FOSUserBundle/index.html" style="line-height: 1.6;">FosUserBundle</a></p>
-
-<p>Easy Backoffice with the excellent <a href="https://github.com/javiereguiluz/EasyAdminBundle" style="line-height: 1.6;">EasyAdminBundle</a>, config file is config/easy_admin.yml</p>
-
-<p>Esay Uploading with <a href="https://github.com/dustin10/VichUploaderBundle">VichUploaderBundle</a>, config file is config/vich_uploader.yml, variable path are in config/parameters.yml</p>
-
-<p>Easy Image format gestion with&nbsp;<a href="https://github.com/liip/LiipImagineBundle">ImagineBundle</a></p>
-
-<p>Easy text editing with <a href="https://github.com/egeloen/IvoryCKEditorBundle">IvoryCKEditorBundle</a></p>
-
+I'm writting a full documentation <a href="http://www.symfony-made-simple.com">here</a>, the website is made with this starter
 <h3>Inside</h3>
 
 <ul style="padding-left: 0;">
@@ -203,6 +192,9 @@ class Page
 <p>If you create the theme structure by the backoffice, no need to di anything, but if not, you need to create a symlink to web path like the defaut theme</p>
 <p>You can do that by clicking on the link assets button on themes list</p>
 
+<h3>Tag system</h3>
+Done but not the doc for now
+
 <h3>Installation</h3>
 <p><code>git clone https://github.com/sohrabg/made-simple.git</code></p>
 <p><code>composer install</code></p>
@@ -211,7 +203,7 @@ class Page
 <p><code>php bin/console assets:install --symlink</code></p>
 <p>Answer all question</p>
 <p>Start to work</p>
-<p>Demo online comming soon...</p>
+
 
 
 <h3>INFORMATIONS</h3>
