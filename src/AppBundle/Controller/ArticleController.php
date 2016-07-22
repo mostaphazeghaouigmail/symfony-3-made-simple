@@ -78,8 +78,10 @@ class ArticleController extends SuperController
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery($dql);
 
+        $site = $this->get("app.application.service")->getParameter("site_nom");
+
         if(APC_ENABLE)
-            $query->useResultCache(true,3600,'_articles');
+            $query->useResultCache(true,86400,$site.'_articles');
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(

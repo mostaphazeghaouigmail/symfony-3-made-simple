@@ -128,7 +128,7 @@ class AppService
         $query->setParameter('cle',$cle);
 
         if(APC_ENABLE)
-            $query->useResultCache(true,3600,'_parameter_'.$cle);
+            $query->useResultCache(true,86400,'_parameter_'.$cle);
 
         $param  = $query->getResult();
         $param  = isset($param[0]) ? $param[0]->getValeur() : '';

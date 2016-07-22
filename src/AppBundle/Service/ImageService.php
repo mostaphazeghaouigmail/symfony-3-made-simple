@@ -16,11 +16,13 @@ class ImageService
 {
     private $em;
     private $rootDir;
+    private $appService;
 
-    public function __construct(EntityManager $em,Kernel $kernel)
+    public function __construct(EntityManager $em,Kernel $kernel,AppService $appService)
     {
-        $this->em       = $em;
-        $this->rootDir  = $kernel->getRootDir();
+        $this->em           = $em;
+        $this->rootDir      = $kernel->getRootDir();
+        $this->appService   = $appService;
     }
 
     public function cleanImages($entity){
@@ -32,9 +34,10 @@ class ImageService
 
         $dql = "SELECT i FROM AppBundle:Image i WHERE i.parentClass ='".$model."' AND i.parentId=".$id." ORDER BY i.place ASC";
         $query = $this->em->createQuery($dql);
+        $site = $this->appService->getParameter("site_nom");
 
         if(APC_ENABLE)
-            $query->useResultCache(true,3600);
+            $query->useResultCache(true,86400,$site."_".$model."_images_".$id);
 
         return $query->getResult();
     }

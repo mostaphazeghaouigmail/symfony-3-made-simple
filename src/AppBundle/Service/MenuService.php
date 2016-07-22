@@ -10,11 +10,14 @@ class MenuService
 {
     private $em;
     private $router;
+    private $appService;
 
-    public function __construct(EntityManager $em,Router $router)
+    public function __construct(EntityManager $em,Router $router,AppService $appService)
     {
-        $this->em     = $em;
-        $this->router = $router;
+        $this->em           = $em;
+        $this->router       = $router;
+        $this->appService   = $appService;
+
     }
 
     public function cleaMenu($entity){
@@ -64,9 +67,10 @@ class MenuService
 
         $dql    = "SELECT m FROM AppBundle:MenuItem m WHERE m.parent IS NULL ORDER BY m.position ASC";
         $query  = $this->em->createQuery($dql);
+        $site   = $this->appService->getParameter("site_nom");
 
         if(APC_ENABLE)
-            $query->useResultCache(true,3600);
+            $query->useResultCache(true,86400,$site."_menu");
 
         return $query->getResult();
     }

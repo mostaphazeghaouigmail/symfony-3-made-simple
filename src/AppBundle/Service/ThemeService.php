@@ -57,7 +57,6 @@ class ThemeService
         $targetThemeAssetsPath = $this->getWebThemePath($folder).'/assets';
 
         $fs = new Filesystem();
-        dump($fs->exists($targetThemeAssetsPath));
         if(!$fs->exists($targetThemeAssetsPath)){
             $fs->mkdir($this->getWebThemePath($folder));
             $fs->symlink($targetThemePath.'/assets/',$targetThemeAssetsPath);

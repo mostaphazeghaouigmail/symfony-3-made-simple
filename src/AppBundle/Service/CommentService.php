@@ -67,9 +67,10 @@ class CommentService
 
         $dql = "SELECT c FROM AppBundle:Comment c WHERE c.parentClass ='".$model."' AND c.parentId=".$id." AND c.validated=true ORDER BY c.createdAt DESC";
         $query = $this->container->get("doctrine.orm.entity_manager")->createQuery($dql);
+        $site = $this->container->get("app.application.service")->getParameter("site_nom");
 
         if(APC_ENABLE)
-            $query->useResultCache(true,3600);
+            $query->useResultCache(true,86400,$site."_".$model."_comments_".$id);
 
         return $query->getResult();
 

@@ -18,7 +18,7 @@ services:
 
     app.menu.service:
         class: AppBundle\Service\MenuService
-        arguments : ["@doctrine.orm.entity_manager","@router"]
+        arguments : ["@doctrine.orm.entity_manager","@router","@app.application.service"]
 
     app.application.service:
         class: AppBundle\Service\AppService
@@ -26,7 +26,7 @@ services:
 
     app.image.service:
         class: AppBundle\Service\ImageService
-        arguments : ["@doctrine.orm.entity_manager","@kernel"]
+        arguments : ["@doctrine.orm.entity_manager","@kernel","@app.application.service"]
 
     app.tag.service:
         class: AppBundle\Service\TagService
