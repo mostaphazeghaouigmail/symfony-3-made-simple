@@ -130,7 +130,7 @@ class Parameter
      * @ORM\PreRemove
      */
     public function beforeRemove(){
-        if(in_array($this->getCle(),$this->mandatory)){
+        if(in_array($this->getCle(),$this->mandatory) || $this->getId() < 7){
             throw new Exception('You can not remove this setting');
         }
     }
