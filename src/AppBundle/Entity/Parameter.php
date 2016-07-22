@@ -130,7 +130,7 @@ class Parameter
      * @ORM\PreRemove
      */
     public function beforeRemove(){
-        if(in_array($this->getCle(),$this->mandatory) || $this->getId() < 7){
+        if(in_array($this->getCle(),$this->mandatory) || $this->getId() <= 7){
             throw new Exception('You can not remove this setting');
         }
     }
@@ -139,8 +139,8 @@ class Parameter
      * @ORM\PreUpdate
      */
     public function beforeUpdate(){
-        if(!in_array($this->getCle(),$this->mandatory) && $this->getId() < 7){
-            throw new Exception('You can not change this key');
+        if(!in_array($this->getCle(),$this->mandatory) && $this->getId() <= 7){
+            throw new \Exception('You can not change this key');
         }
     }
 
