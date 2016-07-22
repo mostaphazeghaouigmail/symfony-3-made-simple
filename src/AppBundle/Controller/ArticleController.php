@@ -23,7 +23,7 @@ class ArticleController extends SuperController
     {
 
 
-        $dql   = "SELECT a FROM AppBundle:Article a";
+        $dql   = "SELECT a FROM AppBundle:Article a ORDER BY a.createdAt DESC";
         $pagination = $this->getArticles($request,$dql);
 
         return $this->template('article/index.html.twig', [
@@ -46,7 +46,7 @@ class ArticleController extends SuperController
             $conditions[] = "a.".$f." LIKE '%".$term."%'";
 
         $conditions = implode(" OR ",$conditions);
-        $pagination = $this->getArticles($request,'SELECT a from AppBundle:Article a WHERE '.$conditions);
+        $pagination = $this->getArticles($request,'SELECT a from AppBundle:Article a WHERE '.$conditions." ORDER BY a.createdAt DESC");
 
         return $this->template('article/index.html.twig', [
             'entities' => $pagination,
