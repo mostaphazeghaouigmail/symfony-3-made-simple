@@ -135,6 +135,15 @@ class Parameter
         }
     }
 
+    /**
+     * @ORM\PreUpdate
+     */
+    public function beforeUpdate(){
+        if(!in_array($this->getCle(),$this->mandatory) && $this->getId() < 7){
+            throw new Exception('You can not change this key');
+        }
+    }
+
     
 
 
