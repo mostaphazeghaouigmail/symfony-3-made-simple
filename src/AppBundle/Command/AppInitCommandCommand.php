@@ -146,7 +146,7 @@ class AppInitCommandCommand extends ContainerAwareCommand
         $settings[]  = $this->createParameter('allow_anonymous_comments','Allow anonymous comments','1');
         $settings[]  = $this->createParameter('validated_comments_by_defaut','By default, comments are published without modération','1');
         $settings[]  = $this->createParameter('tracking_code','Analitycs tracking code','');
-        $settings[]  = $this->createParameter('default_route','Default route','');
+        $settings[]  = $this->createParameter('index_page','Default slug route','');
 
         foreach ($settings as $setting)
             $em->persist($setting);
