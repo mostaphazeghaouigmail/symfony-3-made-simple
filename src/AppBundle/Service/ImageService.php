@@ -26,7 +26,10 @@ class ImageService
     }
 
     public function cleanImages($entity){
-        $sql = "Update Image SET parent_class = NULL, parent_id = NULL WHERE parent_class = '".$entity->getModel()."' AND parent_id = ".$entity->getId();
+        $model = get_class($entity);
+        $model = explode('\\', $model);
+        $model = array_pop($model);
+        $sql = "Update Image SET parent_class = NULL, parent_id = NULL WHERE parent_class = '".$model."' AND parent_id = ".$entity->getId();
         $this->em->getConnection()->exec($sql);
     }
 
