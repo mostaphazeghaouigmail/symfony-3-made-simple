@@ -66,7 +66,7 @@ class CommentController extends SuperController
 
         $em         = $this->getDoctrine()->getManager();
         $mailer     = $this->get('mailer');
-        $object     = $em->getRepository("AppBundle:".$comment->getParentClass())->find($comment->getParentId());
+        $object     = $em->getRepository("AppBundle:".ucfirst($comment->getParentClass()))->find($comment->getParentId());
 
         $objectLink = $this->generateUrl('easyadmin',
             array(
@@ -89,7 +89,7 @@ class CommentController extends SuperController
         }
 
         $message = \Swift_Message::newInstance()
-            ->setSubject("New comment posted on ".$comment->getParentClass()." : ".$comment->getParentId())
+            ->setSubject("New comment posted on ".ucfirst($comment->getParentClass())." : ".$comment->getParentId())
             ->setFrom($email)
             ->setReplyTo($email)
             ->setTo($email)
