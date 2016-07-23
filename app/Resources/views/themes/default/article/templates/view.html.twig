@@ -32,10 +32,14 @@
                     {% if attribute(entity, 'getCommentable') is defined  %}
                         <h3>Comments</h3>
                         <hr>
+                        {% if entity.commentOpen %}
                         <div class="col-md-4 panel panel-default">
                             <h3>Add Commment</h3>
                             {{ app_twig.getCommentForm(entity)|raw }}
                         </div>
+                        {% else %}
+                            Comments are closed
+                        {% endif %}
                         <div class="col-md-8">
                             {{ app_twig.getCommentList(entity)|raw }}
                         </div>

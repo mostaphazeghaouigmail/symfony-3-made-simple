@@ -24,7 +24,9 @@ class CommentController extends SuperController
         $form = $this->createForm(CommentType::class,$comment);
         $form->handleRequest($request);
 
-        if($form->isValid()){
+        $object = $em->getRepository("AppBundle:".ucfirst($comment->getParentClass()))->find($comment->getParentId());
+
+        if($form->isValid() && $object->isCommentOpen()){
             $em->persist($comment);
             $em->flush();
             $this->sendAdminMail($comment);
