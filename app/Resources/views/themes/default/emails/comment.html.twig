@@ -1,0 +1,11 @@
+<div>
+    <p>Hello,</p>
+    <p>New comment have on {{ comment.parentClass }} {{ object.id }} have been posted by {{ author is defined ? author.username~" ("~author.id~") " : "Anonymous" }}</p>
+    <p>
+       <b>Content of the comment :</b><br><br>
+        {{ comment.text }}
+    </p>
+    <p>
+        <a href="{{ objectLink }}">Go to admin</a>
+    </p>
+</div>
