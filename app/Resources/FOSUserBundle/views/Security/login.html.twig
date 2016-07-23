@@ -9,6 +9,9 @@
     <div class="col-md-4 col-md-offset-4 panel panel-default" id="login_container" style="opacity: 0">
         <div class="bs-component">
             <form class="form-horizontal" action="{{ path("fos_user_security_check") }}" method="POST" id="login-form">
+                {% if app.request.get('_route') != app.request.headers.get('referer') %}
+                    <input type="hidden" name="_target_path" value="{{ app.request.headers.get('referer') }}" />
+                {% endif %}
                 <div class="alert alert-danger hide"></div>
                 <div class="form-group" style="padding-left:15px">
                     <div class="col-md-12">

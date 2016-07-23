@@ -23,7 +23,14 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
     }
 
     public function onAuthenticationSuccess(Request $request,TokenInterface $token){
-        return new JsonResponse(['success'=>true,'url'=> $this->router->generate('easyadmin') ]);
+        $session = $request->getSession();
+
+        if($session->has('_security.main.target_path'))
+            $route = $session->get('_security.main.target_path');
+        else
+            $route = $this->router->generate('easyadmin') ;
+
+        return new JsonResponse(['success'=>true,'url'=> $route ]);
     }
 
 }
