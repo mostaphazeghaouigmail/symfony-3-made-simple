@@ -29,7 +29,6 @@ easy_admin:
                     - 'updatedAt'
                     - 'commentOpen'
                     - { property: 'tags', type: 'text'}
-
                     - { property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable"}
             show:
                 actions :

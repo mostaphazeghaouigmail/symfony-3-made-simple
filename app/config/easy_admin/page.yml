@@ -15,15 +15,21 @@ easy_admin:
 
             form:
                 fields:
+                    - { type: 'group', css_class: 'col-sm-8', label: 'Main' }
                     - 'title'
-                    - { property: 'template', type: 'text' }
-                    - { property: 'imageFile', type: 'vich_image' }
                     - 'description'
+                    - { property: 'body', type: 'ckeditor', type_options: { 'config': { filebrowserBrowseRoute: 'images_get'} }}
+                    - { type: 'group', css_class: 'col-sm-4', label: 'Apparence' }
+                    - { property: 'imageFile', type: 'vich_image' }
+                    - { property: 'template', type: 'text' }
+                    - { property : 'style', css_class : 'codeable', label: '' }
+                    - { type: 'group', css_class: 'col-sm-4', label: 'Informations and Options' }
                     - 'metaDescription'
-                    - {property: 'tags', type: 'text'}
-                    - {property: 'body', type: 'ckeditor', type_options: { 'config': { filebrowserBrowseRoute: 'images_get'} }}
-                    - {property : 'style', css_class : 'codeable' }
-                    - {property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable"}
+                    - 'createdAt'
+                    - 'updatedAt'
+                    - 'commentOpen'
+                    - { property: 'tags', type: 'text'}
+                    - { property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable"}
             show:
                 actions :
                     - 'delete'
