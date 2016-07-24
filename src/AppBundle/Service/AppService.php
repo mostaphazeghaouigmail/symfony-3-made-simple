@@ -31,6 +31,10 @@ class AppService
         $this->env       = $this->container->get( 'kernel' )->getEnvironment();
     }
 
+    /**
+     * @param $entity
+     * @return string
+     */
     public function getImage($entity){
 
         if(!method_exists($entity,'getImage'))
@@ -43,6 +47,10 @@ class AppService
         return $path."/".$entity->getImage();
     }
 
+    /**
+     * @param $entity
+     * @return string
+     */
     public function getCommentForm($entity){
 
         if(method_exists($entity,"getCommentable")){
@@ -59,6 +67,10 @@ class AppService
         }
     }
 
+    /**
+     * @param $entity
+     * @return mixed
+     */
     public function getCommentList($entity){
         if(method_exists($entity,"getCommentable")){
             return $this->container->get('twig')
@@ -66,6 +78,13 @@ class AppService
         }
     }
 
+    /**
+     * @param string $id
+     * @param float $lat
+     * @param float $lng
+     * @param string $content
+     * @return mixed
+     */
     public function getMap($id = 'map', $lat = 45.7573657, $lng = 4.8406775, $content="I'm Here"){
         return $this->container->get('twig')
             ->render($this->templating("component/map/map.html.twig"),[
@@ -76,6 +95,10 @@ class AppService
         ]);
     }
 
+    /**
+     * @param $entity
+     * @return mixed
+     */
     public function getSlider($entity){
         return $this->container->get('twig')
             ->render($this->templating("component/slider/slider.html.twig"),[
@@ -83,6 +106,9 @@ class AppService
         ]);
     }
 
+    /**
+     * @return mixed
+     */
     public function getMenu(){
 
         $items       = $this->container->get('app.menu.service')->getMenuItems();
@@ -92,6 +118,9 @@ class AppService
             ->render($this->templating("component/menu/menu.html.twig"),['items'=>$items,'current'=>$currentSlug]);
     }
 
+    /**
+     * @return mixed
+     */
     public function getContactForm(){
         $form = $this->container->get('form.factory')
             ->create(ContactType::class);
@@ -103,6 +132,10 @@ class AppService
             );
     }
 
+    /**
+     * @param string $code
+     * @return string
+     */
     public function getAnalitycsTracking($code = ''){
 
         if(empty($code))
@@ -119,7 +152,12 @@ class AppService
             return '';
     }
 
-    public function getSetting($key,$type = false){
+    /**
+     * @param $key
+     * @param bool $type
+     * @return bool|string
+     */
+    public function getSetting($key, $type = false){
         
         $em     = $this->container->get('doctrine.orm.entity_manager');
 
@@ -157,10 +195,17 @@ class AppService
         return $setting;
     }
 
+    /**
+     * @param $view
+     * @return string
+     */
     public function templating($view){
         return $this->getTheme().'/'.$view;
     }
 
+    /**
+     * @return string
+     */
     public function getTheme(){
         $session = $this->container->get('session');
         if(!$session->has('theme')){
@@ -171,16 +216,28 @@ class AppService
         return 'themes/'.$session->get('theme').'/';
     }
 
+    /**
+     * @return string
+     */
     public function getThemeBase(){
         return $this->getTheme().'base.html.twig';
     }
 
-    public function getMenuUrl(Request $request,$url){
+    /**
+     * @param Request $request
+     * @param $url
+     * @return mixed
+     */
+    public function getMenuUrl(Request $request, $url){
 
         return $this->container->get('app.menu.service')->getMenuUrl($request,$url,$this->container->get('kernel')->getEnvironment());
 
     }
 
+    /**
+     * @param $model
+     * @return mixed
+     */
     public function getSearch($model){
         return $this->container
             ->get('twig')
@@ -189,12 +246,19 @@ class AppService
             );
     }
 
+    /**
+     * @param $entity
+     * @return mixed
+     */
     public function getTagsLink($entity){
         $tagService = $this->container->get('app.tag.service');
         return $tagService->getTagsLink($entity->getTags());
     }
 
 
+    /**
+     * @return array
+     */
     public function listEntities(){
 
         $em = $this->container->get("doctrine.orm.entity_manager");
@@ -208,6 +272,10 @@ class AppService
 
     }
 
+    /**
+     * @param $prop
+     * @return array
+     */
     private function listBehaviored($prop){
         $class = [];
         $entites  = $this->listEntities();
@@ -220,16 +288,65 @@ class AppService
         return $class;
     }
 
+    /**
+     * @return array
+     */
     public function listTaggable(){
         return $this->listBehaviored("tags");
     }
 
+    /**
+     * @return array
+     */
     public function listImageable(){
         return $this->listBehaviored("images");
     }
 
+    /**
+     * @return array
+     */
     public function listCommentable(){
         return $this->listBehaviored("comments");
+    }
+
+
+    /**
+     * @param $model
+     * @return bool|int|string
+     */
+    public function getBundleNameFromEntity($model)
+    {
+        $model   = ucfirst($model);
+        $bundles = $this->container->getParameter('kernel.bundles');
+        $class   = $this->getClassWithNamespace($model);
+        $dataBaseNamespace = substr($class, 0, strpos($class, '\\Entity\\'));
+
+        foreach ($bundles as $type => $bundle) {
+            $bundleRefClass = new \ReflectionClass($bundle);
+            if ($bundleRefClass->getNamespaceName() === $dataBaseNamespace) {
+                return $type;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $model
+     * @return bool|string
+     */
+    public function getClassWithNamespace($model){
+
+        $entites = $this->listEntities();
+
+        foreach($entites as $class){
+            $class = explode("\\",$class);
+            if(end($class) == $model){
+                return implode("\\",$class);
+            }
+        }
+
+        return false;
     }
 
 }

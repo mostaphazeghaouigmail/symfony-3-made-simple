@@ -25,7 +25,9 @@ class CommentController extends SuperController
         $form = $this->createForm(CommentType::class,$comment,['connected'=>$connected]);
         $form->handleRequest($request);
 
-        $object = $em->getRepository("AppBundle:".ucfirst($comment->getParentClass()))->find($comment->getParentId());
+        $bundle = $this->get("app.application.service")->getBundleNameFromEntity($comment->getParentClass());
+        $object = $em->getRepository($bundle.":".ucfirst($comment->getParentClass()))->find($comment->getParentId());
+
         $valid = false;
 
         if($form->isValid() && $object->isCommentOpen()){
@@ -75,7 +77,9 @@ class CommentController extends SuperController
 
         $em         = $this->getDoctrine()->getManager();
         $mailer     = $this->get('mailer');
-        $object     = $em->getRepository("AppBundle:".ucfirst($comment->getParentClass()))->find($comment->getParentId());
+
+        $bundle = $this->get("app.application.service")->getBundleNameFromEntity($comment->getParentClass());
+        $object     = $em->getRepository($bundle.":".ucfirst($comment->getParentClass()))->find($comment->getParentId());
 
         $objectLink = $this->generateUrl('easyadmin',
             array(

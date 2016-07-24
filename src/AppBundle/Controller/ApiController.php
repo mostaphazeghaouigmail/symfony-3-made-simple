@@ -32,15 +32,16 @@ class ApiController extends Controller
             return $this->handleParamError('model');
 
         $model  = ucfirst($model);
+        $class  = $this->get("app.application.service")->getClassWithNamespace($model);
 
-        if(!class_exists("AppBundle\\Entity\\".$model))
+        if(!class_exists($class))
             return $this->handleNotExistError();
 
         if(!$this->isAuthorized($model))
             return $this->handleAuthorizationError();
 
         $serializer = $this->container->get('jms_serializer');
-        $entity = $serializer->deserialize($request->getContent(),"AppBundle\\Entity\\".$model,'json');
+        $entity = $serializer->deserialize($request->getContent(),$class,'json');
 
         $em = $this->getDoctrine()->getEntityManager();
         $em->persist($entity);
@@ -63,8 +64,9 @@ class ApiController extends Controller
             return $this->handleParamError('model');
 
         $model  = ucfirst($model);
+        $class  = $this->get("app.application.service")->getClassWithNamespace($model);
 
-        if(!class_exists("AppBundle\\Entity\\".$model))
+        if(!class_exists($class))
             return $this->handleNotExistError();
 
         if(!$this->isAuthorized($model))
@@ -72,7 +74,7 @@ class ApiController extends Controller
 
         $serializer = $this->container->get('jms_serializer');
 
-        $entity = $serializer->deserialize($request->getContent(),"AppBundle\\Entity\\".$model,'json');
+        $entity = $serializer->deserialize($request->getContent(),$class,'json');
 
         $em = $this->getDoctrine()->getEntityManager();
         $em->merge($entity);
@@ -164,7 +166,8 @@ class ApiController extends Controller
     private function getAll($model){
 
         $em     = $this->container->get('doctrine.orm.entity_manager');
-        $repo   = $em->getRepository("AppBundle:".$model);
+        $bundle = $this->get("app.application.service")->getBundleNameFromEntity($model);
+        $repo   = $em->getRepository($bundle.":".$model);
         $data   = $repo->findAll();
 
         return $data;
@@ -174,7 +177,8 @@ class ApiController extends Controller
     private function getById($model,$id){
 
         $em     = $this->container->get('doctrine.orm.entity_manager');
-        $repo   = $em->getRepository("AppBundle:".$model);
+        $bundle = $this->get("app.application.service")->getBundleNameFromEntity($model);
+        $repo   = $em->getRepository($bundle.":".$model);
         $data   = $repo->find($id);
 
         return $data;
