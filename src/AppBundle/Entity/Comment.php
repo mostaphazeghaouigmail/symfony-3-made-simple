@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use AppBundle\Traits\ApiCapable;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -22,6 +23,7 @@ class Comment
     protected $id;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      * @var string
      */
@@ -35,9 +37,10 @@ class Comment
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      * @var string
      */
-    protected $author = 'Anonymous';
+    protected $author;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -68,6 +71,16 @@ class Comment
      * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
+
+    /**
+     *  @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    protected $email;
 
     protected $editable = false;
 
@@ -250,6 +263,26 @@ class Comment
         $this->author = $author;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     * @return Comment
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+
 
 
 

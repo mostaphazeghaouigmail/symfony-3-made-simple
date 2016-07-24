@@ -21,20 +21,27 @@ class CommentController extends SuperController
     {
         $em = $this->getDoctrine()->getManager();
         $comment = new Comment();
-        $form = $this->createForm(CommentType::class,$comment);
+        $connected      = $this->container->get('security.authorization_checker')->isGranted('ROLE_USER');
+        $form = $this->createForm(CommentType::class,$comment,['connected'=>$connected]);
         $form->handleRequest($request);
 
         $object = $em->getRepository("AppBundle:".ucfirst($comment->getParentClass()))->find($comment->getParentId());
+        $valid = false;
 
         if($form->isValid() && $object->isCommentOpen()){
             $em->persist($comment);
             $em->flush();
             $this->sendAdminMail($comment);
+            $valid = true;
         }
 
         if($request->isXmlHttpRequest()){
-            if($comment->getValidated())
-                return $this->render($this->templating("comment/comment.html.twig"),['comment'=>$comment]);
+            if($comment->getValidated()){
+                if($valid)
+                    return $this->render($this->templating("comment/comment.html.twig"),['comment'=>$comment]);
+                else
+                    return new JsonResponse(['success'=>false,'message'=>((string)$form->getErrors(true))]);
+            }
         }
         else
             return $this->redirect($request->headers->get('referer'));
@@ -85,8 +92,8 @@ class CommentController extends SuperController
             'objectLink'    => $objectLink
         );
 
-        if($comment->getAuthor() != "Anonymous"){
-            $author             = $em->getRepository("AppBundle:User")->findOneBy(['username'=>$comment->getAuthor()]);
+        if($comment->getUserId()){
+            $author             = $em->getRepository("AppBundle:User")->find($comment->getUserId());
             $data['author']     = $author;
         }
 

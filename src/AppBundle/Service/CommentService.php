@@ -37,6 +37,7 @@ class CommentService
         $service        = $this->container->get('app.application.service');
         $connected      = $this->container->get('security.authorization_checker')->isGranted('ROLE_USER');
         $user           = $this->container->get('security.token_storage')->getToken()->getUser();
+
         $allowanonymous = $service->getSetting("allow_anonymous_comments",BooleanType::class);
         $validByDefault = $service->getSetting("allow_anonymous_comments",BooleanType::class);
 
@@ -48,15 +49,20 @@ class CommentService
 
             if($connected){
                 $comment->setUserId($user->getId())
-                        ->setAuthor($user->getUsername());
+                        ->setAuthor($user->getUsername())
+                        ->setEmail($user->getEmail());
             }
 
             $form = $this->container->get('form.factory')
                 ->create(
                     CommentType::class,
                     $comment,
-                    ['action'=>$this->container->get('router')->generate('post_comment')]
+                    [
+                        'action'    => $this->container->get('router')->generate('post_comment'),
+                        'connected' => $connected
+                    ]
                 );
+
 
             return $form;
         }
