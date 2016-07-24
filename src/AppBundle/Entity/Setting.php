@@ -51,7 +51,7 @@ class Setting
         'allow_anonymous_comments',
         'site_email',
         'site_description',
-        'site_nom'
+        'site_name'
     ];
 
     /**
