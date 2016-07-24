@@ -2,7 +2,7 @@
 
 namespace AppBundle\Command;
 
-use AppBundle\Entity\Parameter;
+use AppBundle\Entity\Setting;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,7 +18,7 @@ class AppInitCommandCommand extends ContainerAwareCommand
     {
         $this
             ->setName('app:initCommand')
-            ->setDescription('Init Parameters')
+            ->setDescription('Init Settings')
             ->addOption('name', 'a', InputOption::VALUE_REQUIRED)
 
 
@@ -94,7 +94,7 @@ class AppInitCommandCommand extends ContainerAwareCommand
         $emailContact = $helper->ask($input, $output, $question6);
 
         $output->writeln('Settings creation...');
-        $this->createParameters($nomSite,$descriptionSite,$emailContact);
+        $this->createSettings($nomSite,$descriptionSite,$emailContact);
         $output->writeln('Done!');
 
         $fs = new Filesystem();
@@ -135,18 +135,18 @@ class AppInitCommandCommand extends ContainerAwareCommand
 
     }
 
-    public function createParameters($nomSite,$descriptionSite,$emailContact){
+    public function createSettings($nomSite,$descriptionSite,$emailContact){
 
         $em         = $this->getContainer()->get("doctrine.orm.entity_manager");
 
         $settings = [];
-        $settings[]  = $this->createParameter('site_name','Website name',$nomSite);
-        $settings[]  = $this->createParameter('site_description','Website description',$descriptionSite);
-        $settings[]  = $this->createParameter('site_email','Website email',$emailContact);
-        $settings[]  = $this->createParameter('allow_anonymous_comments','Allow anonymous comments','1');
-        $settings[]  = $this->createParameter('validated_comments_by_defaut','By default, comments are published without modération','1');
-        $settings[]  = $this->createParameter('tracking_code','Analitycs tracking code','');
-        $settings[]  = $this->createParameter('index_page','Default slug route','');
+        $settings[]  = $this->createSetting('site_name','Website name',$nomSite);
+        $settings[]  = $this->createSetting('site_description','Website description',$descriptionSite);
+        $settings[]  = $this->createSetting('site_email','Website email',$emailContact);
+        $settings[]  = $this->createSetting('allow_anonymous_comments','Allow anonymous comments','1');
+        $settings[]  = $this->createSetting('validated_comments_by_defaut','By default, comments are published without modération','1');
+        $settings[]  = $this->createSetting('tracking_code','Analitycs tracking code','');
+        $settings[]  = $this->createSetting('index_page','Default slug route','');
 
         foreach ($settings as $setting)
             $em->persist($setting);
@@ -155,12 +155,12 @@ class AppInitCommandCommand extends ContainerAwareCommand
 
     }
 
-    public function createParameter($cle,$label,$value = ''){
-        $parameter = new Parameter();
-        $parameter->setCle($cle);
-        $parameter->setLabel($label);
-        $parameter->setValeur($value ? $value : '');
-        return $parameter;
+    public function createSetting($key,$label,$value = ''){
+        $setting = new Setting();
+        $setting->setKey($key);
+        $setting->setLabel($label);
+        $setting->setValue($value ? $value : '');
+        return $setting;
     }
 
 

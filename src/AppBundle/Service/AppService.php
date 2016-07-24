@@ -47,7 +47,7 @@ class AppService
 
         if(method_exists($entity,"getCommentable")){
             //allow anonymous ?
-            $allowanonymous = $this->getParameter("allow_anonymous_comments",BooleanType::class);
+            $allowanonymous = $this->getSetting("allow_anonymous_comments",BooleanType::class);
 
             //get the form
             $form = $this->container->get('app.comment.service')
@@ -106,7 +106,7 @@ class AppService
     public function getAnalitycsTracking($code = ''){
 
         if(empty($code))
-            $code = $this->getParameter('tracking_code');
+            $code = $this->getSetting('tracking_code');
 
         if($code){
             return $this->container
@@ -119,42 +119,42 @@ class AppService
             return '';
     }
 
-    public function getParameter($cle,$type = false){
+    public function getSetting($key,$type = false){
         
         $em     = $this->container->get('doctrine.orm.entity_manager');
 
-        $dql    = "SELECT p FROM AppBundle:Parameter p WHERE p.cle=:cle";
+        $dql    = "SELECT p FROM AppBundle:Setting p WHERE p.key=:key";
         $query  = $em->createQuery($dql);
-        $query->setParameter('cle',$cle);
+        $query->setParameter('key',$key);
 
         if(APC_ENABLE)
-            $query->useResultCache(true,86400,'_parameter_'.$cle);
+            $query->useResultCache(true,86400,'_setting_'.$key);
 
-        $param  = $query->getResult();
-        $param  = isset($param[0]) ? $param[0]->getValeur() : '';
+        $setting  = $query->getResult();
+        $setting  = isset($setting[0]) ? $setting[0]->getValue() : '';
 
 
         if($type){
             switch ($type){
                 case BooleanType::class:
                     switch (true){
-                        case empty($param):
-                        case is_null($param):
-                        case strtolower($param) == "0":
-                        case strtolower($param) == "no":
-                        case strtolower($param) == "non":
-                        case strtolower($param) == "nop":
-                        case strtolower($param) == "x":
-                        $param = false;
+                        case empty($setting):
+                        case is_null($setting):
+                        case strtolower($setting) == "0":
+                        case strtolower($setting) == "no":
+                        case strtolower($setting) == "non":
+                        case strtolower($setting) == "nop":
+                        case strtolower($setting) == "x":
+                        $setting = false;
                             break;
                         default :
-                            $param = true;
+                            $setting = true;
                     }
                     break;
             }
         }
 
-        return $param;
+        return $setting;
     }
 
     public function templating($view){

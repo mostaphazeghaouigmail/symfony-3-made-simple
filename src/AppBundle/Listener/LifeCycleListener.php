@@ -11,7 +11,7 @@ namespace AppBundle\Listener;
 use AppBundle\Entity\Article;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Page;
-use AppBundle\Entity\Parameter;
+use AppBundle\Entity\Setting;
 use AppBundle\Entity\Theme;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;

@@ -203,7 +203,7 @@ class ApiController extends Controller
 
     private function checkApiKey(Request $request){
             
-        $key = $this->container->getParameter('api_key');
+        $key = $this->container->getSetting('api_key');
         $headerKey = $request->query->get('api_key');
 
         if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))

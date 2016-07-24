@@ -12,11 +12,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Parameter")
+ * @ORM\Table(name="Setting")
  * @Vich\Uploadable
  * @ORM\HasLifecycleCallbacks()
  */
-class Parameter
+class Setting
 {
 
     /**
@@ -30,7 +30,7 @@ class Parameter
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    protected $cle;
+    protected $key;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -42,7 +42,7 @@ class Parameter
      * @ORM\Column(type="string", length=255, nullable=true)
      * @var string
      */
-    protected $valeur;
+    protected $value;
 
     private $mandatory = [
         'index_page',
@@ -64,7 +64,7 @@ class Parameter
 
     /**
      * @param mixed $id
-     * @return Parameter
+     * @return Setting
      */
     public function setId($id)
     {
@@ -75,36 +75,36 @@ class Parameter
     /**
      * @return string
      */
-    public function getCle()
+    public function getKey()
     {
-        return $this->cle;
+        return $this->key;
     }
 
     /**
-     * @param string $cle
-     * @return Parameter
+     * @param string $key
+     * @return Setting
      */
-    public function setCle($cle)
+    public function setKey($key)
     {
-        $this->cle = $cle;
+        $this->key = $key;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getValeur()
+    public function getValue()
     {
-        return $this->valeur;
+        return $this->value;
     }
 
     /**
-     * @param string $valeur
-     * @return Parameter
+     * @param string $value
+     * @return Setting
      */
-    public function setValeur($valeur)
+    public function setValue($value)
     {
-        $this->valeur = $valeur;
+        $this->value = $value;
         return $this;
     }
 
@@ -118,7 +118,7 @@ class Parameter
 
     /**
      * @param string $label
-     * @return Parameter
+     * @return Setting
      */
     public function setLabel($label)
     {
@@ -130,7 +130,7 @@ class Parameter
      * @ORM\PreRemove
      */
     public function beforeRemove(){
-        if(in_array($this->getCle(),$this->mandatory) || $this->getId() <= 7){
+        if(in_array($this->getKey(),$this->mandatory) || $this->getId() <= 7){
             throw new Exception('You can not remove this setting');
         }
     }
@@ -139,7 +139,7 @@ class Parameter
      * @ORM\PreUpdate
      */
     public function beforeUpdate(){
-        if(!in_array($this->getCle(),$this->mandatory) && $this->getId() <= 7){
+        if(!in_array($this->getKey(),$this->mandatory) && $this->getId() <= 7){
             throw new \Exception('You can not change this key');
         }
     }

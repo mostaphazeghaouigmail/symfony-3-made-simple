@@ -37,7 +37,7 @@ class ImageService
 
         $dql = "SELECT i FROM AppBundle:Image i WHERE i.parentClass ='".$model."' AND i.parentId=".$id." ORDER BY i.place ASC";
         $query = $this->em->createQuery($dql);
-        $site = $this->appService->getParameter("site_nom");
+        $site = $this->appService->getSetting("site_nom");
 
         if(APC_ENABLE)
             $query->useResultCache(true,86400,$site."_".$model."_images_".$id);

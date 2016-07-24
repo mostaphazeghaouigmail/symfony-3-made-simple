@@ -61,7 +61,7 @@ class CommentController extends SuperController
 
     private function sendAdminMail(Comment $comment){
 
-        $email  = $this->get('app.application.service')->getParameter("site_email");
+        $email  = $this->get('app.application.service')->getSetting("site_email");
 
         if(!$email || empty($email))
             return false;

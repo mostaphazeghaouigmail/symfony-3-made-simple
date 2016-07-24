@@ -37,8 +37,8 @@ class CommentService
         $service        = $this->container->get('app.application.service');
         $connected      = $this->container->get('security.authorization_checker')->isGranted('ROLE_USER');
         $user           = $this->container->get('security.token_storage')->getToken()->getUser();
-        $allowanonymous = $service->getParameter("allow_anonymous_comments",BooleanType::class);
-        $validByDefault = $service->getParameter("allow_anonymous_comments",BooleanType::class);
+        $allowanonymous = $service->getSetting("allow_anonymous_comments",BooleanType::class);
+        $validByDefault = $service->getSetting("allow_anonymous_comments",BooleanType::class);
 
         if($allowAnonymous || $connected){
             $comment = new Comment();
@@ -70,7 +70,7 @@ class CommentService
 
         $dql = "SELECT c FROM AppBundle:Comment c WHERE c.parentClass ='".$model."' AND c.parentId=".$id." AND c.validated=true ORDER BY c.createdAt DESC";
         $query = $this->container->get("doctrine.orm.entity_manager")->createQuery($dql);
-        $site = $this->container->get("app.application.service")->getParameter("site_nom");
+        $site = $this->container->get("app.application.service")->getSetting("site_nom");
 
         if(APC_ENABLE)
             $query->useResultCache(true,86400,$site."_".$model."_comments_".$id);

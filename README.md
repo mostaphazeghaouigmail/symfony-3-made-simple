@@ -167,7 +167,7 @@ class Page
 <p>Get analitycs tracking script code : <code>app_service.getAnalitycsTracking(code)|raw</code></p>
 
 <h4>Setting</h4>
-<p>Retreive a setting's value : <code>app_service.getParameter(key,type = false)</code><p>
+<p>Retreive a setting's value : <code>app_service.getSetting(key,type = false)</code><p>
 
 <h4>Menu</h4>
 <p>Get the main menu on view : <code>app_twig.getMenu()|raw</code><p>

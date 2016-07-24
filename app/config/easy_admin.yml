@@ -7,7 +7,7 @@ easy_admin:
             - { entity: 'Page',      label : 'Pages',    icon: 'pencil-square'}
             - { entity: 'Article',   label : 'Articles', icon: 'newspaper-o'}
             - { entity: 'Comment',   label : 'Comments', icon: 'comment'}
-            - { entity: 'Parameter', label : 'Settings', icon: 'cogs'}
+            - { entity: 'Setting',   label : 'Settings', icon: 'cogs'}
             - { entity: 'MenuItem',  label : 'Menu',     icon: 'bars'}
             - { entity: 'Theme',     label : 'Themes',   icon: 'th'}
     entities:
@@ -147,8 +147,8 @@ easy_admin:
                     - 'new'
                     - 'search'
 
-        Parameter:
-            class: AppBundle\Entity\Parameter
+        Setting:
+            class: AppBundle\Entity\Setting
             list:
                 title : 'Settings'
                 actions :
@@ -156,9 +156,9 @@ easy_admin:
                     - { name : 'search', label : 'Search' }
                 fiels :
                     - 'id'
-                    - 'cle'
+                    - 'key'
                     - 'label'
-                    - 'valeur'
+                    - 'value'
         MenuItem:
             class: AppBundle\Entity\MenuItem
             list:
