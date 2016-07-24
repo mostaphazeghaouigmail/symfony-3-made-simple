@@ -143,7 +143,7 @@ class Comment
      */
     public function getParentClass()
     {
-        return $this->parentClass;
+        return $this->parentClass ? ucfirst($this->parentClass) : null;
     }
 
     /**
@@ -282,13 +282,29 @@ class Comment
         return $this;
     }
 
+    public function getOwner(){
+        if($this->getParentClass() && $this->getParentId()){
+            echo "<a href='?entity=".$this->getParentClass()."&action=show&menuIndex=1&submenuIndex=-1&id=".$this->getParentId()."'>".$this->getParentClass()." ".$this->getParentId()."</a>";
+            return '';
+        }
+    }
+
+    public function getUser(){
+        if($this->getUserId()){
+            echo "<a href='?entity=User&action=show&menuIndex=1&submenuIndex=-1&id=".$this->getUserId()."'>User ".$this->getUserId()."</a>";
+            return '';
+        } else {
+            return $this->author;
+        }
+    }
 
 
 
 
 
 
-    
+
+
 
 
 

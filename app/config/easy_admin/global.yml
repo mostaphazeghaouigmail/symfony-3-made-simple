@@ -1,0 +1,9 @@
+easy_admin:
+    site_name: "BackOffice"
+    design:
+        form_theme: 'vertical'
+    list:
+        actions:
+            - { name: 'show',   icon: 'search', label: '' }
+            - { name: 'edit',   icon: 'pencil', label: '' }
+            - { name: 'delete', icon: 'trash', label: '' }

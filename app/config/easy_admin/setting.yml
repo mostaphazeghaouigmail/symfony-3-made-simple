@@ -1,0 +1,14 @@
+easy_admin:
+    entities:
+        Setting:
+            class: AppBundle\Entity\Setting
+            list:
+                title : 'Settings'
+                actions :
+                    - { name : 'new', label : 'Create settings'}
+                    - { name : 'search', label : 'Search' }
+                fiels :
+                    - 'id'
+                    - 'key'
+                    - 'label'
+                    - 'value'

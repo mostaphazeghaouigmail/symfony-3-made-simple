@@ -1,0 +1,29 @@
+easy_admin:
+    entities:
+        User:
+            class: AppBundle\Entity\User
+            show:
+                fields :
+                    - { property: 'image', type: 'image', base_path: %app.path.user_images% }
+                    - 'username'
+                    - 'email'
+                    - 'enabled'
+                    - 'locked'
+                    - { property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable" }
+            list:
+                fields :
+                    - 'id'
+                    - { property: 'image', type: 'image', base_path: %app.path.user_images% }
+                    - 'username'
+                    - 'email'
+                    - 'enabled'
+                    - 'locked'
+            form:
+                fields:
+                    - 'enabled'
+                    - 'username'
+                    - 'email'
+                    - 'roles'
+                    - 'lastLogin'
+                    - { property: 'imageFile', type: 'vich_image' }
+                    - { property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable"}

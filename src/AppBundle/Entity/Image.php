@@ -248,7 +248,7 @@ class Image
      */
     public function getParentClass()
     {
-        return $this->parentClass;
+        return $this->parentClass ? ucfirst($this->parentClass) : null;
     }
 
     /**
@@ -315,6 +315,13 @@ class Image
     {
         $this->createdAt = $createdAt;
         return $this;
+    }
+
+    public function getOwner(){
+        if($this->getParentClass() && $this->getParentId()){
+            echo "<a href='?entity=".$this->getParentClass()."&action=show&menuIndex=1&submenuIndex=-1&id=".$this->getParentId()."'>".$this->getParentClass() ." ".$this->getParentId()."</a>";
+            return '';
+        }
     }
 
 

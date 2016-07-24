@@ -1,0 +1,31 @@
+easy_admin:
+    entities:
+        Page:
+            class: AppBundle\Entity\Page
+            list:
+                fields :
+                    - 'id'
+                    - { property: 'image', type: 'image', base_path: %app.path.page_images% }
+                    - 'title'
+                    - 'slug'
+                    - 'template'
+                    - {property: 'commentOpen', type: 'toggle'}
+                actions :
+                    - { name: 'show_front', type: 'route', icon: 'eye', label : '' }
+
+            form:
+                fields:
+                    - 'title'
+                    - { property: 'template', type: 'text' }
+                    - { property: 'imageFile', type: 'vich_image' }
+                    - 'description'
+                    - 'metaDescription'
+                    - {property: 'tags', type: 'text'}
+                    - {property: 'body', type: 'ckeditor', type_options: { 'config': { filebrowserBrowseRoute: 'images_get'} }}
+                    - {property : 'style', css_class : 'codeable' }
+                    - {property: 'imageable', type: 'text', css_class: 'imageable', id : "imageable"}
+            show:
+                actions :
+                    - 'delete'
+                    - 'edit'
+                    - { name: 'show_front', type: 'route', label : 'Show', css_class: 'btn btn-primary', icon: 'eye' }
