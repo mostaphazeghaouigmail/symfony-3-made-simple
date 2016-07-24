@@ -1,6 +1,6 @@
 <div>
     <p>Hello,</p>
-    <p>New comment on {{ comment.parentClass }} {{ object.id }} have been posted by {{ author is defined ? author.username~" ("~author.id~") " : "Anonymous" }}</p>
+    <p>New comment on {{ comment.parentClass }} {{ object.id }} have been posted by {{ author is defined ? author.username~" ("~author.id~") " : comment.author }}</p>
     <p>
        <b>Content of the comment :</b><br><br>
         {{ comment.text }}
