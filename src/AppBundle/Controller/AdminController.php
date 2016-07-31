@@ -45,7 +45,8 @@ class AdminController extends BaseAdminController
      */
     public function showFrontAction(Request $request){
         $id = $request->query->get('id');
-        $entity = $this->getDoctrine()->getManager()->getRepository('AppBundle:'.$request->query->get('entity'))->find($id);
+        $bundle = $this->get("app.application.service")->getBundleNameFromEntity($request->query->get('entity'));
+        $entity = $this->getDoctrine()->getManager()->getRepository($bundle.':'.$request->query->get('entity'))->find($id);
         return new RedirectResponse($this->generateUrl(strtolower($request->query->get('entity')),['slug'=>$entity->getSlug()]));
     }
 
@@ -54,7 +55,8 @@ class AdminController extends BaseAdminController
      */
     public function showParentAction(Request $request){
         $id = $request->query->get('id');
-        $entity = $this->getDoctrine()->getManager()->getRepository('AppBundle:'.$request->query->get('entity'))->find($id);
+        $bundle = $this->get("app.application.service")->getBundleNameFromEntity($request->query->get('entity'));
+        $entity = $this->getDoctrine()->getManager()->getRepository($bundle.':'.$request->query->get('entity'))->find($id);
         return $this->redirectToRoute('easyadmin', array(
             'action' => 'show',
             'id' => $entity->getParentId(),
@@ -135,6 +137,8 @@ class AdminController extends BaseAdminController
         $menu   = $em->getRepository("AppBundle:MenuItem")->findBy([],['position'=>'ASC']);
         return $this->render('admin/menu.html.twig',['menu'=>$menu]);
     }
+    
+    
     
 
 

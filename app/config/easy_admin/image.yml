@@ -1,0 +1,21 @@
+easy_admin:
+    entities:
+        Image:
+            class: AppBundle\Entity\Image
+            list:
+                fields :
+                    - 'id'
+                    - { property: 'image', type: 'image', base_path: %app.path.image_images% }
+                    - 'name'
+                    - 'title'
+                    - 'owner'
+                actions :
+                    - { name: 'show_front',  type: 'route', label : '' , icon: 'eye' }
+            form:
+                fields:
+                    - 'name'
+                    - 'title'
+                    - 'text'
+                    - 'alt'
+                    - { property: 'imageFile', type: 'vich_image' }
+                    - {property: 'tags', type: 'text'}

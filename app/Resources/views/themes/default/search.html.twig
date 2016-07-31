@@ -1,0 +1,83 @@
+{% extends app_twig.getThemeBase() %}
+
+{% set page_title = 'Search Tag : '~tag %}
+{% set page_description = tag~" search results" %}
+    {% block body_id %}blog{% endblock %}
+    {% block body %}
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="col-md-10 col-md-offset-1" id="blog-title">Tag : {{ tag }}</h1>
+
+                <div  class="col-md-10 col-md-offset-1 bg-blog">
+                    <form action="{{ path('quick_search') }}" method="POST">
+                        <div class="col-md-3 form-group">
+                            <input id="quicksearch" name="term" class="form-control" type="text" placeholder="Quick Search" >
+                        </div>
+                        <div class="col-md-1 form-group">
+                            <input type="submit" value="search" class="btn-default btn ">
+                        </div>
+                    </form>
+                </div>
+                <div class="blog col-md-10 col-md-offset-1 bg-blog">
+                    {% for entity in results %}
+                        <div class="col-md-3 article">
+                            <article>
+                                {% if entity.image is defined and entity.image %}
+                                    <div class="image-wrapper">
+                                        <img style="" src="{{ app_twig.getImage(entity)|imagine_filter('middle', {"thumbnail": {"size": [400, 150] }} )  }}">
+                                    </div>
+                                {% else %}
+                                    <br>
+                                {% endif %}
+                                <h4>
+                                    <a href="{{ path(entity~'',{'slug':entity.slug}) }}">
+                                        {% if entity.title is defined and entity.title %}
+                                            {{ entity.title }}
+                                        {% endif %}
+                                        {% if entity.comments is defined %}
+                                            <span class="pull-right" style="font-size:12px">
+                                                <i class="fa fa-comment"></i>&nbsp;{{ entity.comments|length }}
+                                            </span>
+                                        {% endif %}
+                                    </a>
+                                </h4>
+                                {% if entity.description is defined %}
+                                    <p>
+                                        {{ entity.description }}
+                                    </p>
+                                {% endif %}
+                                <div style="clear:both"></div>
+                                <p>
+                                    {% if entity.createdAt is defined %}
+                                        <span class="pull-left" style="margin-top:20px;font-style: italic">
+                                            Published on {{ entity.createdAt|date('Y/m/d h:m') }}
+                                        </span>
+                                        <a class="btn btn-default pull-right" href="{{ path(entity~'',{'slug':entity.slug}) }}" >Read</a>
+                                    {% endif %}
+                                </p>
+                                <div style="clear:both"></div>
+                            </article>
+                        </div>
+
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    {% endblock body %}
+
+{% block javascripts %}
+    <script>
+        var grid;
+        $(document).ready(function(){
+
+            grid = $('.blog');
+            grid.masonry({
+                itemSelector: '.article', // use a separate class for itemSelector, other than .col-
+                percentPosition: true
+            });
+
+        })
+    </script>
+{% endblock javascripts %}

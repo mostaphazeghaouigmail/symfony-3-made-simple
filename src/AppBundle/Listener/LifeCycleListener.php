@@ -11,7 +11,7 @@ namespace AppBundle\Listener;
 use AppBundle\Entity\Article;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Page;
-use AppBundle\Entity\Parameter;
+use AppBundle\Entity\Setting;
 use AppBundle\Entity\Theme;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
@@ -36,13 +36,17 @@ class LifeCycleListener
        $entity = $args->getEntity();
 
        if(method_exists($entity,'getImageable')){
-           $images = $this->container->get("app.image.service")->loadImage($entity->getModel(),$entity->getId());
-           $entity->setImages($images);
+           if(!$entity->getimages()){
+               $images = $this->container->get("app.image.service")->loadImage($this->getModel($entity),$entity->getId());
+               $entity->setImages($images);
+           }
        }
 
         if(method_exists($entity,'getCommentable')){
-            $comments = $this->container->get("app.comment.service")->loadComments($entity->getModel(),$entity->getId());
-            $entity->setComments($comments);
+            if(!$entity->getComments()){
+                $comments = $this->container->get("app.comment.service")->loadComments($this->getModel($entity),$entity->getId());
+                $entity->setComments($comments);
+            }
         }
 
         if($entity instanceof Comment)
@@ -54,8 +58,9 @@ class LifeCycleListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof Page || $entity instanceof Article)
+        if($entity instanceof Page || $entity instanceof Article){
             $this->container->get('app.theme.service')->handleTemplateFile($entity);
+        }
 
 
         if($entity instanceof Theme)
@@ -101,6 +106,11 @@ class LifeCycleListener
         //handle menu change if need it
         if($entity instanceof Page || $entity instanceof Article)
             $this->container->get('app.menu.service')->cleaMenu($entity);
+
+        //deactivate theme
+        if($entity instanceof Theme && $entity->isActive()){
+            $this->container->get('app.theme.service')->deactivateAllTheme();
+        }
     }
 
 
@@ -111,6 +121,16 @@ class LifeCycleListener
             $this->container->get('app.menu.service')->afterFlush($this->itemsMenu);
             $this->itemsMenu = [];
         }
+
+        if(defined("APC_ENABLE") && APC_ENABLE)
+            apc_clear_cache();
+    }
+
+    private function getModel($entity){
+        $model = get_class($entity);
+        $model = explode('\\', $model);
+        $model = array_pop($model);
+        return $model;
     }
 
 }

@@ -3,7 +3,6 @@ namespace AppBundle\Traits;
 
 use Symfony\Component\Config\Definition\Exception\Exception;
 
-//Todo Rendre le load lazy ?
 /**
  * Created by PhpStorm.
  * User: sohrab
@@ -16,10 +15,19 @@ trait Commentable
     private $comments;
 
     /**
+     * @ORM\Column(type="boolean" )
+     * @var boolean
+     */
+    protected $commentOpen = true;
+
+    /**
      * @return Json
      */
     public function getCommentable(){
-        return json_encode(['name'=>$this->getModel(),'id'=>$this->id]);
+        $model = get_class($this);
+        $model = explode('\\', $model);
+        $model = array_pop($model);
+        return json_encode(['name'=>$model,'id'=>$this->id]);
     }
 
     /**
@@ -41,14 +49,24 @@ trait Commentable
     }
 
     /**
-     * @return string
+     * @return boolean
      */
-    public function getModel()
+    public function isCommentOpen()
     {
-        $model = get_class($this);
-        $model = explode('\\', $model);
-        $model = array_pop($model);
-        return $model;
+        return $this->commentOpen;
     }
+
+    /**
+     * @param boolean $commentOpen
+     * @return Commentable
+     */
+    public function setCommentOpen($commentOpen)
+    {
+        $this->commentOpen = $commentOpen;
+        return $this;
+    }
+
+
+
 
 }

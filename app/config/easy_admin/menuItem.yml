@@ -1,0 +1,25 @@
+easy_admin:
+    entities:
+        MenuItem:
+            class: AppBundle\Entity\MenuItem
+            list:
+                fields:
+                    - { property : 'id', type : 'hidden'}
+                    - { property : 'position', sortable: false }
+                    - { property : 'route', sortable: false}
+                    - { property : 'label', sortable: false}
+                    - { property : 'title', sortable: false}
+            edit:
+                fields:
+                    - 'route'
+                    - 'label'
+                    - 'title'
+                    - { property : 'cssClass', type : 'text'}
+                    - 'attributes'
+            new:
+                fields:
+                    - 'route'
+                    - 'label'
+                    - 'title'
+                    - { property : 'cssClass', type : 'text'}
+                    - 'attributes'

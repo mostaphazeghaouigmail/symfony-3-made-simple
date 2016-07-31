@@ -3,3 +3,15 @@
 {% block fos_user_content %}
 {% include "FOSUserBundle:Registration:register_content.html.twig" %}
 {% endblock fos_user_content %}
+    {% block javascripts %}
+        <script>
+            $(document).ready(function(){
+                $("#register_container").animate({
+                    marginTop : $(window).height() / 2 - $("#register_container").height()/2,
+                    opacity : 1
+                },200);
+            })
+        </script>
+
+    {% endblock javascripts %}
+

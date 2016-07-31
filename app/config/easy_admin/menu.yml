@@ -1,0 +1,11 @@
+easy_admin:
+    design:
+        menu:
+            - { entity: 'User',      label : 'Users',    icon: 'users' }
+            - { entity: 'Image',     label : 'Images',   icon: 'image' }
+            - { entity: 'Page',      label : 'Pages',    icon: 'pencil-square'}
+            - { entity: 'Article',   label : 'Articles', icon: 'newspaper-o'}
+            - { entity: 'Comment',   label : 'Comments', icon: 'comment'}
+            - { entity: 'Setting',   label : 'Settings', icon: 'cogs'}
+            - { entity: 'MenuItem',  label : 'Menu',     icon: 'bars'}
+            - { entity: 'Theme',     label : 'Themes',   icon: 'th'}

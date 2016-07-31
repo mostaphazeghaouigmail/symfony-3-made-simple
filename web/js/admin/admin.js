@@ -11,7 +11,9 @@ function init() {
     if(isCodable){
         var container = document.getElementsByClassName("codeable")[0];
         var editor = CodeMirror.fromTextArea(container.getElementsByTagName('textarea')[0], {
-            lineNumbers: true
+            lineNumbers: true,
+            mode: "css",
+            theme:"monokai"
         });
     }
 
@@ -44,9 +46,7 @@ function init() {
 
     //sortable menu
     if($("body").is("#easyadmin-list-MenuItem")){
-        $.getScript("/js/admin/menuItemAdmin.js",function(){
-            replaceMenuItemTable();
-        });
+        setSortableMenuItem();
     }
 
     //image editing
@@ -61,11 +61,16 @@ function init() {
         handleCreateThemeStructure();
     }
 
+    if($('body').is('#easyadmin-list-Theme'))
+        initMasonrytheme();
+
     //disable an input
     $('.disabled').on('keydown focus keypress',function(){
         $('.disabled').trigger('blur');
         return false;
     });
+
+    $(".action-link_assets").click(linkAssets);
 
     $( document ).ajaxSend(createLoader);
     $( document ).ajaxStop(removeLoader);
@@ -107,4 +112,32 @@ function createThemeStructure(){
     $.get(Routing.generate("create_theme_structure",{'id':id}),function(){
         eModal.alert("Done !");
     });
+}
+
+function linkAssets(){
+    var href = $(this).attr("href");
+    eModal.confirm({
+        title   :"Assets Link",
+        message :"Your are about to create assets symlink in web/themes folder, it is without danger..."
+    }).then(
+        function(){
+            $.get(href,function(){
+             eModal.alert('done !');
+            });
+        },
+        function(){
+            eModal.close;
+        }
+    );
+
+    return false;
+}
+
+function initMasonrytheme(){
+    $(".themes-wrapper").imagesLoaded(function(){
+        $('.themes-inner').masonry({
+            itemSelector: '.theme-item', // use a separate class for itemSelector, other than .col-
+            percentPosition: true
+        });
+    })
 }

@@ -1,8 +1,6 @@
 {% form_theme contact_form 'bootstrap_3_layout.html.twig' %}
-<div class="panel panel-default">
-    <h3>Contact me</h3>
+<div class="    ">
     <div class="alert hide" id="contact-return">
-
     </div>
     {{ form(contact_form,{'action':path('contact'),'id':'contact-form'}) }}
 </div>
@@ -25,6 +23,9 @@
                 var form = $(this);
                 $.post(form.attr('action'),form.serialize(),function(data){
                     $("#contact-return").replaceWith("<div class='alert alert-"+(data.success ? 'success' : 'danger')+"'>"+data.message+"</div>");
+                    setTimeout(function(){
+                        $("#contact-return").fadeOut(500);
+                    },2000);
                     if(data.success){
                         form.find('input[type=text],input[type=email],textarea').val('');
                     }

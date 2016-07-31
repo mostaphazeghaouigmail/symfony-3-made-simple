@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use AppBundle\Traits\ApiCapable;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -22,6 +23,7 @@ class Comment
     protected $id;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
      * @var string
      */
@@ -35,9 +37,10 @@ class Comment
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      * @var string
      */
-    protected $author = 'Anonymous';
+    protected $author;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -68,6 +71,16 @@ class Comment
      * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
+
+    /**
+     *  @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    protected $email;
 
     protected $editable = false;
 
@@ -130,7 +143,7 @@ class Comment
      */
     public function getParentClass()
     {
-        return $this->parentClass;
+        return $this->parentClass ? ucfirst($this->parentClass) : null;
     }
 
     /**
@@ -251,11 +264,47 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     * @return Comment
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    public function getOwner(){
+        if($this->getParentClass() && $this->getParentId()){
+            echo "<a href='?entity=".$this->getParentClass()."&action=show&menuIndex=1&submenuIndex=-1&id=".$this->getParentId()."'>".$this->getParentClass()." ".$this->getParentId()."</a>";
+            return '';
+        }
+    }
+
+    public function getUser(){
+        if($this->getUserId()){
+            echo "<a href='?entity=User&action=show&menuIndex=1&submenuIndex=-1&id=".$this->getUserId()."'>User ".$this->getUserId()."</a>";
+            return '';
+        } else {
+            return $this->author;
+        }
+    }
 
 
 
 
-    
+
+
+
+
 
 
 

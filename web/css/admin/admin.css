@@ -365,4 +365,89 @@
   cursor: default;
   opacity: 0.3; }
 
+.theme-item {
+  padding: 10px; }
+  .theme-item .theme-item-inner {
+    box-sizing: border-box; }
+    .theme-item .theme-item-inner h3 {
+      margin-top: 5px; }
+    .theme-item .theme-item-inner div:not(.toggle-group) {
+      margin: 5px; }
+    .theme-item .theme-item-inner b {
+      display: inline-block;
+      width: 100px; }
+    .theme-item .theme-item-inner .actions {
+      margin-top: 15px !important; }
+      .theme-item .theme-item-inner .actions a {
+        margin-right: 5px; }
+    .theme-item .theme-item-inner .easyadmin-thumbnail img {
+      max-height: inherit; }
+    .theme-item .theme-item-inner small {
+      font-style: italic;
+      margin-left: 5px; }
+
+.main-header .logo,
+.sidebar-menu li a,
+button,
+table thead th a,
+.btn,
+.navbar li,
+.navbar li a,
+.dd3-content {
+  font-weight: 100 !important; }
+
+.sidebar-menu > li > a,
+.sidebar-menu .treeview-menu > li > a,
+.main-sidebar, .wrapper {
+  background: #222 !important; }
+
+.main-header > .navbar,
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus,
+body.list table thead th.sorted,
+body.list table thead th.sorted a,
+.btn-primary:active:hover,
+body.list .table thead tr th.sorted,
+body.list .table thead tr th:first-child.sorted {
+  background-color: #95a5a6 !important;
+  border-color: #95a5a6 !important;
+  border-bottom-color: #95a5a6 !important; }
+
+body.list .table thead tr th.sorted {
+  border-bottom: 2px outset #95a5a6; }
+
+.toggle-group .toggle-on,
+.toggle-group .toggle-on.btn-xs,
+.toggle-group .toggle-on:hover,
+.toggle-group .toggle-on:active,
+.toggle-group .toggle-on:active:hover {
+  background: #27ae60;
+  border-color: #27ae60; }
+
+.toggle-group .toggle-off,
+.toggle-group .toggle-off.btn-xs,
+.toggle-group .toggle-off:hover,
+.toggle-group .toggle-off:active,
+.toggle-group .toggle-off:active:hover {
+  border-color: #e74c3c;
+  background: #e74c3c; }
+
+input[type=text],
+input[type=email],
+textarea,
+select {
+  border: none !important; }
+
+.box {
+  border: none !important; }
+
+body.list table tbody td.image .easyadmin-thumbnail img {
+  border-width: inherit;
+  max-height: inherit; }
+
+body.list td.image {
+  text-align: left; }
+
 /*# sourceMappingURL=admin.css.map */

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Page;
+use AppBundle\Interfaces\Taggable;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,7 +20,13 @@ class PageController extends SuperController
      */
     public function showAction(Request $request, Page $page)
     {
-        return $this->render($this->templating('page/templates/'.($page->getTemplate() ? $page->getTemplate()  : 'view').'.html.twig'), [
+        $template = $page->getTemplate() ? $page->getTemplate() : "view";
+
+        $view = $this->templating('page/templates/'.($page->getTemplate() ? $page->getTemplate()  : 'view').'.html.twig');
+        if(!file_exists($this->get('kernel')->getRootDir().'/Resources/views/'.$view) && $template !="view" ){
+            $template = "view";
+        }
+        return $this->template('page/templates/'.$template.'.html.twig', [
             'entity' => $page
         ]);
     }

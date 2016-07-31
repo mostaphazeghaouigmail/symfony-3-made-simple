@@ -16,9 +16,10 @@ class DefaultController extends SuperController
     public function indexAction(Request $request)
     {
         $service = $this->get('app.application.service');
-        $indexPage = $service->getParameter('index_page');
+        $indexPage = $service->getSetting('index_page');
+
         if($indexPage && !empty($indexPage)){
-            return $this->forward('AppBundle:Page:index',['slug'=>$indexPage]);
+            return $this->forward('AppBundle:Page:show',['slug'=>$indexPage]);
         }
 
         // replace this example code with whatever you need
@@ -38,5 +39,6 @@ class DefaultController extends SuperController
 
         return new JsonResponse(['success'=>true]);
     }
+
 
 }

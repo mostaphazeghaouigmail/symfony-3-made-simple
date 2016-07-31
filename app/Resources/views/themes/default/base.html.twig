@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <title>{{ page_title is defined and page_title != '' ? page_title : app_twig.getParameter('Nom du site') }}</title>
-        <meta content="{{ page_description is defined and page_description != '' ? page_description : app_twig.getParameter('Description du site') }}" name="description">
+        <title>{{ page_title is defined and page_title != '' ? page_title : app_twig.getSetting('site_name') }}</title>
+        <meta content="{{ page_description is defined and page_description != '' ? page_description : app_twig.getSetting('site_description') }}" name="description">
         <link href="{{ asset(app_twig.getTheme()~'assets/css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
         <link href="{{ asset(app_twig.getTheme()~'assets/css/ripples.min.css') }}" rel="stylesheet" media="screen">
         <link href="{{ asset(app_twig.getTheme()~'assets/css/bootstrap-material-design.min.css') }}" rel="stylesheet" media="screen">
@@ -18,9 +18,9 @@
         <![endif]-->
         {{ app_twig.getAnalitycsTracking()|raw }}
     </head>
-    <body id="{% block body_id %}{% endblock %}" class="">
+    <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
     {{ app_twig.getMenu()|raw }}
-    <div class="wrapper container">
+    <div class="wrapper container-fluid">
             {% block body %}{% endblock body %}
         </div>
     </body>
@@ -30,6 +30,8 @@
     <script src="{{ asset(app_twig.getTheme()~'assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset(app_twig.getTheme()~'assets/js/ripples.js') }}"></script>
     <script src="{{ asset(app_twig.getTheme()~'assets/js/material.min.js') }}"></script>
+    <script src="{{ asset(app_twig.getTheme()~'assets/js/masonry.min.js') }}"></script>
+
     {% block javascripts %}{% endblock javascripts %}
     <script>
         $(function () {

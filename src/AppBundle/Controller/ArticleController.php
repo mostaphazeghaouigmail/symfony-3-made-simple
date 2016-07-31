@@ -3,9 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Article;
+use AppBundle\Interfaces\Taggable;
+use Doctrine\Common\Cache\ApcCache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,20 +21,38 @@ class ArticleController extends SuperController
      */
     public function indexAction(Request $request)
     {
-        $em     = $this->getDoctrine()->getManager();
-        $dql   = "SELECT a FROM AppBundle:Article a";
 
-        $query = $em->createQuery($dql);
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            10
-        );
 
-        return $this->render($this->templating('article/index.html.twig'), [
+        $dql   = "SELECT a FROM AppBundle:Article a ORDER BY a.createdAt DESC";
+        $pagination = $this->getArticles($request,$dql);
+
+        return $this->template('article/index.html.twig', [
             'entities' => $pagination
         ]);
+    }
+
+
+    /**
+     * @Route("/search", name="quick_search", options={"expose"=true})
+     */
+    public function quickSearchAction(Request $request ){
+
+        $term       = $request->request->get('term');
+        $properties = get_class_vars("AppBundle\\Entity\\Article");
+
+        $conditions = [];
+
+        foreach ($properties["searchable"] as $f)
+            $conditions[] = "a.".$f." LIKE '%".$term."%'";
+
+        $conditions = implode(" OR ",$conditions);
+        $pagination = $this->getArticles($request,'SELECT a from AppBundle:Article a WHERE '.$conditions." ORDER BY a.createdAt DESC");
+
+        return $this->template('article/index.html.twig', [
+            'entities' => $pagination,
+            'term'     => $term
+        ]);
+
     }
 
 
@@ -43,12 +62,35 @@ class ArticleController extends SuperController
      */
     public function showAction(Request $request, Article $article)
     {
-        return $this->render($this->templating('article/templates/'.($article->getTemplate() ? $article->getTemplate()  : 'view').'.html.twig'), [
+        $template = $article->getTemplate() ? $article->getTemplate() : "view";
+
+        $view = $this->templating('article/templates/'.($article->getTemplate() ? $article->getTemplate()  : 'view').'.html.twig');
+        if(!file_exists($this->get('kernel')->getRootDir().'/Resources/views/'.$view) && $template !="view" ){
+            $template = "view";
+        }
+        return $this->template('article/templates/'.$template.'.html.twig', [
             'entity' => $article
         ]);
     }
 
+    private function getArticles(Request $request,$dql){
 
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery($dql);
 
+        $site = $this->get("app.application.service")->getSetting("site_nom");
+
+        if(APC_ENABLE)
+            $query->useResultCache(true,86400,$site.'_articles');
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            20
+        );
+
+        return $pagination;
+    }
 
 }

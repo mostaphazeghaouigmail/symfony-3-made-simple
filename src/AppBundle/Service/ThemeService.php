@@ -51,6 +51,21 @@ class ThemeService
         return new JsonResponse(['success'=>true]);
     }
 
+    public function linkAssets($folder){
+
+        $targetThemePath       = $this->getThemePath($folder);
+        $targetThemeAssetsPath = $this->getWebThemePath($folder).'/assets';
+
+        $fs = new Filesystem();
+        if(!$fs->exists($targetThemeAssetsPath)){
+            $fs->mkdir($this->getWebThemePath($folder));
+            $fs->symlink($targetThemePath.'/assets/',$targetThemeAssetsPath);
+        }
+
+        return new JsonResponse(['success'=>true]);
+
+    }
+
     public function handleTemplateFile($entity){
         if($entity->getTemplate()){
 

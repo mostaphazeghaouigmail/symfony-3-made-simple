@@ -1,0 +1,12 @@
+easy_admin:
+    entities:
+        Comment:
+            class: AppBundle\Entity\Comment
+            list:
+                fields :
+                    - 'id'
+                    - 'text'
+                    - 'validated'
+                    - 'createdAt'
+                    - 'owner'
+                    - 'user'

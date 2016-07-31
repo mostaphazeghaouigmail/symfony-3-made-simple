@@ -882,7 +882,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/298f27ce696deaa6ecd72e6ba563f892a17e0512",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/42ad0730ee22406de20da75fa9a3f4d74c565a83",
                 "reference": "d1fccc6335b74beca94525551cacc06b256ed261",
                 "shasum": ""
             },
@@ -1134,12 +1134,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/javiereguiluz/EasyAdminBundle.git",
-                "reference": "5027eaf99e09e6e8e9cbda14d56f3a21d16dd822"
+                "reference": "c5563ee41412628eb6bd72716246f75e2534121e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/bef27aa81a34379e77f01ddcc7c88658510ac34a",
-                "reference": "5027eaf99e09e6e8e9cbda14d56f3a21d16dd822",
+                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/c5563ee41412628eb6bd72716246f75e2534121e",
+                "reference": "c5563ee41412628eb6bd72716246f75e2534121e",
                 "shasum": ""
             },
             "require": {
@@ -1209,7 +1209,7 @@
                 "backend",
                 "generator"
             ],
-            "time": "2016-06-12 15:19:21"
+            "time": "2016-07-19 17:55:19"
         },
         {
             "name": "jdorn/sql-formatter",

@@ -60,7 +60,10 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
-        #metadata_cache_driver: apc
+        #remove those line if you do not have apc
+        metadata_cache_driver: "%cache_driver%"
+        query_cache_driver: "%cache_driver%"
+        result_cache_driver: "%cache_driver%"
 
 
 

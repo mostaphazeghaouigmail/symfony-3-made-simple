@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Traits\ApiCapable;
 use AppBundle\Traits\Commentable;
+use AppBundle\Traits\Taggable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\File;
@@ -18,6 +19,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Image
 {
     use ApiCapable;
+    use Taggable;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -245,7 +248,7 @@ class Image
      */
     public function getParentClass()
     {
-        return $this->parentClass;
+        return $this->parentClass ? ucfirst($this->parentClass) : null;
     }
 
     /**
@@ -295,6 +298,32 @@ class Image
     {
         $this->place = $place;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     * @return Image
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    public function getOwner(){
+        if($this->getParentClass() && $this->getParentId()){
+            echo "<a href='?entity=".$this->getParentClass()."&action=show&menuIndex=1&submenuIndex=-1&id=".$this->getParentId()."'>".$this->getParentClass() ." ".$this->getParentId()."</a>";
+            return '';
+        }
+    }
+
 
 
 

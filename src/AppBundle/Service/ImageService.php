@@ -16,20 +16,33 @@ class ImageService
 {
     private $em;
     private $rootDir;
+    private $appService;
 
-    public function __construct(EntityManager $em,Kernel $kernel)
+    public function __construct(EntityManager $em,Kernel $kernel,AppService $appService)
     {
-        $this->em       = $em;
-        $this->rootDir  = $kernel->getRootDir();
+        $this->em           = $em;
+        $this->rootDir      = $kernel->getRootDir();
+        $this->appService   = $appService;
     }
 
     public function cleanImages($entity){
-        $sql = "Update Image SET parent_class = NULL, parent_id = NULL WHERE parent_class = '".$entity->getModel()."' AND parent_id = ".$entity->getId();
+        $model = get_class($entity);
+        $model = explode('\\', $model);
+        $model = array_pop($model);
+        $sql = "Update Image SET parent_class = NULL, parent_id = NULL WHERE parent_class = '".$model."' AND parent_id = ".$entity->getId();
         $this->em->getConnection()->exec($sql);
     }
 
     public function loadImage($model,$id){
-        return $this->em->getRepository("AppBundle:Image")->findBy(["parentClass"=> $model, "parentId"=> $id], ['place'=>"ASC"]);
+
+        $dql = "SELECT i FROM AppBundle:Image i WHERE i.parentClass ='".$model."' AND i.parentId=".$id." ORDER BY i.place ASC";
+        $query = $this->em->createQuery($dql);
+        $site = $this->appService->getSetting("site_nom");
+
+        if(APC_ENABLE)
+            $query->useResultCache(true,86400,$site."_".$model."_images_".$id);
+
+        return $query->getResult();
     }
     
     public function changeFile($request,$path){

@@ -1,0 +1,34 @@
+easy_admin:
+    entities:
+        Theme:
+            class: AppBundle\Entity\Theme
+            list:
+                fields:
+                    - 'name'
+                    - { property: 'image', type: 'image', base_path: %app.path.theme_images% }
+                    - 'author'
+                    - 'description'
+                    - 'active'
+                    - 'folderCreated'
+                actions:
+                    - { name: 'edit', css_class : 'btn btn-primary btn-xs', icon: 'pencil', label: '' }
+                    - { name: 'link_assets', type: 'route', label : '', css_class : 'btn btn-primary btn-xs', icon : 'link'}
+                    - { name: 'delete', css_class : 'btn btn-danger btn-xs', icon : 'trash', label : '' }
+                    - 'new'
+                    - 'search'
+            edit:
+                fields:
+                    - 'name'
+                    - 'author'
+                    - 'description'
+                    - { property: 'imageFile', type: 'vich_image' }
+                    - 'folder'
+                    - 'active'
+            new:
+                fields:
+                    - 'name'
+                    - 'author'
+                    - 'description'
+                    - { property: 'imageFile', type: 'vich_image' }
+                    - 'folder'
+

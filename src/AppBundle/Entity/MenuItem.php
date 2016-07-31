@@ -15,6 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity
  * @ORM\Table(name="MenuItem")
+ * @ORM\HasLifecycleCallbacks()
  */
 class MenuItem
 {
@@ -45,12 +46,12 @@ class MenuItem
     protected $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MenuItem", inversedBy="childrens")
+     * @ORM\ManyToOne(targetEntity="MenuItem", inversedBy="childrens", fetch="EAGER")
      */
     protected $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="MenuItem", mappedBy="parent", )
+     * @ORM\OneToMany(targetEntity="MenuItem", mappedBy="parent", fetch="EAGER" )
      */
     protected $childrens;
 
@@ -249,6 +250,14 @@ class MenuItem
     {
         $this->childrens[] = $children;
         return $this;
+    }
+
+    /**
+     * @ORM\PreRemove
+     */
+    public function removeParent(){
+        foreach ($this->getChildrens() as $child)
+            $child->setParent(null);
     }
 
 

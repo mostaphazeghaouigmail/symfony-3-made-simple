@@ -2,26 +2,51 @@
 
 {% set page_title = 'Title index blog' %}
 {% set page_description = 'Blog meta description' %}
-
+    {% block body_id %}blog{% endblock %}
     {% block body %}
        <div class="row">
            <div class="col-md-12">
-            <h1>Blog</h1>
-               <br>
-           {% for article in entities %}
-              {% include app_twig.getTheme()~"/article/item.html.twig" with {'article' : article } %}
-           {% endfor %}
-           </div>
+               <h1 class="col-md-10 col-md-offset-1" id="blog-title">Blog</h1>
 
+               <div  class="col-md-10 col-md-offset-1 bg-blog">
+                   {% if term is defined %}
+                       <h3>{{ entities.getTotalItemCount }} result{{ entities.getTotalItemCount > 1 ? 's' : '' }}  for '{{ term }}'</h3>
+                   {% endif %}
+                   <form action="{{ path('quick_search') }}" method="POST">
+                       <div class="col-md-3 form-group">
+                           <input id="quicksearch" name="term" class="form-control" type="text" placeholder="Quick Search" >
+                       </div>
+                       <div class="col-md-1 form-group">
+                           <input type="submit" value="search" class="btn-default btn ">
+                        </div>
+                   </form>
+               </div>
+               <div class="blog col-md-10 col-md-offset-1 bg-blog">
+                   {% for article in entities %}
+                       {% include app_twig.getTheme()~"/article/item.html.twig" with {'article' : article } %}
+                   {% endfor %}
+               </div>
+               <div class="col-md-10 col-md-offset-1 bg-blog" style="padding-top:30px">
+                   <div  style="text-align: center">
+                       {{ knp_pagination_render(entities) }}
+                   </div>
+               </div>
+           </div>
        </div>
-        <div class="row" style="margin-top:30px">
-            <div class="col-md-12" style="text-align: center">
-                <div class="navigation" style="display:inline-block;margin:0 auto">
-                    {{ knp_pagination_render(entities) }}
-                </div>
-            </div>
-        </div>
+
     {% endblock body %}
 
 {% block javascripts %}
+    <script>
+        var grid;
+        $(document).ready(function(){
+
+            grid = $('.blog');
+            grid.masonry({
+                itemSelector: '.article', // use a separate class for itemSelector, other than .col-
+                percentPosition: true
+            });
+
+        })
+    </script>
 {% endblock javascripts %}

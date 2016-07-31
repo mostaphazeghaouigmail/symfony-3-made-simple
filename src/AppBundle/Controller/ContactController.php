@@ -19,7 +19,7 @@ class ContactController extends SuperController
 
         $contact = $request->request->get('contact');
         $service = $this->get('app.application.service');
-        $from    = $service->getParameter('site_email');
+        $from    = $service->getSetting('site_email');
 
         if(!$from || empty($from)){
             return new JsonResponse(['success'=>false,'message'=> "There is no mail configured in settings."]);

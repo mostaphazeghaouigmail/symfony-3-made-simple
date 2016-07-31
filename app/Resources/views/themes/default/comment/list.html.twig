@@ -1,3 +1,5 @@
-{% for comment in entity.comments if comment.validated  %}
-        {% include app_twig.getTheme()~"/comment/comment.html.twig" with {'comment' : comment} %}
-{% endfor %}
+<div id="comment-list-wrapper">
+        {% for comment in entity.comments if comment.validated  %}
+                {% include app_twig.getTheme()~"/comment/comment.html.twig" with {'comment' : comment} %}
+        {% endfor %}
+</div>

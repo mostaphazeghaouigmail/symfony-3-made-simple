@@ -23,7 +23,10 @@ class CommentService
     }
 
     public function cleanComment($entity){
-        $sql = "Update Image SET parent_class = NULL, parent_id = NULL WHERE parent_class = '".$entity->getModel()."' AND parent_id = ".$entity->getId();
+        $model = get_class($entity);
+        $model = explode('\\', $model);
+        $model = array_pop($model);
+        $sql = "Update Image SET parent_class = NULL, parent_id = NULL WHERE parent_class = '".$model."' AND parent_id = ".$entity->getId();
         $em = $this->container->get('doctrine.orm.entity_manager');
         $em->getConnection()->exec($sql);
     }
@@ -34,26 +37,32 @@ class CommentService
         $service        = $this->container->get('app.application.service');
         $connected      = $this->container->get('security.authorization_checker')->isGranted('ROLE_USER');
         $user           = $this->container->get('security.token_storage')->getToken()->getUser();
-        $allowanonymous = $service->getParameter("allow_anonymous_comments",BooleanType::class);
-        $validByDefault = $service->getParameter("allow_anonymous_comments",BooleanType::class);
+
+        $allowanonymous = $service->getSetting("allow_anonymous_comments",BooleanType::class);
+        $validByDefault = $service->getSetting("allow_anonymous_comments",BooleanType::class);
 
         if($allowAnonymous || $connected){
             $comment = new Comment();
-            $comment->setParentClass($entity->getModel())
+            $comment->setParentClass($entity)
                     ->setParentId($entity->getId())
                     ->setValidated($allowAnonymous);
 
             if($connected){
                 $comment->setUserId($user->getId())
-                        ->setAuthor($user->getUsername());
+                        ->setAuthor($user->getUsername())
+                        ->setEmail($user->getEmail());
             }
 
             $form = $this->container->get('form.factory')
                 ->create(
                     CommentType::class,
                     $comment,
-                    ['action'=>$this->container->get('router')->generate('post_comment')]
+                    [
+                        'action'    => $this->container->get('router')->generate('post_comment'),
+                        'connected' => $connected
+                    ]
                 );
+
 
             return $form;
         }
@@ -64,17 +73,25 @@ class CommentService
 
 
     public function loadComments($model,$id){
-        return $this->container->get('doctrine.orm.entity_manager')
-            ->getRepository("AppBundle:Comment")
-            ->findBy(["parentClass"=> $model, "parentId"=> $id,'validated' => true], ['validated'=>"ASC"]);
+
+        $dql = "SELECT c FROM AppBundle:Comment c WHERE c.parentClass ='".$model."' AND c.parentId=".$id." AND c.validated=true ORDER BY c.createdAt DESC";
+        $query = $this->container->get("doctrine.orm.entity_manager")->createQuery($dql);
+        $site = $this->container->get("app.application.service")->getSetting("site_nom");
+
+        if(APC_ENABLE)
+            $query->useResultCache(true,86400,$site."_".$model."_comments_".$id);
+
+        return $query->getResult();
+
     }
 
     public function canModify($entity){
         $token           = $this->container->get('security.token_storage')->getToken();
         $securityChecker = $this->container->get('security.authorization_checker');
         if($token && $securityChecker->isGranted('ROLE_USER')) {
-            $user = $this->container->get('security.token_storage')->getToken()->getUser();
-            if($user && $entity->getUserId() == $user->getId()) {
+            $user    = $this->container->get('security.token_storage')->getToken()->getUser();
+            $isAdmin = $securityChecker->isGranted('ROLE_ADMIN');
+            if($entity->getUserId() == $user->getId() || $isAdmin ){
                 return true;
             }
         }

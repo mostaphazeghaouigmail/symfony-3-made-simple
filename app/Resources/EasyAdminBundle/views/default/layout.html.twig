@@ -22,7 +22,7 @@
         {% endfor %}
         <link rel="stylesheet" href="{{ asset("css/admin/codemirror.css") }}">
         <link rel="stylesheet" href="{{ asset("css/admin/admin.css") }}">
-
+        <link rel="stylesheet"  href="{{ asset('js/admin/codemirror/theme/monokai.css') }}">
         {% block head_favicon %}
             {% set favicon = easyadmin_config('design.assets.favicon') %}
             <link rel="icon" type="{{ favicon.mime_type }}" href="{{ asset(favicon.path) }}" />
@@ -50,8 +50,13 @@
             <script src="{{ asset('bundles/easyadmin/stylesheet/html5shiv.min.css') }}"></script>
             <script src="{{ asset('bundles/easyadmin/stylesheet/respond.min.css') }}"></script>
         <![endif]-->
-    </head>
 
+    </head>
+    <script>
+        var style = document.createElement("style");
+        style.innerHTML = '.content-wrapper{min-height:'+screen.height+'px}';
+        document.head.appendChild(style);
+    </script>
     {% block body %}
         <body id="{% block body_id %}{% endblock %}" class="easyadmin sidebar-mini {% block body_class %}{% endblock %} {{ app.request.cookies.has('_easyadmin_navigation_iscollapsed') ? 'sidebar-collapse' }}">
         <div class="wrapper">
@@ -137,12 +142,17 @@
         {% endfor %}
     </body>
     {% endblock body %}
-    <script src="{{ asset('js/admin/codemirror.js') }}"></script>
+
+    <script src="{{ asset('js/admin/codemirror/codemirror.js') }}"></script>
+    <script src="{{ asset('js/admin/codemirror/mode/css/css.js') }}"></script>
     <script src="{{ asset('js/admin/emodal.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     <script src="{{ asset('js/admin/jquery.mjs.nestedSortable.js') }}"></script>
     <script src="{{ asset('js/admin/sortable.min.js') }}"></script>
     <script src="{{ asset('js/admin/uploader.js') }}"></script>
+    {% block loadscritps %}{% endblock loadscritps %}
     <script src="{{ asset('js/admin/admin.js') }}"></script>
+    {% block scripts %}{% endblock scripts %}
+
 </html>
